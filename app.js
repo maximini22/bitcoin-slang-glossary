@@ -61,9 +61,12 @@ async function boot() {
   const meta = metaRes.ok ? await metaRes.json() : { title: slug, artist: "Robbie P" };
 
   titleEl.textContent = meta.title;
-  const aka = meta.alsoKnownAs ? ` · also known as ${meta.alsoKnownAs}` : "";
-  subEl.textContent = `${meta.artist}${meta.theme ? " · " + meta.theme : ""}${aka}`;
-  document.title = `${meta.title} — Bitcoin Slang`;
+  if (meta.description) {
+    subEl.textContent = meta.description;
+  } else {
+    subEl.textContent = `${meta.artist}${meta.theme ? " · " + meta.theme : ""}`;
+  }
+  document.title = `${meta.title} — Bitcoinslang.com`;
 
   lyricsEl.innerHTML = applyAnnotations(lyrics, annotations);
 

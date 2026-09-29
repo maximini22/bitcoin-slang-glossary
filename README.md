@@ -18,6 +18,11 @@ python3 -m http.server 8080
 
 - Catalog: http://localhost:8080
 - First song: http://localhost:8080/song.html?slug=bitcoin-slang-remix
+- Second song: http://localhost:8080/song.html?slug=most-toxic-bitcoin-maxi
+- Third song: http://localhost:8080/song.html?slug=diamond-hands-and-laser-eyes
+- All Time High: http://localhost:8080/song.html?slug=all-time-high-lessons-of-regret
+- Going Cashless: http://localhost:8080/song.html?slug=going-cashless
+- If It Wasn't For Satoshi: http://localhost:8080/song.html?slug=if-it-wasnt-for-satoshi
 
 `bitcoin-slang-remix.standalone.html` bakes the same lyrics and notes into one file so it opens by double-click. The folder version is the one to deploy.
 
@@ -34,6 +39,8 @@ python3 -m http.server 8080
 3. `songs/<slug>/meta.json`
 
 Lyrics sit on the left. The annotation panel sticks on the right. A gold mark is an annotated phrase. Section labels such as `[Verse 1]` and `[Hook]` are not notes.
+
+If `meta.json` includes `description`, that blurb is the line under the title. If it does not, the line falls back to artist and theme.
 
 Highlight rules:
 
@@ -55,7 +62,8 @@ Highlight rules:
   "title": "Song Title",
   "artist": "Robbie P",
   "year": null,
-  "theme": "one-line theme"
+  "theme": "one-line theme",
+  "description": "Two or three sentences on the release and the moment the song is talking about."
 }
 ```
 
@@ -97,9 +105,30 @@ Highlight rules:
 | slug | `bitcoin-slang-remix` |
 | title | Bitcoin Slang Remix |
 | artist | Robbie P |
-| also known as | Don't Nothing Move But The Money |
 | theme | Bitcoin glossary / sound money primer |
 | notes | 34 |
+
+## Second song
+
+| Field | Value |
+| --- | --- |
+| slug | `most-toxic-bitcoin-maxi` |
+| title | Most Toxic Bitcoin Maxi |
+| artist | Robbie P |
+| year | 2023 |
+| theme | Pizza Day 2023 · toxic maxi satire |
+| notes | 31 |
+
+## Third song
+
+| Field | Value |
+| --- | --- |
+| slug | `diamond-hands-and-laser-eyes` |
+| title | Diamond Hands & Laser Eyes |
+| artist | Robbie P |
+| year | 2023 |
+| theme | El Salvador · diamond hands culture |
+| notes | 22 |
 
 ## Layout
 
@@ -109,8 +138,28 @@ song.html
 app.js
 styles.css          dark theme, Bitcoin orange #f7931a
 bitcoin-slang-remix.standalone.html
-assets/             cover and artist images
+assets/             cover.jpg, artist.jpg, chester-bg.jpg, song covers
 songs/bitcoin-slang-remix/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/most-toxic-bitcoin-maxi/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/diamond-hands-and-laser-eyes/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/all-time-high-lessons-of-regret/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/going-cashless/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/if-it-wasnt-for-satoshi/
   lyrics.txt
   annotations.json
   meta.json
