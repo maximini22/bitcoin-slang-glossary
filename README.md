@@ -123,7 +123,7 @@ song.html
 app.js
 styles.css          dark theme, Bitcoin orange #f7931a
 bitcoin-slang-remix.standalone.html
-assets/             cover and artist images
+assets/             cover.jpg, artist.jpg, chester-bg.jpg, song covers
 songs/bitcoin-slang-remix/
   lyrics.txt
   annotations.json

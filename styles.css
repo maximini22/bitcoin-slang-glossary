@@ -188,6 +188,7 @@ mark.ann.active {
 }
 
 .thumb-link { display: block; }
+.thumb-link picture { display: block; }
 .thumb { border-radius: 8px; }
 
 .site-foot {
