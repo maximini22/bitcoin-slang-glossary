@@ -20,6 +20,9 @@ python3 -m http.server 8080
 - First song: http://localhost:8080/song.html?slug=bitcoin-slang-remix
 - Second song: http://localhost:8080/song.html?slug=most-toxic-bitcoin-maxi
 - Third song: http://localhost:8080/song.html?slug=diamond-hands-and-laser-eyes
+- All Time High: http://localhost:8080/song.html?slug=all-time-high-lessons-of-regret
+- Going Cashless: http://localhost:8080/song.html?slug=going-cashless
+- If It Wasn't For Satoshi: http://localhost:8080/song.html?slug=if-it-wasnt-for-satoshi
 
 `bitcoin-slang-remix.standalone.html` bakes the same lyrics and notes into one file so it opens by double-click. The folder version is the one to deploy.
 
@@ -145,6 +148,18 @@ songs/most-toxic-bitcoin-maxi/
   annotations.json
   meta.json
 songs/diamond-hands-and-laser-eyes/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/all-time-high-lessons-of-regret/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/going-cashless/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/if-it-wasnt-for-satoshi/
   lyrics.txt
   annotations.json
   meta.json

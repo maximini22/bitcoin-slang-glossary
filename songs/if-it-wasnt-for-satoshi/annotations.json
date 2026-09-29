@@ -1,0 +1,152 @@
+[
+  {
+    "id": "julian",
+    "phrase": "Julian Knows",
+    "note": "The opener name-checks Julian and does not stop to explain him. The next bar is the boast: the flows. The name is the setup. The UTXOs are where the verse cashes it."
+  },
+  {
+    "id": "flows",
+    "phrase": "juiciest flows",
+    "note": "Flows are the rap itself: cadence and rhyme. \"Juiciest\" is the claim. It lasts one line, then the subject turns to coins."
+  },
+  {
+    "id": "utxos",
+    "phrase": "these UTXOs",
+    "note": "A UTXO is an unspent transaction output: a piece of bitcoin sitting at an output, waiting to be spent. A balance is the sum of those pieces, not a number in an account."
+  },
+  {
+    "id": "consolidate",
+    "phrase": "as i consolidate",
+    "note": "Consolidation combines many small UTXOs into fewer outputs while fees are cheap. Leave them scattered and a later high-fee season makes the stack clumsy to spend. The housekeeping comes before \"the ballers.\""
+  },
+  {
+    "id": "hall-of-fame",
+    "phrase": "bitcoin hall of fame",
+    "note": "There is no building. The line is the imagined room of people who were early and loud. The next bar, entropy, is the thing that room cannot fake."
+  },
+  {
+    "id": "entropy",
+    "phrase": "cracking entropy",
+    "note": "Entropy here is randomness. A private key is a number from a range too large to search. \"Cracking\" it would mean guessing that number. The odds are why a key made properly is not a password you brute-force."
+  },
+  {
+    "id": "orange-stories",
+    "phrase": "orange pill horror stories",
+    "note": "To orange-pill someone is to convince them of bitcoin. The horror stories are the version that went badly: the top-tick buy, the family argument, the seed phrase in a photo. The next lines are the prescribed cold."
+  },
+  {
+    "id": "wimhof",
+    "phrase": "wimhof thing",
+    "note": "Wim Hof is the cold-exposure practice: breathing and ice. The bar sets it next to cold storage. One is a body in the cold. The other is keys kept off the internet. Both get called cold."
+  },
+  {
+    "id": "cold-storage",
+    "phrase": "cold storage",
+    "note": "Cold storage means private keys that do not live on an internet-connected machine. A hardware wallet, a steel backup, a transaction signed offline. Hot storage is the phone or the exchange."
+  },
+  {
+    "id": "nostr",
+    "phrase": "NOSTR",
+    "note": "NOSTR — Notes and Other Stuff Transmitted by Relays — is a protocol for posting without one company owning the feed. The song drops the name on its own line, the way a chant drops a ticker."
+  },
+  {
+    "id": "divorce",
+    "phrase": "divorce lawyers don't really like this thing",
+    "note": "Self-custody does not split like a bank account. If keys are held by one person, a court order is not a withdrawal slip. Lawyers meet bitcoin where the paperwork stops matching the coins."
+  },
+  {
+    "id": "prenup",
+    "phrase": "the prenup never work",
+    "note": "A prenup is a contract, before marriage, about who owns what. It \"never work\" in this bar because bitcoin moves by keys, not by the clause. The unpaid fee is the ordinary punchline on the way out."
+  },
+  {
+    "id": "airgap",
+    "phrase": "air gapped transaction",
+    "note": "Air-gapped means the signing machine never joins the network. You build the transaction online, carry it across on a QR code or a card, sign offline, and bring only the signature back. The gap is the security."
+  },
+  {
+    "id": "sign-device",
+    "phrase": "my sign device",
+    "note": "A signing device is the hardware wallet. It holds the keys and makes the signature. The laptop only builds what you are being asked to approve. You read the amount on the device's screen, which the website cannot rewrite."
+  },
+  {
+    "id": "multisig",
+    "phrase": "multisig",
+    "note": "Multisig means a spend that needs more than one key. Two of three is the usual pattern. Lose one key and the others can still move the coins. It is the grown-up version of a single gadget in a drawer."
+  },
+  {
+    "id": "matrix",
+    "phrase": "whole matrix undermined",
+    "note": "The Matrix is the simulated world. \"Undermined\" means something under it gave way. The brag is that a few lines of code were enough to poke a hole. The Sims line keeps the same joke going."
+  },
+  {
+    "id": "sims",
+    "phrase": "if the sims",
+    "note": "The Sims is the game where characters live a life a player designed. If they started inventing things with nobody to approve it, that is the fantasy in miniature: no manager in the loop."
+  },
+  {
+    "id": "quantum",
+    "phrase": "triple point quantum asset",
+    "note": "Underpriced means the market's number ignores a property the speaker thinks is real. \"Triple point\" in physics is where solid, liquid, and gas meet. Next to \"quantum,\" it is science-flavored slang for fundamental and still cheap — a brag, not a ticker."
+  },
+  {
+    "id": "hook",
+    "phrase": "if it wasn't for satoshi you wouldn't have nothing",
+    "note": "The hook, double negative included. Without Satoshi's bitcoin there is no field for the rest of the carnival: the pumps, the scams, the debris. \"Wouldn't have nothing\" is the grammar of the bar. The meaning is that the crowd would have nothing to stand on."
+  },
+  {
+    "id": "hat",
+    "phrase": "i got your hat you little chump",
+    "note": "A schoolyard jab. In this verse it lands on the orange hat: merch, taken. The next lines say advertising a side pocket on the device was the mistake that followed the costume."
+  },
+  {
+    "id": "side-pocket",
+    "phrase": "side pocket ledger",
+    "note": "Ledger makes hardware wallets. A side pocket is an extra compartment. Advertising it tells a stranger where the backup or the device might live. The bar calls that \"a little dumb\" because the hint is the hazard."
+  },
+  {
+    "id": "attack-vector",
+    "phrase": "attack vector hazard",
+    "note": "An attack vector is a way in. \"Drain your funds\" is the outcome the line is worried about. The pocket, the hat, the brag: each one points. Opsec is boring because the hazard is not."
+  },
+  {
+    "id": "timechain",
+    "phrase": "gossip on this timechain",
+    "note": "Timechain is what the early software called the chain: blocks in time order. Gossip is how nodes pass transactions and blocks to each other. \"What we said\" sitting somewhere you can audit is the contrast with a feed that can be edited."
+  },
+  {
+    "id": "nostr-audit",
+    "phrase": "you can go and audit it for fun",
+    "note": "The invitation after NOSTR. A relay protocol and a chain both leave a record a stranger can check. \"For fun\" is the tone. The work is the same as verify, not trust."
+  },
+  {
+    "id": "diamond-time",
+    "phrase": "diamond hands or time preference",
+    "note": "Diamond hands means refusing to sell. Time preference is how hard you discount the future. Low time preference means you can wait. The line says this era is more than either slogan. The software is the rest."
+  },
+  {
+    "id": "stacking",
+    "phrase": "stacking got sovereignty",
+    "note": "Stacking is buying bitcoin regularly. Sovereignty is fewer people who can tell you no. \"Less harassment\" is the hope: keys instead of an IOU, so the stack is not someone else's permission."
+  },
+  {
+    "id": "founder",
+    "phrase": "founder left you richer in his absence",
+    "note": "Satoshi stopped. No foundation taking a cut, no founder who still has to be in the room. The absence is the design. Holders are richer if the network kept working without its author."
+  },
+  {
+    "id": "flight",
+    "phrase": "flight to safety",
+    "note": "A flight to safety is capital leaving what feels risky for the asset it trusts when something breaks. Around the FTX collapse that phrase was everywhere. The song points the ticket at bitcoin."
+  },
+  {
+    "id": "tide",
+    "phrase": "high tide lifts all ships",
+    "note": "A rising tide lifts all boats: a boom that carries projects which did not earn the lift. \"We've only been the one\" is the answer in the next lines. One network. The others were along for the water."
+  },
+  {
+    "id": "fifteen",
+    "phrase": "it's been 15 years",
+    "note": "The genesis block was 3 January 2009. A 2024 hook saying 15 years is counting from that start. \"We've only been the one\" sits beside it: the maximalist claim, dated."
+  }
+]
