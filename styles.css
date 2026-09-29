@@ -214,4 +214,16 @@ mark.ann.active {
 @media (max-width: 800px) {
   .hero { grid-template-columns: 1fr; }
   .hero-art { max-width: 280px; }
+  .panel {
+    position: fixed;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    top: auto;
+    z-index: 3;
+    max-height: 34vh;
+    overflow: auto;
+    min-height: 0;
+  }
+  .lyrics { padding-bottom: 38vh; }
 }
