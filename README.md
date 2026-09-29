@@ -19,6 +19,7 @@ python3 -m http.server 8080
 - Catalog: http://localhost:8080
 - First song: http://localhost:8080/song.html?slug=bitcoin-slang-remix
 - Second song: http://localhost:8080/song.html?slug=most-toxic-bitcoin-maxi
+- Third song: http://localhost:8080/song.html?slug=diamond-hands-and-laser-eyes
 
 `bitcoin-slang-remix.standalone.html` bakes the same lyrics and notes into one file so it opens by double-click. The folder version is the one to deploy.
 
@@ -115,6 +116,17 @@ Highlight rules:
 | theme | Pizza Day 2023 · toxic maxi satire |
 | notes | 31 |
 
+## Third song
+
+| Field | Value |
+| --- | --- |
+| slug | `diamond-hands-and-laser-eyes` |
+| title | Diamond Hands & Laser Eyes |
+| artist | Robbie P |
+| year | 2023 |
+| theme | El Salvador · diamond hands culture |
+| notes | 22 |
+
 ## Layout
 
 ```
@@ -129,6 +141,10 @@ songs/bitcoin-slang-remix/
   annotations.json
   meta.json
 songs/most-toxic-bitcoin-maxi/
+  lyrics.txt
+  annotations.json
+  meta.json
+songs/diamond-hands-and-laser-eyes/
   lyrics.txt
   annotations.json
   meta.json
