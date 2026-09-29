@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bitcoin Slang Remix — Bitcoin Slang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand"><a href="index.html">Bitcoin Slang</a> · standalone</div>
+    <h1 id="title">Loading…</h1>
+    <p class="sub" id="sub"></p>
+    <div class="layout">
+      <div class="lyrics" id="lyrics"></div>
+      <aside class="panel">
+        <h2>Annotation</h2>
+        <div class="phrase" id="phrase"></div>
+        <div class="note" id="note">
+          <p class="hint">Hover or tap a highlighted line.</p>
+        </div>
+      </aside>
+    </div>
+    <p class="sub">Standalone file. Same data lives in songs/bitcoin-slang-remix/. Needs styles.css beside this file. The folder site (song.html) is what to deploy.</p>
+  </div>
+  <script>
+const META = {"slug": "bitcoin-slang-remix", "title": "Bitcoin Slang Remix", "artist": "Robbie P", "year": null, "theme": "Bitcoin glossary / sound money primer", "alsoKnownAs": "Don't Nothing Move But The Money"};
+const LYRICS = "[Verse 1]\nA Bitcoin is a currency, Blockchain is technology\nTransactions take place on it constantly\nA public key is your address, private key is your access\nCash is trash but a Bitcoin is an asset\nStacking sats is like accumulating gold\nA market order's sold, to hodl is to hold\nA confirmation is that, the transaction is backed\nVerification intact, miners proof of work\nA bankster is a crook, amateur traders get shook\nLook, the white paper is the book\nAnd if the price is low - you bought high and got stuck\nWhats luck? cause if you got hacked that means you got fucked\nAnd Bcash is a clone, open source is the code\nA computer running software is a node\nI know you like the way I break it down\nSo lets take a moment to ponder\nHow's a million dollar Bitcoin sound?\n\n[Hook]\nAin't nothing funny\nDon't nothing move but the money\nStop smiling, stay still\nDon't nothing move but the money\nAin't nothing funny\nDon't nothing move but the money\nStop smiling, stay still\nDon't nothing move but the money\n\n[Verse 2]\nCredit is debt, speculation is a bet\nBitcoin, a native currency for the internet\nTo panic sell is to sweat, a note is a cheque\nAnd to moon is for the price to move a 100x\nAnd Peter Schiff is a hater, Shout outs to Michael Saylor\nElon Musk and Tesla, Yessir\nTo leverage is to add margin to the trade\nAnd if the market moves against you then your absolutely slayed\nI see bubbles they pop, it's volatile alot\nPredict the price going up, that's just timing the top\nNot many systems are credible, a Satoshi is one\nOne hundred millionth of a bitcoin decimal\nYour wallet functions exactly like a bank clerk\nAnd hashrate is the power of the network\nI know you like the way I break it down\nSo lets take a moment to ponder\nHow's does a million dollar Bitcoin sound?\n\n[Hook]\nAin't nothing funny\nDon't nothing move but the money\nStop smiling, stay still\nDon't nothing move but the money\nAin't nothing funny\nDon't nothing move but the money\nStop smiling, stay still\nDon't nothing move but the money\n\n[Verse 3]\nYour crypto holdings is your bag, to boast about your gains is to brag\nAn address name is a tag\nScammers are shills, no coiners hold bills\nExecute a trade means your order got filled\nAlso Dapps are decentralized apps\nCapital gains means tax, some buy signals are traps\nTo discourse is to talk, but a lack of consensus\nMeans that when a blockchain splits its a fork\nA halvenings an event\nWhere the block reward the miners get is cut by 50 percent\nParticipation builds a network effect\nBut if you lost a large amount then that means you got rekt\nA low price is a dip, lambo's are whips\nAnd bitcoin improvement proposals are bips\nI know you like the way I break it down\nSo lets take a moment to ponder\nHow's does a million dollar bitcoin sound\n\n[Hook]\nAin't nothing funny\nDon't nothing move but the money\nStop smiling, stay still\nDon't nothing move but the money\nAin't nothing funny\nDon't nothing move but the money\nStop smiling, stay still\nDon't nothing move but the money\n";
+const ANNOTATIONS = [{"id": "bitcoin-currency", "phrase": "A Bitcoin is a currency", "note": "Bitcoin is digital cash with a hard cap of 21 million coins. Unlike fiat, no central bank can print more. The unit of account is BTC; people also price in sats."}, {"id": "blockchain-tech", "phrase": "Blockchain is technology", "note": "The blockchain is an append-only public ledger. Blocks of transactions are chained by hashes. Bitcoin's chain started 3 January 2009 with the genesis block."}, {"id": "public-private", "phrase": "A public key is your address, private key is your access", "note": "A public key (or its hashed form, the address) is where others send coins. The private key signs spends. Lose the private key and the coins are gone. 'Not your keys, not your coins.'"}, {"id": "cash-trash", "phrase": "Cash is trash but a Bitcoin is an asset", "note": "Fiat cash is a liability of a central bank — it inflates. Bitcoin is a bearer asset with no issuer. Sound-money framing: store of value first, medium of exchange as liquidity grows."}, {"id": "stacking-sats", "phrase": "Stacking sats is like accumulating gold", "note": "A satoshi is 0.00000001 BTC (one hundred millionth). Stacking sats means buying small amounts regularly — dollar-cost averaging into a scarce asset, analog to stacking physical gold."}, {"id": "hodl", "phrase": "to hodl is to hold", "note": "HODL comes from a 2013 Bitcointalk typo: 'I AM HODLING.' It became a strategy: ignore short-term price and hold through drawdowns instead of trading."}, {"id": "confirmation-pow", "phrase": "A confirmation is that, the transaction is backed", "note": "A confirmation is a block that includes your transaction. More confirmations = harder to reverse. Proof of work is how miners spend energy to append those blocks and secure the chain."}, {"id": "miners-pow", "phrase": "miners proof of work", "note": "Miners compete to find a nonce that makes a block hash meet the difficulty target. Energy in, valid chain out. This is what makes rewriting history expensive."}, {"id": "white-paper", "phrase": "the white paper is the book", "note": "Satoshi Nakamoto published 'Bitcoin: A Peer-to-Peer Electronic Cash System' on 31 October 2008. Nine pages. That document is still the canonical spec for why Bitcoin exists."}, {"id": "bcash", "phrase": "Bcash is a clone", "note": "Bitcoin Cash (BCH) forked from Bitcoin in August 2017 after the block-size war. Maxi slang calls it Bcash to mark it as a copy with different tradeoffs, not the original chain."}, {"id": "open-source-node", "phrase": "open source is the code", "note": "Bitcoin Core and related implementations are public. Anyone can read, audit, and run a node. A node is a computer running that software, independently verifying every rule."}, {"id": "node", "phrase": "A computer running software is a node", "note": "Full nodes download and verify the entire chain. They don't trust exchanges or explorers — they check the rules themselves. That's the sovereignty layer."}, {"id": "million-dollar", "phrase": "How's a million dollar Bitcoin sound?", "note": "A thought experiment used by Michael Saylor and others: if Bitcoin absorbs a large share of global store-of-value demand (gold, bonds, real estate hedges), six-figure and seven-figure BTC prices become a math problem, not a meme."}, {"id": "credit-debt", "phrase": "Credit is debt", "note": "Bank credit is someone else's liability. Bitcoin is not credit — it is settlement. No counterparty on the base layer once you hold keys."}, {"id": "native-internet", "phrase": "native currency for the internet", "note": "Bitcoin is bearer digital cash that settles without a bank API. That is why cypherpunks called it money for the internet: value transfer that works like packets, not like a permissioned ledger."}, {"id": "moon-100x", "phrase": "to moon is for the price to move a 100x", "note": "To the moon = extreme upside. 100x is a 10,000% move. Historically Bitcoin has done multi-cycle orders of magnitude; it is not a promise, it is the language of the culture."}, {"id": "schiff-saylor", "phrase": "Peter Schiff is a hater, Shout outs to Michael Saylor", "note": "Peter Schiff is a gold advocate who has shorted or dismissed Bitcoin for years. Michael Saylor (MicroStrategy) treated BTC as corporate treasury reserve and became the loudest institutional maximalist."}, {"id": "elon-tesla", "phrase": "Elon Musk and Tesla", "note": "Tesla bought BTC in 2021, then paused vehicle payments citing energy FUD, then later accepted it again in limited form. The line is zeitgeist: when Tesla tweets, crypto Twitter moves."}, {"id": "leverage", "phrase": "To leverage is to add margin to the trade", "note": "Borrowed size. If price moves against you, the exchange liquidates the position. 'Slayed' here is liquidation — the house takes the collateral."}, {"id": "satoshi-unit", "phrase": "a Satoshi is one", "note": "Named after the creator. 1 BTC = 100,000,000 sats. Pricing in sats makes small stacks legible and is how Lightning invoices are usually denominated."}, {"id": "wallet-clerk", "phrase": "Your wallet functions exactly like a bank clerk", "note": "A wallet does not 'contain' coins. It holds keys and constructs transactions the network will accept. The clerk metaphor: it looks up UTXOs, prepares the spend, waits for your signature."}, {"id": "hashrate", "phrase": "hashrate is the power of the network", "note": "Hashrate is total hashes per second miners throw at proof of work. Higher hashrate means more energy securing the chain and a higher cost to attack it."}, {"id": "bag-brag", "phrase": "Your crypto holdings is your bag", "note": "Bag = your position. Brag = flexing unrealized gains. Culture warning: loud bags attract scammers and tax offices."}, {"id": "tag", "phrase": "An address name is a tag", "note": "A label you put on an address in your wallet so you remember who it belongs to. Not on-chain — local metadata."}, {"id": "shills-nocoiners", "phrase": "Scammers are shills, no coiners hold bills", "note": "Shills pump bags they are paid to promote. Nocoiner = someone who refuses Bitcoin and still holds fiat ('bills'). Classic tribal split in Bitcoin Twitter."}, {"id": "dapps", "phrase": "Dapps are decentralized apps", "note": "Apps that talk to a blockchain instead of a company server. Bitcoin's base layer is conservative; most 'dapp' culture lives on other chains. The lyric is teaching the vocab, not endorsing the casino."}, {"id": "cap-gains", "phrase": "Capital gains means tax", "note": "In most jurisdictions, selling BTC for fiat (or swapping) is a taxable event. Stacking and self-custody is one thing; realizing gains is another."}, {"id": "fork", "phrase": "when a blockchain splits its a fork", "note": "A fork is a split in consensus rules. Soft fork = tighter rules, backward compatible. Hard fork = new rules that old nodes reject. Bitcoin Cash was a hard fork of Bitcoin."}, {"id": "halving", "phrase": "A halvenings an event", "note": "Every 210,000 blocks (~4 years) the block subsidy halves. 50 → 25 → 12.5 → 6.25 → 3.125… This is the programmed supply shock. Last scheduled subsidy era ends around 2140."}, {"id": "network-effect", "phrase": "Participation builds a network effect", "note": "More holders, nodes, miners, merchants, and developers make Bitcoin harder to kill and more useful. Liquidity and security compound together."}, {"id": "rekt", "phrase": "you got rekt", "note": "Rekt = wrecked. Liquidated, hacked, rugged, or sold the bottom. Internet slang that stuck because the market is violent."}, {"id": "dip-lambo-bips", "phrase": "A low price is a dip, lambo's are whips", "note": "Buy the dip = accumulate on drawdowns. Lambo = the joke endgame flex of 2017. Whip = car."}, {"id": "bips", "phrase": "bitcoin improvement proposals are bips", "note": "BIPs are the design docs for protocol changes. BIP-32 (HD wallets), BIP-39 (seed phrases), BIP-84 (native segwit paths) are ones most users touch without knowing the numbers."}, {"id": "hook-money", "phrase": "Don't nothing move but the money", "note": "Stay still, don't flinch, don't panic-sell. The only thing that should move is capital flowing into hard money. Discipline as the hook."}];
+
+const lyricsEl = document.getElementById("lyrics");
+const phraseEl = document.getElementById("phrase");
+const noteEl = document.getElementById("note");
+const titleEl = document.getElementById("title");
+const subEl = document.getElementById("sub");
+
+function escapeHtml(s) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function applyAnnotations(text, annotations) {
+  const sorted = [...annotations].sort((a, b) => b.phrase.length - a.phrase.length);
+  let html = escapeHtml(text);
+
+  for (const a of sorted) {
+    const needle = escapeHtml(a.phrase);
+    if (!needle) continue;
+    const idx = html.toLowerCase().indexOf(needle.toLowerCase());
+    if (idx === -1) continue;
+    const original = html.slice(idx, idx + needle.length);
+    const mark = `<mark class="ann" data-id="${a.id}">${original}</mark>`;
+    html = html.slice(0, idx) + mark + html.slice(idx + needle.length);
+  }
+
+  html = html.replace(/^\[(.+)\]$/gm, '<span class="section-label">[$1]</span>');
+  return html;
+}
+
+function showAnnotation(a) {
+  if (!a) {
+    phraseEl.textContent = "";
+    noteEl.innerHTML = '<p class="hint">Hover or tap a highlighted line.</p>';
+    return;
+  }
+  phraseEl.textContent = a.phrase;
+  noteEl.textContent = a.note;
+}
+
+titleEl.textContent = META.title;
+const aka = META.alsoKnownAs ? ` · also known as ${META.alsoKnownAs}` : "";
+subEl.textContent = `${META.artist}${META.theme ? " · " + META.theme : ""}${aka}`;
+document.title = `${META.title} — Bitcoin Slang`;
+lyricsEl.innerHTML = applyAnnotations(LYRICS, ANNOTATIONS);
+
+const byId = Object.fromEntries(ANNOTATIONS.map((a) => [a.id, a]));
+
+function activate(mark) {
+  document.querySelectorAll("mark.ann.active").forEach((m) => m.classList.remove("active"));
+  mark.classList.add("active");
+  showAnnotation(byId[mark.dataset.id]);
+}
+
+lyricsEl.addEventListener("mouseover", (e) => {
+  const mark = e.target.closest("mark.ann");
+  if (mark) activate(mark);
+});
+
+lyricsEl.addEventListener("click", (e) => {
+  const mark = e.target.closest("mark.ann");
+  if (mark) activate(mark);
+});
+  </script>
+</body>
+</html>
