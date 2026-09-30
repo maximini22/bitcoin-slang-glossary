@@ -1,13 +1,14 @@
 :root {
-  --bg: #0b0b0d;
-  --panel: #141418;
-  --text: #e8e6e3;
-  --muted: #8a8680;
-  --accent: #f7931a;
-  --accent-dim: rgba(247, 147, 26, 0.18);
-  --line: #2a2a30;
-  --font: "IBM Plex Sans", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --bg: #1D1B24;
+  --panel: #0F0F0F;
+  --text: #FFFFFF;
+  --muted: rgba(255, 255, 255, 0.769);
+  --accent: #F07701;
+  --accent-dim: rgba(240, 119, 1, 0.18);
+  --lime: #C0FF72;
+  --line: rgba(255, 255, 255, 0.14);
+  --font: "Inter", system-ui, sans-serif;
+  --mono: "Lucida Console", "Courier New", monospace;
 }
 
 * { box-sizing: border-box; }
@@ -15,27 +16,45 @@ html, body { margin: 0; background: var(--bg); color: var(--text); font-family: 
 
 body { min-height: 100vh; }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
 .wrap {
+  position: relative;
+  z-index: 1;
   max-width: 1100px;
   margin: 0 auto;
   padding: 2.5rem 1.25rem 5rem;
 }
 
 .brand {
-  font-family: var(--mono);
   font-size: 0.75rem;
-  letter-spacing: 0.16em;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 1.5rem;
 }
 
-h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 0.25rem; font-weight: 600; }
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
 .sub { color: var(--muted); margin: 0 0 2rem; }
 #sub { line-height: 1.55; max-width: 42rem; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
 .layout {
   display: grid;
@@ -56,10 +75,10 @@ h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 0.25rem; font-weight: 60
 
 .section-label {
   display: block;
-  color: var(--accent);
-  font-family: var(--mono);
+  color: var(--lime);
   font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
   text-transform: uppercase;
   margin: 1.4rem 0 0.4rem;
 }
@@ -76,7 +95,7 @@ mark.ann {
 
 mark.ann:hover,
 mark.ann.active {
-  background: rgba(247, 147, 26, 0.35);
+  background: rgba(240, 119, 1, 0.35);
 }
 
 .panel {
@@ -84,7 +103,7 @@ mark.ann.active {
   top: 1rem;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 0.875rem;
   padding: 1.25rem 1.35rem;
   min-height: 180px;
 }
@@ -92,10 +111,10 @@ mark.ann.active {
 .panel h2 {
   margin: 0 0 0.65rem;
   font-size: 0.82rem;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
   text-transform: uppercase;
-  color: var(--accent);
-  font-family: var(--mono);
+  color: #fff;
 }
 
 .panel .phrase {
@@ -103,13 +122,13 @@ mark.ann.active {
   margin-bottom: 0.6rem;
 }
 
-.panel .note { color: #d2cec8; line-height: 1.55; }
+.panel .note { color: var(--muted); line-height: 1.55; }
 .panel .hint { color: var(--muted); font-size: 0.92rem; }
 
 .home-list { list-style: none; padding: 0; }
 .home-list li {
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 0.875rem;
   padding: 1rem 1.2rem;
   margin-bottom: 0.75rem;
   background: var(--panel);
@@ -136,9 +155,9 @@ mark.ann.active {
 .hero-art figcaption {
   margin-top: 0.55rem;
   color: var(--muted);
-  font-family: var(--mono);
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
   text-transform: uppercase;
 }
 
@@ -146,7 +165,7 @@ mark.ann.active {
 .thumb {
   width: 100%;
   display: block;
-  border-radius: 12px;
+  border-radius: 0.875rem;
   border: 1px solid var(--line);
 }
 
@@ -160,24 +179,30 @@ mark.ann.active {
 
 .btn {
   display: inline-block;
-  background: var(--accent);
-  color: #0b0b0d;
+  background: #0F0F0F;
+  color: #fff;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
   padding: 0.55rem 0.95rem;
-  border-radius: 8px;
+  border-radius: 0.875rem;
+  border: 1px solid var(--line);
 }
-.btn:hover { text-decoration: none; filter: brightness(1.08); }
+.btn:hover {
+  background: #333333;
+  color: #fff;
+  text-decoration: none;
+}
 
 .catalog { margin-top: 0.5rem; }
 
 .section-title {
   margin: 0 0 0.35rem;
   font-size: 0.82rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.2rem;
   text-transform: uppercase;
-  color: var(--accent);
-  font-family: var(--mono);
-  font-weight: 500;
+  color: #fff;
+  font-weight: 600;
 }
 
 .song-card {
@@ -218,7 +243,7 @@ mark.ann.active {
   width: 2.25rem;
   height: 2.25rem;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 0.875rem;
   color: var(--text);
   background: var(--panel);
 }
@@ -259,8 +284,8 @@ mark.ann.active {
     max-height: 34vh;
     overflow: auto;
     min-height: 0;
-    background: #1f1f24;
-    border-color: #3a3a44;
+    background: #0F0F0F;
+    border-color: var(--line);
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
   }
   .lyrics { padding-bottom: 38vh; }
