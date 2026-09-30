@@ -15,9 +15,24 @@
     "note": "Slots and blackjack stand in for speculative gambling as a come-up path \u2014 high variance bets when wages and paper money feel worthless. The verse pairs that risk with later stacking sats: same hunger, different vehicle."
   },
   {
+    "id": "blackjack-21",
+    "phrase": "hit 21 on blackjack",
+    "note": "Casino 21 vs protocol 21 \u2014 chance versus a rule that does not reset."
+  },
+  {
+    "id": "bluff-texan",
+    "phrase": "Bluff em like a texan",
+    "note": "In Texas Hold\u2019em a bluff is betting a weak or empty hand hard enough that better hands fold. Fiat governance bluffs with print and confidence; settlement is whoever flinches. Bitcoin settles without the performance."
+  },
+  {
     "id": "hold-em-money",
     "phrase": "hold em to the money (ayy)",
     "note": "Poker language (Texas Hold'em) folded into a money flex: bluff like a Texan, then make them pay. Street gambling grammar before the Bitcoin vocabulary arrives."
+  },
+  {
+    "id": "hood-security",
+    "phrase": "Made it out the hood (let's go)\nBut I might need security now",
+    "note": "Exit one risk surface; inherit another. Visible stack, visible target."
   },
   {
     "id": "stack-sats",
@@ -45,14 +60,24 @@
     "note": "Gold digging means pursuing a partner for money. The narrator imagines success, then questions motives \u2014 freedom from being broke still comes with trust problems."
   },
   {
+    "id": "freedom",
+    "phrase": "Freedom",
+    "note": "Self-sovereignty keyword \u2014 money, state, and older \"set you free\" talk in one noun."
+  },
+  {
     "id": "brokey",
     "phrase": "From being a brokey",
-    "note": "\"Brokey\" is slang for broke \u2014 cash-poor, living paycheck to paycheck. The hook's freedom is escape from that state. In Bitcoin circles it often contrasts stacking sats with remaining dependent on fiat wages."
+    "note": "Cash-poor, wage-tied; the opposite pole of the prosper flex."
   },
   {
     "id": "mirage",
     "phrase": "Unless its a mirage",
     "note": "The hook questions whether \"freedom from being brokey\" is real wealth or an illusion \u2014 paper gains, temporary highs, or a lifestyle that can still evaporate. Doubt sits inside the celebration."
+  },
+  {
+    "id": "hot-momentum",
+    "phrase": "Hot momentum",
+    "note": "Green candles; bullish run."
   },
   {
     "id": "hodl",
@@ -70,9 +95,9 @@
     "note": "Acquisition is only half the game. Keeping bitcoin means not panic-selling, not losing keys, and not spending the stack when fiat pressure hits. Custody and discipline, not just the buy."
   },
   {
-    "id": "stewart-or-brat",
-    "phrase": "Are you a stewart or a brat",
-    "note": "Likely \"steward\" misspelled as street/OCR grammar: steward vs brat. A steward builds and protects; a brat tears down. The verse asks which side of that split you are on."
+    "id": "steward-or-brat",
+    "phrase": "Are you a steward or a brat",
+    "note": "Custody of the good vs appetite to spoil it."
   },
   {
     "id": "build-or-rip",
@@ -81,7 +106,7 @@
   },
   {
     "id": "cherrish",
-    "phrase": "That thing you cherrish there",
+    "phrase": "That thing you cherish there",
     "note": "\"Cherrish\" is the lyric's spelling of cherish. The object is whatever you are trying to protect \u2014 the stack, the relationship, the come-up \u2014 while the next line threatens to rip it up."
   },
   {
