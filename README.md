@@ -1,6 +1,6 @@
 # Bitcoin Slang
 
-Static educational hub for [bitcoinslang.com](https://bitcoinslang.com) and [btcslang.com](https://btcslang.com). Artist: **Robbie P**.
+Static educational hub for [bitcoinslang.com](https://bitcoinslang.com) and [btcslang.com](https://btcslang.com). Artist: **ROBBIE P**.
 
 Bitcoin Slang is a continuous thread of Bitcoin and crypto educational music. This site is the lyric-annotation glossary: gold phrases in the lyrics open notes that teach slang, Bitcoin culture, and the zeitgeist of the song. It is not a streaming page and not a link list.
 
@@ -60,7 +60,7 @@ Highlight rules:
 {
   "slug": "your-slug",
   "title": "Song Title",
-  "artist": "Robbie P",
+  "artist": "ROBBIE P",
   "year": null,
   "theme": "one-line theme",
   "description": "Two or three sentences on the release and the moment the song is talking about."
@@ -91,7 +91,7 @@ Highlight rules:
   </a>
   <div>
     <strong><a href="song.html?slug=your-slug">Song Title</a></strong>
-    <span class="sub">Robbie P · one-line theme</span>
+    <span class="sub">ROBBIE P · one-line theme</span>
   </div>
 </li>
 ```
@@ -104,7 +104,7 @@ Highlight rules:
 | --- | --- |
 | slug | `bitcoin-slang-remix` |
 | title | Bitcoin Slang Remix |
-| artist | Robbie P |
+| artist | ROBBIE P |
 | theme | Bitcoin glossary / sound money primer |
 | notes | 34 |
 
@@ -114,7 +114,7 @@ Highlight rules:
 | --- | --- |
 | slug | `most-toxic-bitcoin-maxi` |
 | title | Most Toxic Bitcoin Maxi |
-| artist | Robbie P |
+| artist | ROBBIE P |
 | year | 2023 |
 | theme | Pizza Day 2023 · toxic maxi satire |
 | notes | 31 |
@@ -125,7 +125,7 @@ Highlight rules:
 | --- | --- |
 | slug | `diamond-hands-and-laser-eyes` |
 | title | Diamond Hands & Laser Eyes |
-| artist | Robbie P |
+| artist | ROBBIE P |
 | year | 2023 |
 | theme | El Salvador · diamond hands culture |
 | notes | 22 |

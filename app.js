@@ -58,7 +58,7 @@ async function boot() {
 
   const lyrics = await lyricsRes.text();
   const annotations = await annRes.json();
-  const meta = metaRes.ok ? await metaRes.json() : { title: slug, artist: "Robbie P" };
+  const meta = metaRes.ok ? await metaRes.json() : { title: slug, artist: "ROBBIE P" };
 
   titleEl.textContent = meta.title;
   if (meta.description) {
