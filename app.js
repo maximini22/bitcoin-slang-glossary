@@ -4,6 +4,7 @@ const slug = params.get("slug") || "bitcoin-slang-remix";
 const lyricsEl = document.getElementById("lyrics");
 const phraseEl = document.getElementById("phrase");
 const noteEl = document.getElementById("note");
+const noteImg = document.getElementById("note-image");
 const titleEl = document.getElementById("title");
 const subEl = document.getElementById("sub");
 
@@ -38,10 +39,24 @@ function showAnnotation(a) {
   if (!a) {
     phraseEl.textContent = "";
     noteEl.innerHTML = '<p class="hint">Hover or tap a highlighted line.</p>';
+    if (noteImg) {
+      noteImg.hidden = true;
+      noteImg.removeAttribute("src");
+      noteImg.alt = "";
+    }
     return;
   }
   phraseEl.textContent = a.phrase;
   noteEl.textContent = a.note;
+  if (noteImg && a.image) {
+    noteImg.src = a.image;
+    noteImg.alt = "Chart for " + a.phrase;
+    noteImg.hidden = false;
+  } else if (noteImg) {
+    noteImg.hidden = true;
+    noteImg.removeAttribute("src");
+    noteImg.alt = "";
+  }
 }
 
 async function boot() {

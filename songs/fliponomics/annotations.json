@@ -1,0 +1,168 @@
+[
+  {
+    "id": "stack-btc",
+    "phrase": "stacking a whole lot of bitcoin",
+    "note": "Stacking bitcoin means adding to a coin balance, usually in repeated buys rather than one entry."
+  },
+  {
+    "id": "sats",
+    "phrase": "satoshis",
+    "note": "A satoshi is one hundred-millionth of a bitcoin. Counting the stack in satoshis is the smaller unit of the same asset."
+  },
+  {
+    "id": "sell-it",
+    "phrase": "now sell it",
+    "note": "The aside is the exit: the coins just stacked are inventory to sell, not a hold."
+  },
+  {
+    "id": "degen",
+    "phrase": "d'gen",
+    "note": "Degen, short for degenerate, is a trader who sizes for the thrill. The bar spells it d'gen."
+  },
+  {
+    "id": "web3",
+    "phrase": "web3",
+    "note": "Web3 is the name for apps and tokens pitched as a blockchain internet. Here it is the venue for the bets."
+  },
+  {
+    "id": "memecoin",
+    "phrase": "memecoin tokens",
+    "note": "A memecoin is a token priced for the joke and the crowd, not for cash flow."
+  },
+  {
+    "id": "eth",
+    "phrase": "lot of eth",
+    "note": "ETH is ether, the asset of the Ethereum network, spent here on designer goods."
+  },
+  {
+    "id": "cheat-sheet",
+    "phrase": "wall street cheat sheet",
+    "note": "The Wall Street cheat sheet is a cartoon map of crowd mood at each stage of a price cycle."
+  },
+  {
+    "id": "hodl",
+    "phrase": "hodl",
+    "note": "HODL means holding bitcoin through swings instead of trading it. The line rejects that stance."
+  },
+  {
+    "id": "elliott",
+    "phrase": "eliot waves",
+    "note": "Elliott Wave is a technical theory that trends unfold in repeating impulse and corrective waves."
+  },
+  {
+    "id": "yield",
+    "phrase": "yeild",
+    "note": "Yield is the return paid on a position. The bar says that rate is sitting in contracts it does not trust."
+  },
+  {
+    "id": "honeypot",
+    "phrase": "honey pots",
+    "note": "A honeypot token is a contract that lets a wallet buy and then blocks the sell. Funds go in and do not come out."
+  },
+  {
+    "id": "arb",
+    "phrase": "arbitrage",
+    "note": "Arbitrage is buying and selling the same exposure in two markets to pocket the price gap."
+  },
+  {
+    "id": "margin",
+    "phrase": "margin call",
+    "note": "A margin call demands more collateral, or a smaller position, after losses shrink the equity backing a loan."
+  },
+  {
+    "id": "lev",
+    "phrase": "leverage it",
+    "note": "Leverage means controlling a larger position with borrowed funds, so gains and losses are both multiplied."
+  },
+  {
+    "id": "cup",
+    "phrase": "cup and handle",
+    "note": "Cup and handle: price rounds down and back up, then drifts shallowly lower. A break above the handle high is the usual trigger.",
+    "image": "assets/charts/cup-and-handle.png"
+  },
+  {
+    "id": "hh",
+    "phrase": "higher highs",
+    "note": "Higher highs: each rally peak prints above the prior peak. With higher lows, that sequence is an uptrend.",
+    "image": "assets/charts/higher-highs.png"
+  },
+  {
+    "id": "oversold",
+    "phrase": "oversold on the rsi",
+    "note": "RSI, the relative strength index, runs from 0 to 100. Under 30 is the common oversold line: downside momentum is stretched, not a guaranteed bounce."
+  },
+  {
+    "id": "golden",
+    "phrase": "golden crossing",
+    "note": "Golden cross: the faster moving average crossing above the slower one, classically the 50-day over the 200-day. It lags the turn.",
+    "image": "assets/charts/golden-cross.png"
+  },
+  {
+    "id": "volume",
+    "phrase": "volume dropping",
+    "note": "Volume is how much changed hands. Volume falling while rallies make lower highs means less size is supporting the bounces."
+  },
+  {
+    "id": "lh",
+    "phrase": "lower highs",
+    "note": "Lower highs: each rally peak fails under the prior peak. That is bearish structure, the mirror of higher highs.",
+    "image": "assets/charts/lower-highs.png"
+  },
+  {
+    "id": "overbought",
+    "phrase": "overbought on the RSI",
+    "note": "RSI above 70 is the common overbought line: upside momentum is stretched. A strong trend can stay there."
+  },
+  {
+    "id": "short",
+    "phrase": "we gone short it",
+    "note": "A short profits if price falls. Death cross: the faster average crossing under the slower one, often 50-day under 200-day, is the lagging form of that turn.",
+    "image": "assets/charts/death-cross.png"
+  },
+  {
+    "id": "double",
+    "phrase": "double topping",
+    "note": "Double top: two highs near the same price with a dip between them. It confirms only if price breaks the neckline, the low between the peaks.",
+    "image": "assets/charts/double-top.png"
+  },
+  {
+    "id": "candles",
+    "phrase": "chase some candles",
+    "note": "Candles are candlesticks: each bar is the open, high, low, and close of a time slice. Chasing them is buying after that bar has already printed."
+  },
+  {
+    "id": "retr",
+    "phrase": "retracements",
+    "note": "A retracement is a temporary move against the prevailing trend. It is not, by itself, a reversal."
+  },
+  {
+    "id": "bags",
+    "phrase": "flipping the bags",
+    "note": "Bags are the coins held. Flipping them is selling that position."
+  },
+  {
+    "id": "two-sixtyfive",
+    "phrase": "bought it for 2 sold it for 65",
+    "note": "A sale at 65 of coins bought at 2 is (65 − 2) / 2 = 3,150 percent profit. The next line rounds that to 3,100 percent."
+  },
+  {
+    "id": "airdrop",
+    "phrase": "airdrop",
+    "note": "An airdrop is tokens sent to wallets, often free, to seed holders or pay for an action."
+  },
+  {
+    "id": "shitcoin",
+    "phrase": "shit coin token",
+    "note": "A shitcoin is a token whose main feature is the trade. Dumping it means selling into whatever bid is there."
+  },
+  {
+    "id": "value",
+    "phrase": "value investing",
+    "note": "Value investing buys an asset below an estimate of what it is worth, the approach tied to Benjamin Graham and Warren Buffett."
+  },
+  {
+    "id": "twenty",
+    "phrase": "20x's",
+    "note": "20x means the position became twenty times the money put in."
+  }
+]

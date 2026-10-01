@@ -1,0 +1,102 @@
+[
+  {
+    "id": "hollered",
+    "phrase": "Your bitcoin getting hollered at",
+    "note": "The coin, and the wallet that holds it, is being singled out. Hollered at means it is an attack surface: someone is lining up a way in."
+  },
+  {
+    "id": "sha",
+    "phrase": "SHA-256",
+    "note": "SHA-256 is the hash function Bitcoin mining and addresses use. Guessing keys by hashing at random is not a workable break-in."
+  },
+  {
+    "id": "wright",
+    "phrase": "Craig Wright",
+    "note": "Craig Wright claims he is Satoshi Nakamoto, Bitcoin's pseudonymous creator. The claim is disputed; in 2024 the UK High Court held he is not Satoshi."
+  },
+  {
+    "id": "hashrate",
+    "phrase": "hashrate",
+    "note": "Hashrate is the computing power pointed at Bitcoin mining, in hashes per second. More of it makes a majority of the network costlier to assemble."
+  },
+  {
+    "id": "fiftyone",
+    "phrase": "51% attack",
+    "note": "A 51 percent attack is control of a majority of hashrate, enough to outwork honest miners and replace recent blocks."
+  },
+  {
+    "id": "reorg",
+    "phrase": "run back up the block",
+    "note": "A reorg replaces the current chain tip with a heavier competing chain, undoing the blocks that get swapped out."
+  },
+  {
+    "id": "hex",
+    "phrase": "HEX bags",
+    "note": "HEX is the token project associated with Richard Heart. Bags are the coins held; the bar says that position was wrecked."
+  },
+  {
+    "id": "sixfig",
+    "phrase": "6 figures",
+    "note": "Six figures is a holding sized in the hundreds of thousands."
+  },
+  {
+    "id": "squeeze",
+    "phrase": "short sell squeeze",
+    "note": "A short squeeze is a rising price that forces short sellers to buy back, which can drive the price up further. The bar pins that on the fiat rat race."
+  },
+  {
+    "id": "dpr",
+    "phrase": "the real DPR",
+    "note": "DPR here is Dread Pirate Roberts, the handle used on Silk Road, a marketplace that settled in bitcoin."
+  },
+  {
+    "id": "ulbricht",
+    "phrase": "Ulbricht",
+    "note": "Ross Ulbricht was convicted as the operator of Silk Road. The bar asks who the name belongs to if he was the one left with it."
+  },
+  {
+    "id": "sbf",
+    "phrase": "sam bankman",
+    "note": "Sam Bankman-Fried ran the FTX exchange. It collapsed in 2022, and he was later convicted of fraud."
+  },
+  {
+    "id": "madoff",
+    "phrase": "made off like Madoff",
+    "note": "Bernie Madoff ran a Ponzi scheme in traditional markets and was convicted of fraud. The bar sets the FTX collapse beside that case."
+  },
+  {
+    "id": "roth",
+    "phrase": "You were messing with the Rothschild’s\nIf your first name was Adolf",
+    "note": "Fringe groups allege that the Rothschild banking family and a figure named Adolf belong to one story about who controls money. The bar cites that allegation."
+  },
+  {
+    "id": "hedge",
+    "phrase": "Hedge Fund",
+    "note": "A hedge fund is a private pooled vehicle. Bonuses are what the managers take out when the book pays."
+  },
+  {
+    "id": "wrongway",
+    "phrase": "bought the news and sold the rumour",
+    "note": "Buying after the headline and selling the rumor is the late trade: the move has often already happened."
+  },
+  {
+    "id": "rumour",
+    "phrase": "bought the rumour sold the news",
+    "note": "Buy the rumor, sell the news: price often moves before the headline, and the headline is the exit."
+  },
+  {
+    "id": "kyc",
+    "phrase": "non KYC",
+    "note": "Non-KYC bitcoin is coin held or moved without a know-your-customer identity check at an exchange."
+  },
+  {
+    "id": "recession",
+    "phrase": "recession",
+    "note": "A recession is a broad contraction in economic activity."
+  },
+  {
+    "id": "wallst",
+    "phrase": "collapse on wall street",
+    "note": "A collapse on Wall Street is a sharp drop across mainstream equity and credit markets."
+  }
+]

@@ -105,6 +105,14 @@ mark.ann.active {
 
 .panel .note { color: #d2cec8; line-height: 1.55; }
 .panel .hint { color: var(--muted); font-size: 0.92rem; }
+.panel .note-fig {
+  width: 100%;
+  margin-top: 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #0e0e12;
+}
+.panel .note-fig[hidden] { display: none; }
 
 .home-list { list-style: none; padding: 0; }
 .home-list li {
