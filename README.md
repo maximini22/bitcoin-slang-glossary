@@ -1,1 +1,1 @@
-Lyric pages for bitcoinslang.com. Label hosting.
+Lyric pages for bitcoinslang.com.
