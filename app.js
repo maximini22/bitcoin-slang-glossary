@@ -263,7 +263,7 @@ function mountRemixPlayer(lines) {
   document.body.appendChild(bar);
 
   const audio = document.createElement("audio");
-  audio.preload = "none";
+  audio.preload = "metadata";
   audio.crossOrigin = "anonymous";
   audio.setAttribute("playsinline", "");
   bar.appendChild(audio);
