@@ -475,6 +475,83 @@ body.has-player .listen-everywhere:focus-visible {
   border-color: var(--accent);
   text-decoration: none;
 }
+.mp3-signup {
+  margin: 1.75rem 0 0.5rem;
+  max-width: 36rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem 1.15rem;
+}
+.mp3-signup h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  font-family: var(--font);
+  color: var(--text);
+}
+.mp3-signup .mp3-lead {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.mp3-signup form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+.mp3-signup .mp3-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.mp3-signup input[type="email"] {
+  flex: 1 1 14rem;
+  min-width: 0;
+  background: #0e0e12;
+  color: var(--text);
+  border: 1px solid #5a564e;
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+  font-size: 1rem;
+}
+.mp3-signup input[type="email"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.mp3-signup button {
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #0b0b0d;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.68rem 0.95rem;
+  cursor: pointer;
+}
+.mp3-signup button:disabled { opacity: 0.55; cursor: default; }
+.mp3-signup .mp3-note,
+.mp3-signup .mp3-status {
+  flex: 1 0 100%;
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.mp3-signup .mp3-status { color: var(--text); font-size: 0.95rem; }
+.mp3-signup .mp3-status.is-error { color: #e7b3a2; }
+@media (max-width: 600px) {
+  .mp3-signup button { width: 100%; }
+}
 body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
 @media (max-width: 899px) {
   body.has-player .lyrics { padding-bottom: 0.4rem; }
