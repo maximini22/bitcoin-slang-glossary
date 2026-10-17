@@ -85,9 +85,10 @@ async function boot() {
 
   if (slug === "bitcoin-slang-remix") {
     await renderRemix(lyrics, annotations);
-  } else {
-    lyricsEl.innerHTML = applyAnnotations(lyrics, annotations);
+    return;
   }
+
+  lyricsEl.innerHTML = applyAnnotations(lyrics, annotations);
 
   const byId = Object.fromEntries(annotations.map((a) => [a.id, a]));
 
@@ -208,12 +209,19 @@ async function renderRemix(lyrics, annotations) {
     return;
   }
 
+  const byId = Object.fromEntries(annotations.map((a) => [a.id, a]));
   const full = textItems.map((item) => item.text).join("\n");
   const marks = collectMarks(full, annotations);
   const frag = document.createDocumentFragment();
   const lines = [];
   let offset = 0;
   let timeIndex = 0;
+
+  const cta = document.createElement("button");
+  cta.type = "button";
+  cta.className = "read-along";
+  cta.textContent = "Play music and read along";
+  subEl.insertAdjacentElement("afterend", cta);
 
   for (const item of items) {
     if (item.section) {
@@ -227,11 +235,51 @@ async function renderRemix(lyrics, annotations) {
     const el = document.createElement("div");
     el.className = "lyric-line";
     el.tabIndex = 0;
-    el.setAttribute("role", "button");
     el.dataset.t = String(entry.t);
+    el.dataset.i = String(lines.length);
     el.innerHTML = renderMarkedLine(item.text, offset, marks);
+    const ids = [];
+    const lineEnd = offset + item.text.length;
+    for (const mark of marks) {
+      if (mark.end > offset && mark.start < lineEnd && !ids.includes(mark.id)) ids.push(mark.id);
+    }
+    let note = null;
+    if (ids.length) {
+      note = document.createElement("div");
+      note.className = "line-note";
+      note.hidden = true;
+      note.dataset.i = el.dataset.i;
+      const card = document.createElement("div");
+      card.className = "line-note-card";
+      for (const id of ids) {
+        const ann = byId[id];
+        if (!ann) continue;
+        const entryNote = document.createElement("div");
+        entryNote.className = "line-note-entry";
+        const heading = document.createElement("h3");
+        heading.textContent = ann.phrase;
+        const body = document.createElement("p");
+        body.textContent = ann.note;
+        const playHere = document.createElement("button");
+        playHere.type = "button";
+        playHere.className = "play-from";
+        playHere.textContent = "play song from here";
+        entryNote.append(heading, body);
+        if (ann.image) {
+          const img = document.createElement("img");
+          img.className = "line-note-fig";
+          img.src = ann.image;
+          img.alt = "";
+          entryNote.append(img);
+        }
+        entryNote.append(playHere);
+        card.append(entryNote);
+      }
+      note.append(card);
+    }
     frag.appendChild(el);
-    lines.push({ t: entry.t, el });
+    if (note) frag.appendChild(note);
+    lines.push({ t: entry.t, el, note });
     offset += item.text.length + 1;
     timeIndex += 1;
   }
@@ -246,6 +294,7 @@ function mountRemixPlayer(lines) {
 
   const bar = document.createElement("div");
   bar.className = "player";
+  bar.hidden = true;
   bar.innerHTML = `
     <div class="player-in">
       <p class="player-note" id="player-note" role="status" aria-live="polite"></p>
@@ -254,9 +303,11 @@ function mountRemixPlayer(lines) {
           <svg class="icon-play" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 0v14l11-7z"/></svg>
           <svg class="icon-pause" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 0h3.5v14H1zM7.5 0H11v14H7.5z"/></svg>
         </button>
-        <span class="player-time" id="player-cur">0:00</span>
-        <input class="player-scrub" id="player-scrub" type="range" min="0" max="193.49" step="0.01" value="0" aria-label="Seek">
-        <span class="player-time player-dur" id="player-dur">0:00</span>
+        <button class="player-mute" id="player-mute" type="button" aria-label="Mute" aria-pressed="false">
+          <svg class="icon-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 15.5 12z"/></svg>
+          <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4zm13.2.8 1.4 1.4-1.8 1.8 1.8 1.8-1.4 1.4-1.8-1.8-1.8 1.8-1.4-1.4 1.8-1.8-1.8-1.8 1.4-1.4 1.8 1.8z"/></svg>
+          <span class="mute-label">Muted</span>
+        </button>
       </div>
     </div>
   `;
@@ -269,10 +320,9 @@ function mountRemixPlayer(lines) {
   bar.appendChild(audio);
 
   const playBtn = bar.querySelector("#player-play");
-  const scrub = bar.querySelector("#player-scrub");
-  const curEl = bar.querySelector("#player-cur");
-  const durEl = bar.querySelector("#player-dur");
+  const muteBtn = bar.querySelector("#player-mute");
   const noteEl = bar.querySelector("#player-note");
+  const readAlong = document.querySelector(".read-along");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   let signedUrl = "";
@@ -283,24 +333,15 @@ function mountRemixPlayer(lines) {
   let chain = Promise.resolve();
   let mediaGen = 0;
   let holdTime = null;
-  let dragging = false;
   let active = -1;
+  let openNote = -1;
   let scrollLockUntil = 0;
   let errorTries = 0;
-
-  function fmt(seconds) {
-    if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
-    const whole = Math.floor(seconds);
-    return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
-  }
-
-  function paintScrub() {
-    const max = Number(scrub.max) || 1;
-    const min = Number(scrub.min) || 0;
-    const value = Number(scrub.value) || 0;
-    const span = max - min || 1;
-    scrub.style.setProperty("--p", `${Math.min(100, ((value - min) / span) * 100)}%`);
-  }
+  let audioStarted = false;
+  let muted = false;
+  let suspending = false;
+  let heldTime = 0;
+  let heldIndex = -1;
 
   function showCalm() {
     noteEl.textContent = "This song cannot be played right now. Please try again.";
@@ -326,15 +367,33 @@ function mountRemixPlayer(lines) {
   function scrollLine(el) {
     if (performance.now() < scrollLockUntil) return;
     const rect = el.getBoundingClientRect();
-    const topBound = 72;
-    const bottomBound = window.innerHeight * 0.58;
-    if (rect.top >= topBound && rect.bottom <= bottomBound) return;
-    const y = window.scrollY + rect.top - window.innerHeight * 0.28;
+    const target = window.innerHeight * 0.38;
+    if (Math.abs(rect.top - target) < 72) return;
+    const y = window.scrollY + rect.top - target;
     window.scrollTo({ top: Math.max(0, y), behavior: reduce.matches ? "auto" : "smooth" });
   }
 
-  function highlight(t, scroll) {
-    const i = indexAt(t);
+  function hideNotes() {
+    if (openNote >= 0 && lines[openNote] && lines[openNote].note) {
+      lines[openNote].note.hidden = true;
+      lines[openNote].el.setAttribute("aria-expanded", "false");
+    }
+    openNote = -1;
+  }
+
+  function showLineNote(i) {
+    if (!lines[i] || !lines[i].note) {
+      hideNotes();
+      return;
+    }
+    if (openNote === i && !lines[i].note.hidden) return;
+    hideNotes();
+    lines[i].note.hidden = false;
+    lines[i].el.setAttribute("aria-expanded", "true");
+    openNote = i;
+  }
+
+  function applyIndex(i, scroll) {
     if (i === active) return;
     if (active >= 0 && lines[active]) {
       lines[active].el.classList.remove("is-current");
@@ -348,20 +407,56 @@ function mountRemixPlayer(lines) {
     if (scroll) scrollLine(lines[i].el);
   }
 
-  function shownTime() {
-    if (holdTime != null) return holdTime;
-    if (dragging) return Number(scrub.value) || 0;
-    return audio.currentTime || 0;
+  function highlight(t, scroll) {
+    applyIndex(indexAt(t), scroll);
+  }
+
+  function followPlayingNote() {
+    if (audio.paused || muted || active < 0) return;
+    showLineNote(active);
   }
 
   function syncChrome() {
-    const t = shownTime();
-    if (!dragging) {
-      scrub.value = String(t);
-      paintScrub();
+    if (muted) {
+      applyIndex(heldIndex, false);
+      return;
     }
-    curEl.textContent = fmt(t);
-    highlight(t, wantPlay && !dragging);
+    const t = holdTime != null ? holdTime : (audio.currentTime || 0);
+    highlight(t, wantPlay && !audio.paused);
+    if (!audio.paused && !swapping) followPlayingNote();
+  }
+
+  function revealBar() {
+    audioStarted = true;
+    bar.hidden = false;
+    document.body.classList.add("player-ready");
+    if (readAlong) readAlong.hidden = true;
+  }
+
+  function releaseStream() {
+    suspending = true;
+    try {
+      audio.pause();
+      audio.removeAttribute("src");
+      audio.load();
+    } finally {
+      suspending = false;
+    }
+    signedUrl = "";
+    fetchedAt = 0;
+  }
+
+  function setMuted(next) {
+    muted = next;
+    document.body.classList.toggle("is-muted", next);
+    muteBtn.setAttribute("aria-pressed", String(next));
+    muteBtn.setAttribute("aria-label", next ? "Unmute" : "Mute");
+  }
+
+  function syncPlayIcon() {
+    const playing = !muted && !audio.paused && !audio.ended;
+    document.body.classList.toggle("is-playing", playing);
+    playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
   }
 
   async function requestSigned() {
@@ -413,10 +508,6 @@ function mountRemixPlayer(lines) {
       let gotMeta = false;
       const onMeta = () => {
         gotMeta = true;
-        if (Number.isFinite(audio.duration) && audio.duration > 1) {
-          scrub.max = String(audio.duration);
-          durEl.textContent = fmt(audio.duration);
-        }
         const dest = clampTime(time);
         if (dest <= 0.05 || Math.abs((audio.currentTime || 0) - dest) < 0.05) {
           finish();
@@ -472,13 +563,6 @@ function mountRemixPlayer(lines) {
     return run;
   }
 
-  function primePlayback() {
-    wantPlay = true;
-    if (!audio.src || audio.src.startsWith("data:")) return;
-    const pending = audio.play();
-    if (pending && typeof pending.catch === "function") pending.catch(() => {});
-  }
-
   async function playFrom(time) {
     hideCalm();
     wantPlay = true;
@@ -492,98 +576,173 @@ function mountRemixPlayer(lines) {
     }
   }
 
+  async function seekPaused(time) {
+    wantPlay = false;
+    if (!stillValid()) await swapTo(time, false);
+    else if (Math.abs((audio.currentTime || 0) - time) > 0.05) {
+      audio.currentTime = time;
+    }
+    highlight(time, true);
+  }
+
+  async function muteAudio() {
+    if (muted) return;
+    heldTime = holdTime != null ? holdTime : (audio.currentTime || 0);
+    heldIndex = active >= 0 ? active : indexAt(heldTime);
+    wantPlay = false;
+    setMuted(true);
+    releaseStream();
+    syncPlayIcon();
+    applyIndex(heldIndex, false);
+  }
+
+  async function unmuteAudio() {
+    if (!muted) return;
+    const resumeAt = heldTime;
+    setMuted(false);
+    revealBar();
+    try {
+      await playFrom(resumeAt);
+    } catch (err) {
+      showCalm();
+    }
+  }
+
+  function lineIndexFrom(node) {
+    const line = node.closest(".lyric-line");
+    const note = node.closest(".line-note");
+    const source = line || note;
+    if (!source || !lyricsEl.contains(source)) return -1;
+    const i = Number(source.dataset.i);
+    return Number.isInteger(i) ? i : -1;
+  }
+
+  async function activateLine(i, { play }) {
+    const line = lines[i];
+    if (!line) return;
+    showLineNote(i);
+    if (!audioStarted && !play) return;
+    if (play) {
+      if (muted) setMuted(false);
+      revealBar();
+      try {
+        await playFrom(line.t);
+      } catch (err) {
+        showCalm();
+      }
+      return;
+    }
+    if (!audioStarted) return;
+    if (muted) {
+      heldTime = line.t;
+      heldIndex = i;
+      applyIndex(i, true);
+      return;
+    }
+    const resume = !audio.paused && !audio.ended;
+    try {
+      if (resume) await playFrom(line.t);
+      else await seekPaused(line.t);
+    } catch (err) {
+      showCalm();
+    }
+  }
+
+  if (readAlong) {
+    readAlong.addEventListener("click", async () => {
+      revealBar();
+      try {
+        await playFrom(0);
+      } catch (err) {
+        showCalm();
+      }
+    });
+  }
+
   playBtn.addEventListener("click", async () => {
+    if (muted) {
+      unmuteAudio();
+      return;
+    }
     if (!audio.paused && !audio.ended) {
       wantPlay = false;
       audio.pause();
+      syncPlayIcon();
       return;
     }
-    primePlayback();
     const restart = audio.ended;
     try {
-      await playFrom(restart ? 0 : audio.currentTime || 0);
+      await playFrom(restart ? 0 : (audio.currentTime || heldTime || 0));
     } catch (err) {
       showCalm();
     }
   });
 
+  muteBtn.addEventListener("click", () => {
+    if (muted) unmuteAudio();
+    else muteAudio();
+  });
+
   lyricsEl.addEventListener("click", (e) => {
+    const from = e.target.closest(".play-from");
+    if (from) {
+      e.preventDefault();
+      const i = lineIndexFrom(from);
+      if (i >= 0) activateLine(i, { play: true });
+      return;
+    }
     const line = e.target.closest(".lyric-line");
     if (!line || !lyricsEl.contains(line)) return;
-    primePlayback();
-    const t = Number(line.dataset.t);
-    highlight(t, true);
-    playFrom(t).catch(() => showCalm());
+    const i = Number(line.dataset.i);
+    if (!audioStarted) {
+      if (lines[i] && lines[i].note) showLineNote(i);
+      else hideNotes();
+      return;
+    }
+    activateLine(i, { play: false });
   });
 
   lyricsEl.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;
     const line = e.target.closest(".lyric-line");
-    if (!line || !lyricsEl.contains(line)) return;
+    if (!line || document.activeElement !== line) return;
     e.preventDefault();
-    primePlayback();
-    const t = Number(line.dataset.t);
-    highlight(t, true);
-    playFrom(t).catch(() => showCalm());
+    line.click();
   });
 
-  scrub.addEventListener("input", () => {
-    dragging = true;
-    const t = Number(scrub.value);
-    curEl.textContent = fmt(t);
-    paintScrub();
-    highlight(t, false);
-    if (stillValid()) {
-      try { audio.currentTime = t; } catch (err) {}
-    }
-  });
-
-  scrub.addEventListener("change", () => {
-    dragging = false;
-    const t = Number(scrub.value);
-    const keepPlaying = wantPlay || (!audio.paused && !audio.ended);
-    if (!stillValid()) {
-      if (keepPlaying) wantPlay = true;
-      swapTo(t, keepPlaying).catch(() => showCalm());
-      return;
-    }
-    try { audio.currentTime = t; } catch (err) {}
-    syncChrome();
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".lyric-line, .line-note, .read-along, .player")) return;
+    if (!audioStarted || audio.paused || muted) hideNotes();
   });
 
   audio.addEventListener("play", () => {
-    document.body.classList.add("is-playing");
-    playBtn.setAttribute("aria-label", "Pause");
+    syncPlayIcon();
+    if (!muted && !audio.paused) followPlayingNote();
   });
   audio.addEventListener("pause", () => {
-    document.body.classList.remove("is-playing");
-    playBtn.setAttribute("aria-label", "Play");
+    syncPlayIcon();
   });
   audio.addEventListener("timeupdate", () => {
+    if (muted || suspending) return;
     syncChrome();
     if (!audio.paused && !audio.ended && !stillValid() && !swapping) {
       swapTo(audio.currentTime || 0, true).catch(() => showCalm());
     }
   });
   audio.addEventListener("seeked", () => {
-    if (!swapping) syncChrome();
-  });
-  audio.addEventListener("loadedmetadata", () => {
-    if (Number.isFinite(audio.duration) && audio.duration > 1) {
-      scrub.max = String(audio.duration);
-      durEl.textContent = fmt(audio.duration);
-    }
+    if (muted || suspending || swapping) return;
+    syncChrome();
   });
   audio.addEventListener("stalled", () => {
-    if (swapping || audio.paused || stillValid()) return;
+    if (muted || suspending || swapping || audio.paused || stillValid()) return;
     swapTo(audio.currentTime || 0, wantPlay).catch(() => showCalm());
   });
   audio.addEventListener("waiting", () => {
-    if (swapping || audio.paused || stillValid()) return;
+    if (muted || suspending || swapping || audio.paused || stillValid()) return;
     swapTo(audio.currentTime || 0, wantPlay).catch(() => showCalm());
   });
   audio.addEventListener("error", () => {
-    if (swapping || !audio.src || audio.src.startsWith("data:")) return;
+    if (muted || suspending || swapping || !audio.getAttribute("src")) return;
     if (errorTries >= 2) {
       showCalm();
       return;
@@ -599,6 +758,4 @@ function mountRemixPlayer(lines) {
   }
   window.addEventListener("wheel", userScrolled, { passive: true });
   window.addEventListener("touchmove", userScrolled, { passive: true });
-
-  paintScrub();
 }
