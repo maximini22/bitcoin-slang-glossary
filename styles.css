@@ -213,6 +213,34 @@ mark.ann.active {
 }
 .site-foot p { margin: 0; }
 
+.song-foot {
+  margin-top: 2.75rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+.jlr-logo {
+  width: 112px;
+  height: auto;
+  display: block;
+  margin: 0;
+}
+.song-foot-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 0.35rem 0.9rem;
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+.song-foot-artist {
+  color: var(--accent);
+  font-size: inherit;
+}
+
 .social {
   display: flex;
   flex-wrap: wrap;
@@ -580,7 +608,7 @@ body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
   body.has-player .read-along {
     display: block;
     width: fit-content;
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
     margin-bottom: 1.5rem;
   }
