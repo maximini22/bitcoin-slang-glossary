@@ -112,6 +112,7 @@ async function boot() {
 boot();
 
 const REMIX_TRACK = "bitcoin-slang-remix.mp3";
+const REMIX_LINKS_URL = "https://links.robbiep.net/bitcoin-slang/";
 const SIGN_HOSTS = [
   "https://audio.btcslang.com",
   "https://bitcoin-slang-audio.bitcoinslang.workers.dev",
@@ -296,7 +297,6 @@ function mountRemixPlayer(lines) {
 
   const bar = document.createElement("div");
   bar.className = "player";
-  bar.hidden = true;
   bar.innerHTML = `
     <div class="player-in">
       <p class="player-note" id="player-note" role="status" aria-live="polite"></p>
@@ -310,6 +310,7 @@ function mountRemixPlayer(lines) {
           <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4zm13.2.8 1.4 1.4-1.8 1.8 1.8 1.8-1.4 1.4-1.8-1.8-1.8 1.8-1.4-1.4 1.8-1.8-1.8-1.8 1.4-1.4 1.8 1.8z"/></svg>
           <span class="mute-label">Muted</span>
         </button>
+        <input class="player-vol" id="player-vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume" title="Volume">
       </div>
     </div>
   `;
@@ -321,8 +322,16 @@ function mountRemixPlayer(lines) {
   audio.setAttribute("playsinline", "");
   bar.appendChild(audio);
 
+  document.body.classList.add("player-ready");
+  const listen = document.createElement("a");
+  listen.className = "listen-everywhere";
+  listen.href = REMIX_LINKS_URL;
+  listen.textContent = "Listen everywhere";
+  const layout = document.querySelector(".layout");
+  if (layout) layout.insertAdjacentElement("afterend", listen);
   const playBtn = bar.querySelector("#player-play");
   const muteBtn = bar.querySelector("#player-mute");
+  const vol = bar.querySelector("#player-vol");
   const statusEl = bar.querySelector("#player-note");
   const readAlong = document.querySelector(".read-along");
   const sidePanel = document.querySelector(".panel");
@@ -350,6 +359,12 @@ function mountRemixPlayer(lines) {
   let heldIndex = -1;
   let scrollToken = 0;
   let resumeTimer = 0;
+  let savedLevel = 1;
+  let zeroTimer = 0;
+  let silenced = false;
+
+  audio.volume = 1;
+  paintVol();
 
   function showCalm() {
     statusEl.textContent = "This song cannot be played right now. Please try again.";
@@ -525,9 +540,69 @@ function mountRemixPlayer(lines) {
 
   function revealBar() {
     audioStarted = true;
-    bar.hidden = false;
     document.body.classList.add("player-ready");
-    if (readAlong) readAlong.hidden = true;
+  }
+
+  function paintVol() {
+    const value = Number(vol.value);
+    vol.style.setProperty("--p", `${Math.max(0, Math.min(100, value * 100))}%`);
+    document.body.classList.toggle("is-silent", value === 0 && !muted);
+  }
+
+  function rememberedLevel() {
+    return savedLevel > 0 ? savedLevel : 0.6;
+  }
+
+  function setSlider(level) {
+    const next = Math.max(0, Math.min(1, level));
+    if (next > 0) savedLevel = next;
+    vol.value = String(next);
+    audio.volume = next;
+    if (next > 0) {
+      window.clearTimeout(zeroTimer);
+      zeroTimer = 0;
+      silenced = false;
+    }
+    paintVol();
+  }
+
+  async function resumeHeld() {
+    const t = Number.isFinite(audio.currentTime) ? audio.currentTime : heldTime;
+    wantPlay = true;
+    if (!audio.getAttribute("src") || !stillValid()) await playFrom(t);
+    else await audio.play();
+  }
+
+  function commitZero() {
+    zeroTimer = 0;
+    if (muted || Number(vol.value) > 0) return;
+    audio.volume = 0;
+    silenced = true;
+    paintVol();
+    if (!audio.paused && !audio.ended) {
+      wantPlay = false;
+      audio.pause();
+    }
+    syncPlayIcon();
+  }
+
+  function onVolumeInput() {
+    const value = Number(vol.value);
+    if (value > 0) {
+      savedLevel = value;
+      audio.volume = value;
+      window.clearTimeout(zeroTimer);
+      zeroTimer = 0;
+      paintVol();
+      if (silenced) {
+        silenced = false;
+        if (audioStarted) resumeHeld().catch(() => showCalm());
+      }
+      return;
+    }
+    audio.volume = 0;
+    paintVol();
+    if (!zeroTimer) zeroTimer = window.setTimeout(commitZero, 250);
   }
 
   function releaseStream() {
@@ -698,6 +773,7 @@ function mountRemixPlayer(lines) {
     const resumeAt = heldTime;
     setMuted(false);
     revealBar();
+    setSlider(Number(vol.value) > 0 ? Number(vol.value) : rememberedLevel());
     try {
       await playFrom(resumeAt);
     } catch (err) {
@@ -721,6 +797,7 @@ function mountRemixPlayer(lines) {
     if (!audioStarted && !play) return;
     if (play) {
       if (muted) setMuted(false);
+      if (!(Number(vol.value) > 0)) setSlider(rememberedLevel());
       revealBar();
       try {
         await playFrom(line.t);
@@ -745,16 +822,31 @@ function mountRemixPlayer(lines) {
     }
   }
 
+  async function playAudible(time) {
+    if (!(Number(vol.value) > 0)) setSlider(rememberedLevel());
+    revealBar();
+    await playFrom(time);
+  }
+
   if (readAlong) {
     readAlong.addEventListener("click", async () => {
-      revealBar();
       try {
-        await playFrom(0);
+        await playAudible(0);
       } catch (err) {
         showCalm();
       }
     });
   }
+
+  vol.addEventListener("input", onVolumeInput);
+  vol.addEventListener("change", () => {
+    if (Number(vol.value) === 0) {
+      window.clearTimeout(zeroTimer);
+      commitZero();
+      return;
+    }
+    onVolumeInput();
+  });
 
   playBtn.addEventListener("click", async () => {
     if (muted) {
@@ -767,9 +859,9 @@ function mountRemixPlayer(lines) {
       syncPlayIcon();
       return;
     }
-    const restart = audio.ended;
+    const restart = audio.ended || !audioStarted;
     try {
-      await playFrom(restart ? 0 : (audio.currentTime || heldTime || 0));
+      await playAudible(restart ? 0 : (audio.currentTime || heldTime || 0));
     } catch (err) {
       showCalm();
     }
