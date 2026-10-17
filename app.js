@@ -8,6 +8,16 @@ function songSlug() {
 }
 const slug = songSlug();
 
+const ROBBIE_P_URL = "https://robbiep.net";
+
+function applySongFooter() {
+  const year = document.getElementById("jlr-year");
+  if (year) year.textContent = String(new Date().getFullYear());
+  const link = document.querySelector("a.song-foot-artist");
+  if (link) link.href = ROBBIE_P_URL;
+}
+applySongFooter();
+
 const lyricsEl = document.getElementById("lyrics");
 const phraseEl = document.getElementById("phrase");
 const noteEl = document.getElementById("note");
@@ -384,7 +394,7 @@ async function renderRemix(lyrics, annotations) {
   mountRemixPlayer(lines);
 }
 
-function mountFreeMp3(listen) {
+function mountFreeMp3() {
   const block = document.createElement("section");
   block.className = "mp3-signup";
   block.innerHTML = `
@@ -398,7 +408,6 @@ function mountFreeMp3(listen) {
     </form>
     <p class="mp3-status" role="status" hidden></p>
   `;
-  listen.insertAdjacentElement("afterend", block);
 
   const form = block.querySelector("form");
   const lead = block.querySelector(".mp3-lead");
@@ -416,7 +425,7 @@ function mountFreeMp3(listen) {
 
   if (new URLSearchParams(location.search).get("confirmed") === "1") {
     showMessage("You're confirmed — your download link is on its way.", false);
-    return;
+    return block;
   }
 
   form.addEventListener("submit", async (event) => {
@@ -448,6 +457,7 @@ function mountFreeMp3(listen) {
       status.classList.add("is-error");
     }
   });
+  return block;
 }
 
 function mountRemixPlayer(lines) {
@@ -487,8 +497,9 @@ function mountRemixPlayer(lines) {
   listen.textContent = "Listen everywhere";
   const layout = document.querySelector(".layout");
   if (slug === "bitcoin-slang-remix" && layout) {
-    layout.insertAdjacentElement("afterend", listen);
-    mountFreeMp3(listen);
+    const signup = mountFreeMp3();
+    layout.insertAdjacentElement("afterend", signup);
+    signup.insertAdjacentElement("afterend", listen);
   }
   const playBtn = bar.querySelector("#player-play");
   const muteBtn = bar.querySelector("#player-mute");
