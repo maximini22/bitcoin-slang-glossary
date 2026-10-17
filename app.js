@@ -239,6 +239,7 @@ async function renderRemix(lyrics, annotations) {
     el.dataset.i = String(lines.length);
     el.innerHTML = renderMarkedLine(item.text, offset, marks);
     const ids = [];
+    const anns = [];
     const lineEnd = offset + item.text.length;
     for (const mark of marks) {
       if (mark.end > offset && mark.start < lineEnd && !ids.includes(mark.id)) ids.push(mark.id);
@@ -254,6 +255,7 @@ async function renderRemix(lyrics, annotations) {
       for (const id of ids) {
         const ann = byId[id];
         if (!ann) continue;
+        anns.push(ann);
         const entryNote = document.createElement("div");
         entryNote.className = "line-note-entry";
         const heading = document.createElement("h3");
@@ -279,7 +281,7 @@ async function renderRemix(lyrics, annotations) {
     }
     frag.appendChild(el);
     if (note) frag.appendChild(note);
-    lines.push({ t: entry.t, el, note });
+    lines.push({ t: entry.t, el, note, anns });
     offset += item.text.length + 1;
     timeIndex += 1;
   }
@@ -321,9 +323,13 @@ function mountRemixPlayer(lines) {
 
   const playBtn = bar.querySelector("#player-play");
   const muteBtn = bar.querySelector("#player-mute");
-  const noteEl = bar.querySelector("#player-note");
+  const statusEl = bar.querySelector("#player-note");
   const readAlong = document.querySelector(".read-along");
+  const sidePanel = document.querySelector(".panel");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const wideQuery = window.matchMedia("(min-width: 900px)");
+  const PHONE_ANCHOR = 0.4;
+  const DESK_ANCHOR = 1 / 3;
 
   let signedUrl = "";
   let fetchedAt = 0;
@@ -342,13 +348,15 @@ function mountRemixPlayer(lines) {
   let suspending = false;
   let heldTime = 0;
   let heldIndex = -1;
+  let scrollToken = 0;
+  let resumeTimer = 0;
 
   function showCalm() {
-    noteEl.textContent = "This song cannot be played right now. Please try again.";
+    statusEl.textContent = "This song cannot be played right now. Please try again.";
   }
 
   function hideCalm() {
-    noteEl.textContent = "";
+    statusEl.textContent = "";
   }
 
   function stillValid() {
@@ -364,16 +372,96 @@ function mountRemixPlayer(lines) {
     return found;
   }
 
-  function scrollLine(el) {
-    if (performance.now() < scrollLockUntil) return;
-    const rect = el.getBoundingClientRect();
-    const target = window.innerHeight * 0.38;
-    if (Math.abs(rect.top - target) < 72) return;
-    const y = window.scrollY + rect.top - target;
-    window.scrollTo({ top: Math.max(0, y), behavior: reduce.matches ? "auto" : "smooth" });
+  function anchorY() {
+    const barH = bar.hidden ? 0 : bar.getBoundingClientRect().height;
+    const visible = Math.max(0, window.innerHeight - barH);
+    return visible * (wideQuery.matches ? DESK_ANCHOR : PHONE_ANCHOR);
   }
 
-  function hideNotes() {
+  function smoothScrollTo(dest) {
+    const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    dest = Math.min(Math.max(0, dest), max);
+    const start = window.scrollY;
+    const change = dest - start;
+    if (Math.abs(change) < 1) return;
+    const token = ++scrollToken;
+    if (reduce.matches) {
+      window.scrollTo(0, dest);
+      return;
+    }
+    const duration = 420;
+    const t0 = performance.now();
+    const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - ((-2 * t + 2) ** 2) / 2);
+    const step = (now) => {
+      if (token !== scrollToken) return;
+      const p = Math.min(1, (now - t0) / duration);
+      window.scrollTo(0, start + change * ease(p));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  function anchorLine(el) {
+    if (!el || performance.now() < scrollLockUntil) return;
+    const delta = el.getBoundingClientRect().top - anchorY();
+    if (Math.abs(delta) < 1.5) return;
+    smoothScrollTo(window.scrollY + delta);
+  }
+
+  function clearSidePanel() {
+    if (!phraseEl || !noteEl) return;
+    phraseEl.textContent = "";
+    noteEl.innerHTML = '<p class="hint">Hover or tap a highlighted line.</p>';
+    if (noteImg) {
+      noteImg.hidden = true;
+      noteImg.removeAttribute("src");
+      noteImg.alt = "";
+    }
+  }
+
+  function renderSidePanel(i) {
+    if (!wideQuery.matches) {
+      clearSidePanel();
+      return;
+    }
+    const line = lines[i];
+    if (!line || !line.anns.length) {
+      clearSidePanel();
+      return;
+    }
+    phraseEl.textContent = "";
+    noteEl.replaceChildren();
+    if (noteImg) {
+      noteImg.hidden = true;
+      noteImg.removeAttribute("src");
+    }
+    for (const ann of line.anns) {
+      const entry = document.createElement("div");
+      entry.className = "panel-entry";
+      const heading = document.createElement("div");
+      heading.className = "phrase";
+      heading.textContent = ann.phrase;
+      const body = document.createElement("p");
+      body.textContent = ann.note;
+      entry.append(heading, body);
+      if (ann.image) {
+        const img = document.createElement("img");
+        img.className = "note-fig";
+        img.src = ann.image;
+        img.alt = "";
+        entry.append(img);
+      }
+      const playHere = document.createElement("button");
+      playHere.type = "button";
+      playHere.className = "play-from";
+      playHere.dataset.i = String(i);
+      playHere.textContent = "play song from here";
+      entry.append(playHere);
+      noteEl.append(entry);
+    }
+  }
+
+  function hideInline() {
     if (openNote >= 0 && lines[openNote] && lines[openNote].note) {
       lines[openNote].note.hidden = true;
       lines[openNote].el.setAttribute("aria-expanded", "false");
@@ -381,19 +469,33 @@ function mountRemixPlayer(lines) {
     openNote = -1;
   }
 
+  function hideNotes() {
+    hideInline();
+    if (wideQuery.matches) clearSidePanel();
+  }
+
   function showLineNote(i) {
-    if (!lines[i] || !lines[i].note) {
+    const line = lines[i];
+    if (!line) return;
+    if (wideQuery.matches) {
+      hideInline();
+      openNote = i;
+      if (line.anns.length) line.el.setAttribute("aria-expanded", "true");
+      renderSidePanel(i);
+      return;
+    }
+    if (!line.note) {
       hideNotes();
       return;
     }
-    if (openNote === i && !lines[i].note.hidden) return;
-    hideNotes();
-    lines[i].note.hidden = false;
-    lines[i].el.setAttribute("aria-expanded", "true");
+    if (openNote === i && !line.note.hidden) return;
+    hideInline();
+    line.note.hidden = false;
+    line.el.setAttribute("aria-expanded", "true");
     openNote = i;
   }
 
-  function applyIndex(i, scroll) {
+  function applyIndex(i, scroll, notes) {
     if (i === active) return;
     if (active >= 0 && lines[active]) {
       lines[active].el.classList.remove("is-current");
@@ -404,26 +506,21 @@ function mountRemixPlayer(lines) {
     if (i < 0) return;
     lines[i].el.classList.add("is-current");
     lines[i].el.setAttribute("aria-current", "true");
-    if (scroll) scrollLine(lines[i].el);
+    if (notes) showLineNote(i);
+    if (scroll) anchorLine(lines[i].el);
   }
 
   function highlight(t, scroll) {
-    applyIndex(indexAt(t), scroll);
-  }
-
-  function followPlayingNote() {
-    if (audio.paused || muted || active < 0) return;
-    showLineNote(active);
+    applyIndex(indexAt(t), scroll, !muted && (scroll || !audio.paused));
   }
 
   function syncChrome() {
     if (muted) {
-      applyIndex(heldIndex, false);
+      applyIndex(heldIndex, false, false);
       return;
     }
     const t = holdTime != null ? holdTime : (audio.currentTime || 0);
     highlight(t, wantPlay && !audio.paused);
-    if (!audio.paused && !swapping) followPlayingNote();
   }
 
   function revealBar() {
@@ -593,7 +690,7 @@ function mountRemixPlayer(lines) {
     setMuted(true);
     releaseStream();
     syncPlayIcon();
-    applyIndex(heldIndex, false);
+    applyIndex(heldIndex, false, false);
   }
 
   async function unmuteAudio() {
@@ -636,7 +733,7 @@ function mountRemixPlayer(lines) {
     if (muted) {
       heldTime = line.t;
       heldIndex = i;
-      applyIndex(i, true);
+      applyIndex(i, true, false);
       return;
     }
     const resume = !audio.paused && !audio.ended;
@@ -710,14 +807,29 @@ function mountRemixPlayer(lines) {
     line.click();
   });
 
+  if (sidePanel) {
+    sidePanel.addEventListener("click", (e) => {
+      const from = e.target.closest(".play-from");
+      if (!from) return;
+      e.preventDefault();
+      const i = Number(from.dataset.i);
+      if (Number.isInteger(i)) activateLine(i, { play: true });
+    });
+  }
+
   document.addEventListener("click", (e) => {
-    if (e.target.closest(".lyric-line, .line-note, .read-along, .player")) return;
+    if (e.target.closest(".lyric-line, .line-note, .read-along, .player, .panel")) return;
     if (!audioStarted || audio.paused || muted) hideNotes();
+  });
+
+  wideQuery.addEventListener("change", () => {
+    if (openNote >= 0) showLineNote(openNote);
+    else if (wideQuery.matches) clearSidePanel();
   });
 
   audio.addEventListener("play", () => {
     syncPlayIcon();
-    if (!muted && !audio.paused) followPlayingNote();
+    if (!muted && active >= 0) showLineNote(active);
   });
   audio.addEventListener("pause", () => {
     syncPlayIcon();
@@ -752,9 +864,16 @@ function mountRemixPlayer(lines) {
     swapTo(t, wantPlay).catch(() => showCalm());
   });
 
-  function userScrolled() {
-    if (!wantPlay || active < 0) return;
+  function userScrolled(e) {
+    if (e.target && e.target.closest && e.target.closest(".panel")) return;
+    if (!wantPlay || audio.paused || muted || active < 0) return;
+    scrollToken += 1;
     scrollLockUntil = performance.now() + 4000;
+    window.clearTimeout(resumeTimer);
+    resumeTimer = window.setTimeout(() => {
+      scrollLockUntil = 0;
+      if (active >= 0 && !audio.paused && !muted) anchorLine(lines[active].el);
+    }, 4000);
   }
   window.addEventListener("wheel", userScrolled, { passive: true });
   window.addEventListener("touchmove", userScrolled, { passive: true });

@@ -275,6 +275,11 @@ mark.ann.active {
 }
 
 /* Remix player only. Other songs never get body.has-player. */
+body.has-player .wrap {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 body.has-player .panel { display: none; }
 body.has-player .layout { grid-template-columns: 1fr; }
 body.has-player #sub { margin-bottom: 1rem; }
@@ -373,10 +378,11 @@ body.has-player .play-from:focus-visible { color: var(--accent); }
 body.has-player .player[hidden] { display: none; }
 body.has-player .player {
   position: fixed;
-  left: 0;
-  right: 0;
+  left: 50%;
   bottom: 0;
   z-index: 6;
+  width: min(1200px, 100%);
+  transform: translateX(-50%);
   background: rgba(16, 16, 19, 0.96);
   border-top: 1px solid var(--line);
   padding: 0.7rem 0.9rem calc(0.7rem + env(safe-area-inset-bottom));
@@ -449,9 +455,60 @@ body.has-player.is-muted .player-mute .icon-sound { display: none; }
 body.has-player.is-muted .player-mute .icon-muted,
 body.has-player.is-muted .mute-label { display: inline; }
 body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
-@media (max-width: 800px) {
+@media (max-width: 899px) {
   body.has-player .lyrics { padding-bottom: 1.25rem; }
   body.has-player.player-ready .lyrics { padding-bottom: 5.5rem; }
+}
+@media (min-width: 900px) {
+  body.has-player .layout {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  body.has-player .panel {
+    display: block;
+    position: sticky;
+    top: 1.25rem;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    max-height: calc(100vh - 7.5rem);
+    overflow: auto;
+    z-index: 1;
+    box-shadow: none;
+  }
+  body.has-player .line-note { display: none; }
+  body.has-player .lyrics { padding-bottom: 0; }
+  body.has-player .read-along {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+  }
+  body.has-player .panel > .phrase:empty { display: none; }
+  body.has-player .panel-entry .phrase {
+    color: var(--text);
+    font-weight: 600;
+    margin: 0 0 0.45rem;
+  }
+  body.has-player .panel-entry p {
+    margin: 0;
+    color: #d2cec8;
+    line-height: 1.55;
+  }
+  body.has-player .panel-entry + .panel-entry {
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+  }
+  body.has-player .panel .note-fig {
+    display: block;
+    width: 100%;
+    margin-top: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
 }
 @media (hover: hover) {
   body.has-player .lyric-line:hover { color: #f3f1ee; }
