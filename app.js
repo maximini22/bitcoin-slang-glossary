@@ -1,5 +1,12 @@
-const params = new URLSearchParams(location.search);
-const slug = params.get("slug") || "bitcoin-slang-remix";
+function songSlug() {
+  const parts = location.pathname.split("/").filter(Boolean);
+  const i = parts.lastIndexOf("songs");
+  if (i >= 0 && parts[i + 1] && !parts[i + 1].includes(".")) {
+    return decodeURIComponent(parts[i + 1]);
+  }
+  return new URLSearchParams(location.search).get("slug") || "bitcoin-slang-remix";
+}
+const slug = songSlug();
 
 const lyricsEl = document.getElementById("lyrics");
 const phraseEl = document.getElementById("phrase");
@@ -7,6 +14,84 @@ const noteEl = document.getElementById("note");
 const noteImg = document.getElementById("note-image");
 const titleEl = document.getElementById("title");
 const subEl = document.getElementById("sub");
+
+const SHARE_HOOK = "The Bitcoin Slang Dictionary, line by line, with notes on every term.";
+const SHARE_COVERS = {
+  "bitcoin-slang-remix": ["assets/cover.jpg", 1200, 675],
+  "most-toxic-bitcoin-maxi": ["assets/most-toxic-bitcoin-maxi-cover.jpg", 1920, 1080],
+  "diamond-hands-and-laser-eyes": ["assets/diamond-hands-and-laser-eyes-cover.jpg", 1920, 1080],
+  "all-time-high-lessons-of-regret": ["assets/all-time-high-lessons-of-regret-cover.jpg", 1920, 1080],
+  "going-cashless": ["assets/going-cashless-cover.jpg", 1920, 1080],
+  "if-it-wasnt-for-satoshi": ["assets/if-it-wasnt-for-satoshi-cover.jpg", 1920, 1080],
+  "freedom": ["assets/freedom-cover.jpg", 1920, 1080],
+  "fliponomics": ["assets/fliponomics-cover.jpg", 1920, 1080],
+  "dread-pirate-robbie": ["assets/dread-pirate-robbie-cover.jpg", 1920, 1080],
+};
+
+function shareCopy(title) {
+  return {
+    title: `${title} annotated lyrics by Robbie P`,
+    description: `${title}. ${SHARE_HOOK}`,
+  };
+}
+
+function setShareMeta(title, description, songTitle) {
+  const write = (attr, key, content) => {
+    let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute(attr, key);
+      document.head.appendChild(el);
+    }
+    el.setAttribute("content", content);
+  };
+  const cover = SHARE_COVERS[slug] || ["assets/cover.jpg", 1200, 675];
+  const image = new URL("/" + cover[0], "https://bitcoinslang.com").href;
+  const page = `https://bitcoinslang.com/songs/${slug}/`;
+  const alt = `Cover art for ${songTitle}`;
+  write("name", "description", description);
+  write("property", "og:title", title);
+  write("property", "og:description", description);
+  write("property", "og:image", image);
+  write("property", "og:image:width", String(cover[1]));
+  write("property", "og:image:height", String(cover[2]));
+  write("property", "og:image:alt", alt);
+  write("property", "og:url", page);
+  write("property", "og:type", "music.song");
+  write("name", "twitter:title", title);
+  write("name", "twitter:description", description);
+  write("name", "twitter:image", image);
+  write("name", "twitter:image:alt", alt);
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute("href", page);
+}
+
+function ensureJsonLd(meta, lyrics) {
+  if (document.querySelector('script[type="application/ld+json"]')) return;
+  const cover = SHARE_COVERS[slug] || ["assets/cover.jpg", 1200, 675];
+  const share = shareCopy(meta.title);
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "MusicRecording",
+    name: meta.title,
+    byArtist: { "@type": "Person", name: "Robbie P" },
+    url: `https://bitcoinslang.com/songs/${slug}/`,
+    image: new URL("/" + cover[0], "https://bitcoinslang.com").href,
+    description: share.description,
+    recordingOf: {
+      "@type": "MusicComposition",
+      name: meta.title,
+      composer: { "@type": "Person", name: "Robbie P" },
+      lyricist: { "@type": "Person", name: "Robbie P" },
+      lyrics: { "@type": "CreativeWork", text: lyrics },
+    },
+  };
+  if (meta.year) data.datePublished = String(meta.year);
+  const el = document.createElement("script");
+  el.type = "application/ld+json";
+  el.textContent = JSON.stringify(data);
+  document.head.appendChild(el);
+}
 
 function escapeHtml(s) {
   return s
@@ -81,7 +166,10 @@ async function boot() {
   } else {
     subEl.textContent = `${meta.artist}${meta.theme ? " · " + meta.theme : ""}`;
   }
-  document.title = `${meta.title} — Bitcoinslang.com`;
+  const share = shareCopy(meta.title);
+  document.title = share.title;
+  setShareMeta(share.title, share.description, meta.title);
+  ensureJsonLd(meta, lyrics);
 
   if (slug === "bitcoin-slang-remix") {
     await renderRemix(lyrics, annotations);
