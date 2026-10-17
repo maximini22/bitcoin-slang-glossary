@@ -317,7 +317,7 @@ body.has-player .lyric-line.is-current mark.ann,
 body.has-player .lyric-line.is-current mark.ann:hover,
 body.has-player .lyric-line.is-current mark.ann.active {
   background: transparent;
-  border-bottom-color: transparent;
+  border-bottom: none;
 }
 body.has-player .lyric-line:focus-visible {
   outline: 2px solid var(--accent);
