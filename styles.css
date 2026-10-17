@@ -273,3 +273,136 @@ mark.ann.active {
   }
   .lyrics { padding-bottom: 38vh; }
 }
+
+/* Player for Bitcoin Slang Remix only. Other songs never get body.has-player. */
+body.has-player .wrap { padding-bottom: 7.5rem; }
+body.has-player .lyrics { white-space: normal; }
+body.has-player .lyric-line {
+  color: inherit;
+  padding: 0.42rem 0.4rem;
+  margin: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  -webkit-tap-highlight-color: transparent;
+}
+body.has-player.has-current .lyric-line { color: #6e6a66; }
+body.has-player .lyric-line.is-current {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(247, 147, 26, 0.32), rgba(247, 147, 26, 0.08));
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+body.has-player .lyric-line:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+@media (hover: hover) {
+  body.has-player .lyric-line:hover { color: #f3f1ee; }
+}
+body.has-player .player {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  background: rgba(16, 16, 19, 0.96);
+  border-top: 1px solid var(--line);
+  padding: 0.55rem 0.9rem calc(0.55rem + env(safe-area-inset-bottom));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+body.has-player .player-in { max-width: 1100px; margin: 0 auto; }
+body.has-player .player-note {
+  margin: 0 0 0.35rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  min-height: 0;
+}
+body.has-player .player-note:empty { display: none; }
+body.has-player .player-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+body.has-player .player-play {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  touch-action: manipulation;
+}
+body.has-player .player-play svg { width: 14px; height: 14px; fill: #0b0b0d; display: block; }
+body.has-player .icon-pause { display: none; }
+body.has-player.is-playing .icon-play { display: none; }
+body.has-player.is-playing .icon-pause { display: block; }
+body.has-player .player-time {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 2.4rem;
+}
+body.has-player .player-dur { text-align: right; }
+body.has-player .player-scrub {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  margin: 0;
+  cursor: pointer;
+  --p: 0%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+body.has-player .player-scrub::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent) var(--p), #2e2e2e var(--p));
+}
+body.has-player .player-scrub::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent) var(--p), #2e2e2e var(--p));
+}
+body.has-player .player-scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(247, 147, 26, 0.35);
+}
+body.has-player .player-scrub::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+}
+@media (min-width: 801px) {
+  body.has-player .panel {
+    max-height: calc(100vh - 7.5rem);
+    overflow: auto;
+  }
+}
+@media (max-width: 800px) {
+  body.has-player .panel {
+    bottom: calc(5.6rem + env(safe-area-inset-bottom));
+  }
+  body.has-player .lyrics {
+    padding-bottom: calc(38vh + 5.6rem);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.has-player .lyric-line { transition: none; }
+}
