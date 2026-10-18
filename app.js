@@ -171,7 +171,7 @@ async function boot() {
   setShareMeta(share.title, share.description, meta.title);
   ensureJsonLd(meta, lyrics);
 
-  if (slug === "bitcoin-slang-remix") {
+  if (slug === "bitcoin-slang-remix" || slug === "if-it-wasnt-for-satoshi") {
     await renderRemix(lyrics, annotations);
     return;
   }
@@ -200,6 +200,10 @@ async function boot() {
 boot();
 
 const REMIX_TRACK = "bitcoin-slang-remix.mp3";
+function audioTrack() {
+  if (slug === "if-it-wasnt-for-satoshi") return "if-it-wasnt-for-satoshi.mp3";
+  return REMIX_TRACK;
+}
 const REMIX_LINKS_URL = "https://links.robbiep.net/bitcoin-slang/";
 const SIGN_HOSTS = [
   "https://audio.btcslang.com",
@@ -416,7 +420,7 @@ function mountRemixPlayer(lines) {
   listen.href = REMIX_LINKS_URL;
   listen.textContent = "Listen everywhere";
   const layout = document.querySelector(".layout");
-  if (layout) layout.insertAdjacentElement("afterend", listen);
+  if (slug === "bitcoin-slang-remix" && layout) layout.insertAdjacentElement("afterend", listen);
   const playBtn = bar.querySelector("#player-play");
   const muteBtn = bar.querySelector("#player-mute");
   const vol = bar.querySelector("#player-vol");
@@ -725,7 +729,7 @@ function mountRemixPlayer(lines) {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 8000);
       try {
-        const res = await fetch(`${host}/sign?track=${encodeURIComponent(REMIX_TRACK)}`, {
+        const res = await fetch(`${host}/sign?track=${encodeURIComponent(audioTrack())}`, {
           cache: "no-store",
           credentials: "omit",
           signal: ctrl.signal,
