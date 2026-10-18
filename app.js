@@ -8,6 +8,16 @@ function songSlug() {
 }
 const slug = songSlug();
 
+const ROBBIE_P_URL = "https://robbiep.net";
+
+function applySongFooter() {
+  const year = document.getElementById("jlr-year");
+  if (year) year.textContent = String(new Date().getFullYear());
+  const link = document.querySelector("a.song-foot-artist");
+  if (link) link.href = ROBBIE_P_URL;
+}
+applySongFooter();
+
 const lyricsEl = document.getElementById("lyrics");
 const phraseEl = document.getElementById("phrase");
 const noteEl = document.getElementById("note");
@@ -384,6 +394,72 @@ async function renderRemix(lyrics, annotations) {
   mountRemixPlayer(lines);
 }
 
+function mountFreeMp3() {
+  const block = document.createElement("section");
+  block.className = "mp3-signup";
+  block.innerHTML = `
+    <h2>Get the free MP3</h2>
+    <p class="mp3-lead">Pop your email in and we'll send you a free download of Bitcoin Slang Remix.</p>
+    <form>
+      <label class="mp3-label" for="mp3-email">Email</label>
+      <input id="mp3-email" name="email" type="email" autocomplete="email" required placeholder="Email" />
+      <button type="submit">Send me the MP3</button>
+      <p class="mp3-note">We'll email you a link to confirm first.</p>
+    </form>
+    <p class="mp3-status" role="status" hidden></p>
+  `;
+
+  const form = block.querySelector("form");
+  const lead = block.querySelector(".mp3-lead");
+  const status = block.querySelector(".mp3-status");
+  const input = block.querySelector("#mp3-email");
+  const button = block.querySelector("button");
+
+  const showMessage = (text, isError) => {
+    form.hidden = !isError;
+    lead.hidden = !isError;
+    status.hidden = false;
+    status.textContent = text;
+    status.classList.toggle("is-error", Boolean(isError));
+  };
+
+  if (new URLSearchParams(location.search).get("confirmed") === "1") {
+    showMessage("You're confirmed — your download link is on its way.", false);
+    return block;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const email = input.value.trim();
+    if (!email || !input.checkValidity()) {
+      status.hidden = false;
+      status.textContent = "Enter your email and try again.";
+      status.classList.add("is-error");
+      return;
+    }
+    button.disabled = true;
+    status.hidden = true;
+    status.textContent = "";
+    status.classList.remove("is-error");
+    try {
+      const res = await fetch("https://audio.btcslang.com/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, slug }),
+      });
+      if (!res.ok) throw new Error("subscribe failed");
+      input.value = "";
+      showMessage("Check your inbox to confirm.", false);
+    } catch {
+      button.disabled = false;
+      status.hidden = false;
+      status.textContent = "That didn't send. Please try again.";
+      status.classList.add("is-error");
+    }
+  });
+  return block;
+}
+
 function mountRemixPlayer(lines) {
   document.body.classList.add("has-player");
 
@@ -420,7 +496,11 @@ function mountRemixPlayer(lines) {
   listen.href = REMIX_LINKS_URL;
   listen.textContent = "Listen everywhere";
   const layout = document.querySelector(".layout");
-  if (slug === "bitcoin-slang-remix" && layout) layout.insertAdjacentElement("afterend", listen);
+  if (slug === "bitcoin-slang-remix" && layout) {
+    const signup = mountFreeMp3();
+    layout.insertAdjacentElement("afterend", signup);
+    signup.insertAdjacentElement("afterend", listen);
+  }
   const playBtn = bar.querySelector("#player-play");
   const muteBtn = bar.querySelector("#player-mute");
   const vol = bar.querySelector("#player-vol");
