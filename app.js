@@ -406,22 +406,100 @@ async function renderRemix(lyrics, annotations) {
   mountRemixPlayer(lines);
 }
 
+const FREE_MP3_API = "https://audio.btcslang.com";
+const landing = (() => {
+  const q = new URLSearchParams(location.search);
+  const out = { confirmed: q.get("confirmed") === "1", claim: q.get("claim") || "" };
+  if (out.confirmed || out.claim) {
+    q.delete("confirmed");
+    q.delete("claim");
+    const rest = q.toString();
+    history.replaceState(null, "", location.pathname + (rest ? "?" + rest : "") + location.hash);
+  }
+  return out;
+})();
+
+function listenLink() {
+  const url = LISTEN_PAGES[slug];
+  if (!url) return null;
+  const a = document.createElement("a");
+  a.className = "listen-everywhere";
+  a.href = url;
+  a.textContent = "Listen everywhere";
+  return a;
+}
+
+function downloadButton(url) {
+  const a = document.createElement("a");
+  a.className = "mp3-download";
+  a.href = url;
+  a.rel = "nofollow";
+  a.textContent = "Download MP3";
+  return a;
+}
+
+function mountConfirmPanel(title) {
+  const panel = document.createElement("section");
+  panel.className = "mp3-confirm";
+  panel.setAttribute("aria-live", "polite");
+  panel.innerHTML = `
+    <h2>You're in</h2>
+    <p class="mp3-confirm-lead"></p>
+    <div class="mp3-confirm-action"><p class="mp3-confirm-wait">Getting your download…</p></div>
+    <p class="mp3-confirm-note"></p>
+  `;
+  const lead = panel.querySelector(".mp3-confirm-lead");
+  const action = panel.querySelector(".mp3-confirm-action");
+  const note = panel.querySelector(".mp3-confirm-note");
+  lead.textContent = `Thanks for confirming. Your free MP3 of ${title} is ready.`;
+  const listen = listenLink();
+  if (listen) panel.append(listen);
+
+  const fallback = () => {
+    lead.textContent = "Thanks for confirming.";
+    action.innerHTML = "";
+    const p = document.createElement("p");
+    p.className = "mp3-confirm-fallback";
+    p.textContent = "Your download link is on its way to your inbox.";
+    action.append(p);
+    note.textContent = "It can take a few minutes. Check your spam folder if it doesn't show up.";
+  };
+
+  if (!landing.claim) {
+    fallback();
+    return panel;
+  }
+  fetch(`${FREE_MP3_API}/claim`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ claim: landing.claim }),
+  })
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (!data || !data.ok || !data.downloadUrl) return fallback();
+      if (data.title) lead.textContent = `Thanks for confirming. Your free MP3 of ${data.title} is ready.`;
+      action.innerHTML = "";
+      action.append(downloadButton(data.downloadUrl));
+      note.textContent = "320 kbps MP3 with cover art. A copy of the link is also in your inbox. It works up to 5 times.";
+    })
+    .catch(fallback);
+  return panel;
+}
+
 function mountSongOffers(meta) {
   const layout = document.querySelector(".layout");
   if (!layout) return;
+  if (landing.confirmed && FREE_MP3_SLUGS.has(slug)) {
+    layout.insertAdjacentElement("beforebegin", mountConfirmPanel(meta.title || slug));
+  }
   let anchor = layout;
   if (FREE_MP3_SLUGS.has(slug)) {
     const signup = mountFreeMp3(meta.title || slug);
     layout.insertAdjacentElement("afterend", signup);
     anchor = signup;
   }
-  const listenUrl = LISTEN_PAGES[slug];
-  if (!listenUrl) return;
-  const listen = document.createElement("a");
-  listen.className = "listen-everywhere";
-  listen.href = listenUrl;
-  listen.textContent = "Listen everywhere";
-  anchor.insertAdjacentElement("afterend", listen);
+  const listen = listenLink();
+  if (listen) anchor.insertAdjacentElement("afterend", listen);
 }
 
 function mountFreeMp3(title) {
@@ -454,10 +532,25 @@ function mountFreeMp3(title) {
     status.classList.toggle("is-error", Boolean(isError));
   };
 
-  if (new URLSearchParams(location.search).get("confirmed") === "1") {
-    showMessage("You're confirmed — your download link is on its way.", false);
+  if (landing.confirmed) {
+    showMessage("You're confirmed. Your download is at the top of this page and in your inbox.", false);
     return block;
   }
+
+  const showDownload = (url) => {
+    form.hidden = true;
+    lead.hidden = true;
+    status.hidden = false;
+    status.classList.remove("is-error");
+    status.textContent = "Here's your MP3.";
+    const row = document.createElement("div");
+    row.className = "mp3-instant";
+    const sent = document.createElement("p");
+    sent.className = "mp3-note";
+    sent.textContent = "Also sent to your inbox.";
+    row.append(downloadButton(url), sent);
+    status.insertAdjacentElement("afterend", row);
+  };
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -473,14 +566,21 @@ function mountFreeMp3(title) {
     status.textContent = "";
     status.classList.remove("is-error");
     try {
-      const res = await fetch("https://audio.btcslang.com/subscribe", {
+      const res = await fetch(`${FREE_MP3_API}/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, slug }),
       });
       if (!res.ok) throw new Error("subscribe failed");
+      const data = await res.json().catch(() => ({}));
       input.value = "";
-      showMessage("Check your inbox to confirm.", false);
+      if (data.existing && data.downloadUrl) {
+        showDownload(data.downloadUrl);
+      } else if (data.existing && data.usedUp) {
+        showMessage(data.message || "You've already used all the downloads for this song.", false);
+      } else {
+        showMessage("Check your inbox to confirm.", false);
+      }
     } catch {
       button.disabled = false;
       status.hidden = false;

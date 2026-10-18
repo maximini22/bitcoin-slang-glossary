@@ -567,6 +567,7 @@ body.has-player .player-vol { display: none; }
   cursor: pointer;
 }
 .mp3-signup button:disabled { opacity: 0.55; cursor: default; }
+.mp3-signup [hidden] { display: none !important; }
 .mp3-signup .mp3-note,
 .mp3-signup .mp3-status {
   flex: 1 0 100%;
@@ -577,8 +578,46 @@ body.has-player .player-vol { display: none; }
 }
 .mp3-signup .mp3-status { color: var(--text); font-size: 0.95rem; }
 .mp3-signup .mp3-status.is-error { color: #e7b3a2; }
+.mp3-download {
+  display: inline-block;
+  background: var(--accent);
+  color: #0b0b0d;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  padding: 0.85rem 1.6rem;
+  text-decoration: none;
+}
+.mp3-download:hover,
+.mp3-download:focus-visible { background: #ffa733; color: #0b0b0d; text-decoration: none; }
+.mp3-instant { margin-top: 0.75rem; }
+.mp3-instant .mp3-note { margin: 0.55rem 0 0; font-size: 0.85rem; color: var(--muted); }
+.mp3-confirm {
+  margin: 0.5rem 0 1.6rem;
+  max-width: 36rem;
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.35rem 1.4rem 1.2rem;
+}
+.mp3-confirm h2 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text);
+}
+.mp3-confirm-lead { margin: 0 0 1rem; color: var(--text); line-height: 1.5; }
+.mp3-confirm-wait,
+.mp3-confirm-fallback { margin: 0; color: var(--text); font-size: 1.05rem; }
+.mp3-confirm-note { margin: 0.7rem 0 0; font-size: 0.85rem; line-height: 1.45; color: var(--muted); }
+.mp3-confirm-note:empty { display: none; }
+.mp3-confirm .listen-everywhere { margin: 1.1rem 0 0; }
 @media (max-width: 600px) {
   .mp3-signup button { width: 100%; }
+  .mp3-download { display: block; text-align: center; }
 }
 body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
 @media (max-width: 899px) {
