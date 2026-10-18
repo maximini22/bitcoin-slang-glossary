@@ -180,6 +180,7 @@ async function boot() {
   document.title = share.title;
   setShareMeta(share.title, share.description, meta.title);
   ensureJsonLd(meta, lyrics);
+  mountSongOffers(meta);
 
   if (slug === "bitcoin-slang-remix" || slug === "if-it-wasnt-for-satoshi") {
     await renderRemix(lyrics, annotations);
@@ -214,7 +215,18 @@ function audioTrack() {
   if (slug === "if-it-wasnt-for-satoshi") return "if-it-wasnt-for-satoshi.mp3";
   return REMIX_TRACK;
 }
-const REMIX_LINKS_URL = "https://links.robbiep.net/bitcoin-slang/";
+const LISTEN_PAGES = {
+  "all-time-high-lessons-of-regret": "https://links.robbiep.net/all-time-high/",
+  "bitcoin-slang-remix": "https://links.robbiep.net/bitcoin-slang/",
+  "diamond-hands-and-laser-eyes": "https://links.robbiep.net/diamond-hands/",
+  "dread-pirate-robbie": "https://links.robbiep.net/dread-pirate-robbie/",
+  "fliponomics": "https://links.robbiep.net/dread-pirate-robbie/",
+  "freedom": "https://links.robbiep.net/freedom/",
+  "going-cashless": "https://links.robbiep.net/going-cashless/",
+  "if-it-wasnt-for-satoshi": "https://links.robbiep.net/if-it-wasnt-for-satoshi/",
+  "most-toxic-bitcoin-maxi": "https://links.robbiep.net/most-toxic-bitcoin-maxi/",
+};
+const FREE_MP3_SLUGS = new Set(Object.keys(LISTEN_PAGES));
 const SIGN_HOSTS = [
   "https://audio.btcslang.com",
   "https://bitcoin-slang-audio.bitcoinslang.workers.dev",
@@ -394,12 +406,30 @@ async function renderRemix(lyrics, annotations) {
   mountRemixPlayer(lines);
 }
 
-function mountFreeMp3() {
+function mountSongOffers(meta) {
+  const layout = document.querySelector(".layout");
+  if (!layout) return;
+  let anchor = layout;
+  if (FREE_MP3_SLUGS.has(slug)) {
+    const signup = mountFreeMp3(meta.title || slug);
+    layout.insertAdjacentElement("afterend", signup);
+    anchor = signup;
+  }
+  const listenUrl = LISTEN_PAGES[slug];
+  if (!listenUrl) return;
+  const listen = document.createElement("a");
+  listen.className = "listen-everywhere";
+  listen.href = listenUrl;
+  listen.textContent = "Listen everywhere";
+  anchor.insertAdjacentElement("afterend", listen);
+}
+
+function mountFreeMp3(title) {
   const block = document.createElement("section");
   block.className = "mp3-signup";
   block.innerHTML = `
     <h2>Get the free MP3</h2>
-    <p class="mp3-lead">Pop your email in and we'll send you a free download of Bitcoin Slang Remix.</p>
+    <p class="mp3-lead"></p>
     <form>
       <label class="mp3-label" for="mp3-email">Email</label>
       <input id="mp3-email" name="email" type="email" autocomplete="email" required placeholder="Email" />
@@ -411,6 +441,7 @@ function mountFreeMp3() {
 
   const form = block.querySelector("form");
   const lead = block.querySelector(".mp3-lead");
+  lead.textContent = `Pop your email in and we'll send you a free download of ${title}.`;
   const status = block.querySelector(".mp3-status");
   const input = block.querySelector("#mp3-email");
   const button = block.querySelector("button");
@@ -491,16 +522,6 @@ function mountRemixPlayer(lines) {
   bar.appendChild(audio);
 
   document.body.classList.add("player-ready");
-  const listen = document.createElement("a");
-  listen.className = "listen-everywhere";
-  listen.href = REMIX_LINKS_URL;
-  listen.textContent = "Listen everywhere";
-  const layout = document.querySelector(".layout");
-  if (slug === "bitcoin-slang-remix" && layout) {
-    const signup = mountFreeMp3();
-    layout.insertAdjacentElement("afterend", signup);
-    signup.insertAdjacentElement("afterend", listen);
-  }
   const playBtn = bar.querySelector("#player-play");
   const muteBtn = bar.querySelector("#player-mute");
   const vol = bar.querySelector("#player-vol");

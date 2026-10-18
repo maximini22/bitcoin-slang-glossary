@@ -486,7 +486,7 @@ body.has-player.is-muted .mute-label { display: inline; }
 body.has-player.is-silent:not(.is-muted) .player-mute .icon-sound { display: none; }
 body.has-player.is-silent:not(.is-muted) .player-mute .icon-muted { display: block; }
 body.has-player .player-vol { display: none; }
-body.has-player .listen-everywhere {
+.listen-everywhere {
   display: inline-block;
   margin: 1.6rem 0 0.4rem;
   padding: 0.5rem 0.85rem;
@@ -497,8 +497,8 @@ body.has-player .listen-everywhere {
   font-size: 0.92rem;
   text-decoration: none;
 }
-body.has-player .listen-everywhere:hover,
-body.has-player .listen-everywhere:focus-visible {
+.listen-everywhere:hover,
+.listen-everywhere:focus-visible {
   color: var(--accent);
   border-color: var(--accent);
   text-decoration: none;
