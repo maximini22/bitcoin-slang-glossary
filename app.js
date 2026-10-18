@@ -1,5 +1,22 @@
-const params = new URLSearchParams(location.search);
-const slug = params.get("slug") || "bitcoin-slang-remix";
+function songSlug() {
+  const parts = location.pathname.split("/").filter(Boolean);
+  const i = parts.lastIndexOf("songs");
+  if (i >= 0 && parts[i + 1] && !parts[i + 1].includes(".")) {
+    return decodeURIComponent(parts[i + 1]);
+  }
+  return new URLSearchParams(location.search).get("slug") || "bitcoin-slang-remix";
+}
+const slug = songSlug();
+
+const ROBBIE_P_URL = "https://robbiep.net";
+
+function applySongFooter() {
+  const year = document.getElementById("jlr-year");
+  if (year) year.textContent = String(new Date().getFullYear());
+  const link = document.querySelector("a.song-foot-artist");
+  if (link) link.href = ROBBIE_P_URL;
+}
+applySongFooter();
 
 const lyricsEl = document.getElementById("lyrics");
 const phraseEl = document.getElementById("phrase");
@@ -7,6 +24,84 @@ const noteEl = document.getElementById("note");
 const noteImg = document.getElementById("note-image");
 const titleEl = document.getElementById("title");
 const subEl = document.getElementById("sub");
+
+const SHARE_HOOK = "The Bitcoin Slang Dictionary, line by line, with notes on every term.";
+const SHARE_COVERS = {
+  "bitcoin-slang-remix": ["assets/cover.jpg", 1200, 675],
+  "most-toxic-bitcoin-maxi": ["assets/most-toxic-bitcoin-maxi-cover.jpg", 1920, 1080],
+  "diamond-hands-and-laser-eyes": ["assets/diamond-hands-and-laser-eyes-cover.jpg", 1920, 1080],
+  "all-time-high-lessons-of-regret": ["assets/all-time-high-lessons-of-regret-cover.jpg", 1920, 1080],
+  "going-cashless": ["assets/going-cashless-cover.jpg", 1920, 1080],
+  "if-it-wasnt-for-satoshi": ["assets/if-it-wasnt-for-satoshi-cover.jpg", 1920, 1080],
+  "freedom": ["assets/freedom-cover.jpg", 1920, 1080],
+  "fliponomics": ["assets/fliponomics-cover.jpg", 1920, 1080],
+  "dread-pirate-robbie": ["assets/dread-pirate-robbie-cover.jpg", 1920, 1080],
+};
+
+function shareCopy(title) {
+  return {
+    title: `${title} annotated lyrics by Robbie P`,
+    description: `${title}. ${SHARE_HOOK}`,
+  };
+}
+
+function setShareMeta(title, description, songTitle) {
+  const write = (attr, key, content) => {
+    let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute(attr, key);
+      document.head.appendChild(el);
+    }
+    el.setAttribute("content", content);
+  };
+  const cover = SHARE_COVERS[slug] || ["assets/cover.jpg", 1200, 675];
+  const image = new URL("/" + cover[0], "https://bitcoinslang.com").href;
+  const page = `https://bitcoinslang.com/songs/${slug}/`;
+  const alt = `Cover art for ${songTitle}`;
+  write("name", "description", description);
+  write("property", "og:title", title);
+  write("property", "og:description", description);
+  write("property", "og:image", image);
+  write("property", "og:image:width", String(cover[1]));
+  write("property", "og:image:height", String(cover[2]));
+  write("property", "og:image:alt", alt);
+  write("property", "og:url", page);
+  write("property", "og:type", "music.song");
+  write("name", "twitter:title", title);
+  write("name", "twitter:description", description);
+  write("name", "twitter:image", image);
+  write("name", "twitter:image:alt", alt);
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute("href", page);
+}
+
+function ensureJsonLd(meta, lyrics) {
+  if (document.querySelector('script[type="application/ld+json"]')) return;
+  const cover = SHARE_COVERS[slug] || ["assets/cover.jpg", 1200, 675];
+  const share = shareCopy(meta.title);
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "MusicRecording",
+    name: meta.title,
+    byArtist: { "@type": "Person", name: "Robbie P" },
+    url: `https://bitcoinslang.com/songs/${slug}/`,
+    image: new URL("/" + cover[0], "https://bitcoinslang.com").href,
+    description: share.description,
+    recordingOf: {
+      "@type": "MusicComposition",
+      name: meta.title,
+      composer: { "@type": "Person", name: "Robbie P" },
+      lyricist: { "@type": "Person", name: "Robbie P" },
+      lyrics: { "@type": "CreativeWork", text: lyrics },
+    },
+  };
+  if (meta.year) data.datePublished = String(meta.year);
+  const el = document.createElement("script");
+  el.type = "application/ld+json";
+  el.textContent = JSON.stringify(data);
+  document.head.appendChild(el);
+}
 
 function escapeHtml(s) {
   return s
@@ -81,9 +176,13 @@ async function boot() {
   } else {
     subEl.textContent = `${meta.artist}${meta.theme ? " · " + meta.theme : ""}`;
   }
-  document.title = `${meta.title} — Bitcoinslang.com`;
+  const share = shareCopy(meta.title);
+  document.title = share.title;
+  setShareMeta(share.title, share.description, meta.title);
+  ensureJsonLd(meta, lyrics);
+  mountSongOffers(meta);
 
-  if (slug === "bitcoin-slang-remix") {
+  if (slug === "bitcoin-slang-remix" || slug === "if-it-wasnt-for-satoshi") {
     await renderRemix(lyrics, annotations);
     return;
   }
@@ -112,7 +211,22 @@ async function boot() {
 boot();
 
 const REMIX_TRACK = "bitcoin-slang-remix.mp3";
-const REMIX_LINKS_URL = "https://links.robbiep.net/bitcoin-slang/";
+function audioTrack() {
+  if (slug === "if-it-wasnt-for-satoshi") return "if-it-wasnt-for-satoshi.mp3";
+  return REMIX_TRACK;
+}
+const LISTEN_PAGES = {
+  "all-time-high-lessons-of-regret": "https://links.robbiep.net/all-time-high/",
+  "bitcoin-slang-remix": "https://links.robbiep.net/bitcoin-slang/",
+  "diamond-hands-and-laser-eyes": "https://links.robbiep.net/diamond-hands/",
+  "dread-pirate-robbie": "https://links.robbiep.net/dread-pirate-robbie/",
+  "fliponomics": "https://links.robbiep.net/dread-pirate-robbie/",
+  "freedom": "https://links.robbiep.net/freedom/",
+  "going-cashless": "https://links.robbiep.net/going-cashless/",
+  "if-it-wasnt-for-satoshi": "https://links.robbiep.net/if-it-wasnt-for-satoshi/",
+  "most-toxic-bitcoin-maxi": "https://links.robbiep.net/most-toxic-bitcoin-maxi/",
+};
+const FREE_MP3_SLUGS = new Set(Object.keys(LISTEN_PAGES));
 const SIGN_HOSTS = [
   "https://audio.btcslang.com",
   "https://bitcoin-slang-audio.bitcoinslang.workers.dev",
@@ -292,6 +406,91 @@ async function renderRemix(lyrics, annotations) {
   mountRemixPlayer(lines);
 }
 
+function mountSongOffers(meta) {
+  const layout = document.querySelector(".layout");
+  if (!layout) return;
+  let anchor = layout;
+  if (FREE_MP3_SLUGS.has(slug)) {
+    const signup = mountFreeMp3(meta.title || slug);
+    layout.insertAdjacentElement("afterend", signup);
+    anchor = signup;
+  }
+  const listenUrl = LISTEN_PAGES[slug];
+  if (!listenUrl) return;
+  const listen = document.createElement("a");
+  listen.className = "listen-everywhere";
+  listen.href = listenUrl;
+  listen.textContent = "Listen everywhere";
+  anchor.insertAdjacentElement("afterend", listen);
+}
+
+function mountFreeMp3(title) {
+  const block = document.createElement("section");
+  block.className = "mp3-signup";
+  block.innerHTML = `
+    <h2>Get the free MP3</h2>
+    <p class="mp3-lead"></p>
+    <form>
+      <label class="mp3-label" for="mp3-email">Email</label>
+      <input id="mp3-email" name="email" type="email" autocomplete="email" required placeholder="Email" />
+      <button type="submit">Send me the MP3</button>
+      <p class="mp3-note">We'll email you a link to confirm first.</p>
+    </form>
+    <p class="mp3-status" role="status" hidden></p>
+  `;
+
+  const form = block.querySelector("form");
+  const lead = block.querySelector(".mp3-lead");
+  lead.textContent = `Pop your email in and we'll send you a free download of ${title}.`;
+  const status = block.querySelector(".mp3-status");
+  const input = block.querySelector("#mp3-email");
+  const button = block.querySelector("button");
+
+  const showMessage = (text, isError) => {
+    form.hidden = !isError;
+    lead.hidden = !isError;
+    status.hidden = false;
+    status.textContent = text;
+    status.classList.toggle("is-error", Boolean(isError));
+  };
+
+  if (new URLSearchParams(location.search).get("confirmed") === "1") {
+    showMessage("You're confirmed — your download link is on its way.", false);
+    return block;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const email = input.value.trim();
+    if (!email || !input.checkValidity()) {
+      status.hidden = false;
+      status.textContent = "Enter your email and try again.";
+      status.classList.add("is-error");
+      return;
+    }
+    button.disabled = true;
+    status.hidden = true;
+    status.textContent = "";
+    status.classList.remove("is-error");
+    try {
+      const res = await fetch("https://audio.btcslang.com/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, slug }),
+      });
+      if (!res.ok) throw new Error("subscribe failed");
+      input.value = "";
+      showMessage("Check your inbox to confirm.", false);
+    } catch {
+      button.disabled = false;
+      status.hidden = false;
+      status.textContent = "That didn't send. Please try again.";
+      status.classList.add("is-error");
+    }
+  });
+  return block;
+}
+
 function mountRemixPlayer(lines) {
   document.body.classList.add("has-player");
 
@@ -323,12 +522,6 @@ function mountRemixPlayer(lines) {
   bar.appendChild(audio);
 
   document.body.classList.add("player-ready");
-  const listen = document.createElement("a");
-  listen.className = "listen-everywhere";
-  listen.href = REMIX_LINKS_URL;
-  listen.textContent = "Listen everywhere";
-  const layout = document.querySelector(".layout");
-  if (layout) layout.insertAdjacentElement("afterend", listen);
   const playBtn = bar.querySelector("#player-play");
   const muteBtn = bar.querySelector("#player-mute");
   const vol = bar.querySelector("#player-vol");
@@ -637,7 +830,7 @@ function mountRemixPlayer(lines) {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 8000);
       try {
-        const res = await fetch(`${host}/sign?track=${encodeURIComponent(REMIX_TRACK)}`, {
+        const res = await fetch(`${host}/sign?track=${encodeURIComponent(audioTrack())}`, {
           cache: "no-store",
           credentials: "omit",
           signal: ctrl.signal,
