@@ -18,6 +18,15 @@ function applySongFooter() {
 }
 applySongFooter();
 
+// Songs with a synced lyrics.lrc and a <slug>.mp3 stream key in R2.
+const READ_ALONG_SLUGS = new Set([
+  "bitcoin-slang-remix",
+  "if-it-wasnt-for-satoshi",
+  "going-cashless",
+  "freedom",
+  "fliponomics",
+]);
+
 const lyricsEl = document.getElementById("lyrics");
 const phraseEl = document.getElementById("phrase");
 const noteEl = document.getElementById("note");
@@ -182,7 +191,7 @@ async function boot() {
   ensureJsonLd(meta, lyrics);
   mountSongOffers(meta);
 
-  if (slug === "bitcoin-slang-remix" || slug === "if-it-wasnt-for-satoshi") {
+  if (READ_ALONG_SLUGS.has(slug)) {
     await renderRemix(lyrics, annotations);
     return;
   }
@@ -212,7 +221,7 @@ boot();
 
 const REMIX_TRACK = "bitcoin-slang-remix.mp3";
 function audioTrack() {
-  if (slug === "if-it-wasnt-for-satoshi") return "if-it-wasnt-for-satoshi.mp3";
+  if (READ_ALONG_SLUGS.has(slug)) return `${slug}.mp3`;
   return REMIX_TRACK;
 }
 const LISTEN_PAGES = {
