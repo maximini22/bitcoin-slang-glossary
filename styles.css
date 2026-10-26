@@ -763,12 +763,6 @@ body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
   margin: 56px 0 18px;
   border-radius: 0;
 }
-.lyrics .section-label::after {
-  content: "";
-  flex: 1;
-  height: 2px;
-  background: #f7931b;
-}
 .lyrics .section-label:first-child { margin-top: 0; }
 .lyrics .lyric-line,
 body.has-player .lyrics .lyric-line {
