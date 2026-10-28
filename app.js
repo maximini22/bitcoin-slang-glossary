@@ -498,20 +498,74 @@ function mountConfirmPanel(title) {
   return panel;
 }
 
+const BUNDLE_URL = "https://bs-bundle-mockup-87403d0f.bitcoinslang.workers.dev/bundle/";
+
 function mountSongOffers(meta) {
   const layout = document.querySelector(".layout");
   if (!layout) return;
   if (landing.confirmed && FREE_MP3_SLUGS.has(slug)) {
     layout.insertAdjacentElement("beforebegin", mountConfirmPanel(meta.title || slug));
   }
-  let anchor = layout;
+
+  const offers = document.createElement("aside");
+  offers.className = "bs-offers";
+  offers.setAttribute("aria-label", "Get the music");
+
+  const label = document.createElement("div");
+  label.className = "flyer-label";
+  label.textContent = "GET THE MUSIC";
+  offers.append(label);
+
+  const bundle = document.createElement("section");
+  bundle.className = "hero-own";
+  bundle.innerHTML = `
+    <span class="badge">Recommended</span>
+    <h3>Own the catalog in HD lossless</h3>
+    <p class="tag">Streaming is renting. Own the files. Not your keys, not your coins. Be your own bank.</p>
+    <p>The album, the singles and HD audio — 23 songs plus 10 bonus tracks. FLAC default · MP3 320 also available.</p>
+    <p class="fine">*Bonus instrumentals and alternate versions on selected songs.</p>
+    <p class="price"><strong>A$17.50</strong> · BTC Slang Bundle</p>
+    <a class="btn" href="${BUNDLE_URL}">Buy the bundle now</a>
+  `;
+  offers.append(bundle);
+
+  const quiet = document.createElement("div");
+  quiet.className = "quiet";
+
+  const freeBox = document.createElement("div");
+  freeBox.className = "q";
+  const freeHead = document.createElement("h4");
+  freeHead.textContent = "Get the song as a free MP3";
+  freeBox.append(freeHead);
   if (FREE_MP3_SLUGS.has(slug)) {
-    const signup = mountFreeMp3(meta.title || slug);
-    layout.insertAdjacentElement("afterend", signup);
-    anchor = signup;
+    freeBox.append(mountFreeMp3(meta.title || slug));
+  } else {
+    const p = document.createElement("p");
+    p.textContent = "Free MP3 signup is not available for this track yet.";
+    freeBox.append(p);
   }
+
+  const streamBox = document.createElement("div");
+  streamBox.className = "q";
+  const streamHead = document.createElement("h4");
+  streamHead.textContent = "Or stream it everywhere";
+  const streamP = document.createElement("p");
+  streamP.textContent = "Follow the links to stream this song on Spotify, Apple, YouTube and more.";
+  streamBox.append(streamHead, streamP);
   const listen = listenLink();
-  if (listen) anchor.insertAdjacentElement("afterend", listen);
+  if (listen) {
+    listen.className = "bs-listen";
+    listen.textContent = "Open streaming links →";
+    streamBox.append(listen);
+  } else {
+    const miss = document.createElement("p");
+    miss.textContent = "Streaming links coming soon.";
+    streamBox.append(miss);
+  }
+
+  quiet.append(freeBox, streamBox);
+  offers.append(quiet);
+  layout.insertAdjacentElement("afterend", offers);
 }
 
 function mountFreeMp3(title) {
