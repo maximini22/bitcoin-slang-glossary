@@ -1,0 +1,112 @@
+[
+  {
+    "id": "no-fly-zone",
+    "phrase": "No fly zone",
+    "note": "Detroit's Trick Trick–enforced barrier on artists milking the city's hip-hop culture — famously kept Rick Ross from performing there. Robbie was a tourist artist, nobody of significance on that scene, but the bar says he flew in the face of that rule anyway."
+  },
+  {
+    "id": "20oz",
+    "phrase": "What is 20oz",
+    "note": "Australia runs metric. A 20 oz drink is about 600 ml — the size that still confuses an Aussie ordering Stateside."
+  },
+  {
+    "id": "alexa",
+    "phrase": "I be asking alexa",
+    "note": "Alexa is the Siri equivalent, more American. Nod to being in North America — asking the room gadget what a 20 oz even is."
+  },
+  {
+    "id": "seed-phrase-texter",
+    "phrase": "Written down with a texter",
+    "note": "Seed phrase on paper carried across the border. Nod to a security vulnerability: walking a written seed through customs isn't peak self custody. Texter = texta (Aussie marker pen)."
+  },
+  {
+    "id": "accent-ocker",
+    "phrase": "She's loving the accent",
+    "note": "Aussie accent dialled up abroad — exotic points. Ocker is the broad Australian register; it travels when the room has never heard it."
+  },
+  {
+    "id": "down-under",
+    "phrase": "I'm down under",
+    "note": "Down under = southern hemisphere (Australia). Paired with \"up over\" (northern hemisphere) — geography flex from Torquay outbound."
+  },
+  {
+    "id": "up-over",
+    "phrase": "Up over from Torquay",
+    "note": "Up over = northern hemisphere. He left Torquay for the north — down under / up over contrast."
+  },
+  {
+    "id": "friend-arrested",
+    "phrase": "Don't wanna get arrested",
+    "note": "A close friend was arrested on a USA trip years earlier and had to liquidate BTC for bail and to leave the country. Cautionary tale baked into the verse."
+  },
+  {
+    "id": "reptile-irwin",
+    "phrase": "I'm chilling like a reptile bruh",
+    "note": "Steve Irwin nod — chill like a croc until provoked. Gun/shooting bars juxtapose Australian wildlife culture with real danger: Crocodile Dundee crossed with Reckless Kelly (Ned Kelly) vibe."
+  },
+  {
+    "id": "crickey",
+    "phrase": "Nothing quite like me crickey",
+    "note": "\"Crikey\" — Steve Irwin's catchphrase. Same Aussie wildlife / danger lane as the reptile bar."
+  },
+  {
+    "id": "stab-some-cunt",
+    "phrase": "I could stab some cunt",
+    "note": "Aussie slang, not a literal threat — rough talk that lands harder offshore. Sets up the dogs / train wordplay later."
+  },
+  {
+    "id": "underbelly",
+    "phrase": "Underbelly type steeze",
+    "note": "Nod to Australian gangland of the 90s/2000s — the Underbelly TV series. Street steeze with that Melbourne/Sydney crime-era flavour."
+  },
+  {
+    "id": "give-it-a-go",
+    "phrase": "I'll give it a go",
+    "note": "Aussie slang: have a crack. Not sure he can dodge bullets — but he'll give it a go."
+  },
+  {
+    "id": "lucky-country",
+    "phrase": "Lucky country got the bubble wrap day care",
+    "note": "The Lucky Country (1964) by Donald Horne argued Australia's prosperity was luck rather than merit — a coddled nation. \"Bubble wrap day care\" sharpens that critique."
+  },
+  {
+    "id": "bunch-of-dogs",
+    "phrase": "Bunch of dogs",
+    "note": "Aussie slang for a rough crew. Sets up the next line's wordplay: train an Aussie to stay there — dogs / train."
+  },
+  {
+    "id": "train-aussie",
+    "phrase": "Train an aussie how to stay there",
+    "note": "Wordplay on the dogs bar: train an (Aussie to) stay there. Comfort-trap of the lucky country vs leaving."
+  },
+  {
+    "id": "rat-race",
+    "phrase": "Bail on the rat race",
+    "note": "\"Rat race\" from Robert Kiyosaki's Rich Dad Poor Dad (also carried through Cashflow Quadrant) — the wage-and-debt loop sound-money thinking is meant to exit."
+  },
+  {
+    "id": "via-rail",
+    "phrase": "Hit up VIA rail",
+    "note": "Via Rail — the public train line he took from Toronto to Detroit. Escape fare north of the border."
+  },
+  {
+    "id": "ask-permission",
+    "phrase": "give permission",
+    "note": "Always waiting for someone to give permission — then refusing that posture. Permissionless travel and moves funded by sound investments."
+  },
+  {
+    "id": "stronghorn",
+    "phrase": "From stronghorn",
+    "note": "Stronghorn: the old studio in Oakleigh, Victoria where he recorded a lot of Gzutek material, 2010–2016. Origin point before the 313."
+  },
+  {
+    "id": "nixon-btc",
+    "phrase": "Money not sound since Nixon",
+    "note": "1971: Nixon ended dollar gold convertibility. Money hasn't been sound since. Next line: Bitcoin fixed it — finance lesson in two bars."
+  },
+  {
+    "id": "btc-fixed-it",
+    "phrase": "BTC fixed it",
+    "note": "Bitcoin as the fix for post-1971 fiat — sound money after Nixon closed the gold window. Work out the rest."
+  }
+]

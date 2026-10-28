@@ -25,6 +25,7 @@ const READ_ALONG_SLUGS = new Set([
   "going-cashless",
   "freedom",
   "fliponomics",
+  "chester",
 ]);
 
 const lyricsEl = document.getElementById("lyrics");
@@ -43,6 +44,7 @@ const SHARE_COVERS = {
   "going-cashless": ["assets/going-cashless-cover.jpg", 1920, 1080],
   "if-it-wasnt-for-satoshi": ["assets/if-it-wasnt-for-satoshi-cover.jpg", 1920, 1080],
   "freedom": ["assets/freedom-cover.jpg", 1920, 1080],
+  "chester": ["assets/chester-cover.jpg", 700, 700],
   "fliponomics": ["assets/fliponomics-cover.jpg", 1920, 1080],
   "dread-pirate-robbie": ["assets/dread-pirate-robbie-cover.jpg", 1920, 1080],
 };
@@ -231,6 +233,7 @@ const LISTEN_PAGES = {
   "dread-pirate-robbie": "https://links.robbiep.net/dread-pirate-robbie/",
   "fliponomics": "https://links.robbiep.net/dread-pirate-robbie/",
   "freedom": "https://links.robbiep.net/freedom/",
+  "chester": "https://links.robbiep.net/chester/",
   "going-cashless": "https://links.robbiep.net/going-cashless/",
   "if-it-wasnt-for-satoshi": "https://links.robbiep.net/if-it-wasnt-for-satoshi/",
   "most-toxic-bitcoin-maxi": "https://links.robbiep.net/most-toxic-bitcoin-maxi/",
