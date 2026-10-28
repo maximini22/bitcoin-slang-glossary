@@ -37,16 +37,16 @@ const subEl = document.getElementById("sub");
 
 const SHARE_HOOK = "The Bitcoin Slang Dictionary, line by line, with notes on every term.";
 const SHARE_COVERS = {
-  "bitcoin-slang-remix": ["assets/cover.jpg", 1200, 675],
-  "most-toxic-bitcoin-maxi": ["assets/most-toxic-bitcoin-maxi-cover.jpg", 1920, 1080],
-  "diamond-hands-and-laser-eyes": ["assets/diamond-hands-and-laser-eyes-cover.jpg", 1920, 1080],
-  "all-time-high-lessons-of-regret": ["assets/all-time-high-lessons-of-regret-cover.jpg", 1920, 1080],
-  "going-cashless": ["assets/going-cashless-cover.jpg", 1920, 1080],
-  "if-it-wasnt-for-satoshi": ["assets/if-it-wasnt-for-satoshi-cover.jpg", 1920, 1080],
-  "freedom": ["assets/freedom-cover.jpg", 1920, 1080],
+  "bitcoin-slang-remix": ["assets/cover.jpg", 600, 600],
+  "most-toxic-bitcoin-maxi": ["assets/most-toxic-bitcoin-maxi-cover.jpg", 600, 600],
+  "diamond-hands-and-laser-eyes": ["assets/diamond-hands-and-laser-eyes-cover.jpg", 600, 600],
+  "all-time-high-lessons-of-regret": ["assets/all-time-high-lessons-of-regret-cover.jpg", 600, 600],
+  "going-cashless": ["assets/going-cashless-cover.jpg", 600, 600],
+  "if-it-wasnt-for-satoshi": ["assets/if-it-wasnt-for-satoshi-cover.jpg", 600, 600],
+  "freedom": ["assets/freedom-cover.jpg", 600, 600],
   "chester": ["assets/chester-cover.jpg", 700, 700],
-  "fliponomics": ["assets/fliponomics-cover.jpg", 1920, 1080],
-  "dread-pirate-robbie": ["assets/dread-pirate-robbie-cover.jpg", 1920, 1080],
+  "fliponomics": ["assets/fliponomics-cover.jpg", 600, 600],
+  "dread-pirate-robbie": ["assets/dread-pirate-robbie-cover.jpg", 600, 600],
 };
 
 function shareCopy(title) {
