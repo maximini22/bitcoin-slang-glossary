@@ -2,7 +2,7 @@
   {
     "id": "price-you-deserve",
     "phrase": "You buy bitcoin at the price you deserve",
-    "note": "A popular Bitcoin saying: the price you pay reflects how early you understood it. Missing out, or selling too soon, is the cost of learning late."
+    "note": "A popular Bitcoin saying: the price you pay mirrors how early you understood it. Buying late, or selling early, is the tuition of learning slowly."
   },
   {
     "id": "tuition",
@@ -12,47 +12,47 @@
   {
     "id": "dot-com",
     "phrase": "We saw the dot com bubble that bursted",
-    "note": "In the late 1990s investors poured money into internet start-ups. When the bubble burst from 2000, the tech-heavy Nasdaq lost nearly 80% and many companies vanished."
+    "note": "In the late 1990s investors piled into internet start-ups. When that bubble burst from 2000, the tech-heavy Nasdaq lost nearly 80% and many companies vanished."
   },
   {
     "id": "zero-sum",
-    "phrase": "And that\u2019s a zero sum game",
-    "note": "In a zero-sum game one player's gain is exactly another's loss. Chasing paper profits can work that way: digits change hands, nothing new is created."
+    "phrase": "And that’s a zero sum game",
+    "note": "In a zero-sum game one player's gain is exactly another's loss. Chasing paper profits can work that way: digits change hands and nothing new is created."
   },
   {
     "id": "too-big-to-fail",
-    "phrase": "It\u2019s too big to fail",
-    "note": "'Too big to fail' describes banks so large that governments rescue them rather than let them collapse, as in the 2008 bailouts. Bitcoin's first block quotes a headline about a bank bailout."
+    "phrase": "It’s too big to fail",
+    "note": "'Too big to fail' names banks so large that governments rescue them rather than let them collapse, as in the 2008 bailouts. Bitcoin's first block quotes a headline about a bank bailout."
   },
   {
     "id": "liquidity",
     "phrase": "Might sell with sell pressure\nBut no liquidity",
-    "note": "Sell pressure is a wave of people trying to sell. Liquidity is how easily you can sell without crashing the price. When liquidity dries up, sellers find no buyers at fair prices."
+    "note": "Sell pressure is a wave of people trying to exit. Liquidity is how easily you can sell without crashing the price. When liquidity dries up, sellers find no buyers at a fair price."
   },
   {
     "id": "owners-of-debt",
     "phrase": "Are straight up owners of debt",
-    "note": "In a debt-based system, lenders and bondholders get paid first. When companies fail, creditors are repaid before shareholders, and savers holding cash lose value to inflation."
+    "note": "In a debt-based system, lenders and bondholders get paid first. When firms fail, creditors sit ahead of shareholders, and cash savers quietly lose to inflation."
   },
   {
     "id": "lien",
-    "phrase": "Commercial lien that\u2019s a fatal error",
+    "phrase": "Commercial lien that’s a fatal error",
     "note": "A lien is a legal claim over someone's property until a debt is paid. Miss the payments and the lender can seize the asset: you own it only until you don't."
   },
   {
     "id": "hate-the-game",
     "phrase": "Hate the game and still a player",
-    "note": "A twist on 'don't hate the player, hate the game'. You can dislike the fiat money system and still live inside it, so learn its rules and play it better."
+    "note": "A twist on 'don't hate the player, hate the game'. You can dislike the fiat money system and still live inside it, so learn its rules and play them better."
   },
   {
     "id": "what-is-money",
-    "phrase": "Money don\u2019t grow on trees",
-    "note": "The history of money, from metal to paper to digital, runs through the 'Saylor Series': 17 long conversations between Michael Saylor and Robert Breedlove on the What is Money? podcast."
+    "phrase": "Money don’t grow on trees",
+    "note": "The history of money, from metal to paper to digital, runs through the Saylor Series: 17 long conversations between Michael Saylor and Robert Breedlove on the What is Money? podcast."
   },
   {
     "id": "metal",
     "phrase": "Before that, pressed out of metal",
-    "note": "For thousands of years money was metal: gold, silver and copper coins. The earliest known coins were struck in Lydia, in modern-day Turkey, more than 2,500 years ago."
+    "note": "Hard money started as metal. Gold, silver and copper coins carried value for thousands of years. The earliest known coins were struck in Lydia, in what is now Turkey, more than 2,500 years ago."
   },
   {
     "id": "paper-sheets",
@@ -62,56 +62,56 @@
   {
     "id": "promissory",
     "phrase": "Promissory notes were great receipts",
-    "note": "A promissory note is a written promise to pay. Early banknotes were exactly that: receipts redeemable for gold or silver on demand, until governments ended the link."
+    "note": "A promissory note is a written promise to pay. Early banknotes were exactly that: receipts redeemable for gold or silver on demand, until governments cut the link."
   },
   {
     "id": "bank-run",
     "phrase": "Until the bank run made them see",
-    "note": "A bank run is when many depositors withdraw at once, fearing the bank can't pay. Banks lend out most deposits, so they never hold enough cash to repay everyone at the same time."
+    "note": "A bank run is when many depositors withdraw at once, fearing the bank cannot pay. Banks lend out most deposits, so they never hold enough cash to repay everyone at the same time."
   },
   {
     "id": "restricted",
     "phrase": "Restricted access, leaky faucet",
-    "note": "Money held by someone else can be frozen or limited: restricted access. Inflation is the leaky faucet, value dripping out of savings so slowly most people never notice."
+    "note": "Money held by someone else can be frozen or capped: restricted access. Inflation is the leaky faucet, value dripping out of savings so slowly most people never notice."
   },
   {
     "id": "pyramid",
-    "phrase": "Insurance don\u2019t cover pyramid below",
-    "note": "A pyramid scheme pays early members with money from later ones and collapses when new money stops. Critics argue debt-based money has a similar shape, with the most exposed at the bottom."
+    "phrase": "Insurance don’t cover pyramid below",
+    "note": "A pyramid scheme pays early members with money from later ones and collapses when new money stops. Critics say debt-based money has a similar shape, with the most exposed at the bottom."
   },
   {
     "id": "penthouse",
     "phrase": "From penthouse down when the hotel floods",
-    "note": "New money enters the economy at the top, through banks and asset owners, before reaching everyone else. Economists call it the Cantillon effect: those first in line gain while the floors below absorb the damage."
+    "note": "New money enters at the top, through banks and asset owners, before it reaches everyone else. Economists call that the Cantillon effect: first in line gain while the floors below take the hit."
   },
   {
     "id": "sink",
-    "phrase": "Don\u2019t wanna let that sink in",
-    "note": "In October 2022, Elon Musk walked into Twitter's San Francisco headquarters carrying a bathroom sink, posting 'let that sink in!' days before closing his US$44 billion purchase of the company, now X."
+    "phrase": "Don’t wanna let that sink in",
+    "note": "In October 2022 Elon Musk walked into Twitter's San Francisco headquarters carrying a bathroom sink, posting 'let that sink in!' days before closing his US$44 billion purchase of the company, now X."
   },
   {
     "id": "paddle",
     "phrase": "Quick realize paddler missing",
-    "note": "A twist on 'up the creek without a paddle': stuck in trouble with no way to steer. Lose your savings in a crisis and you're adrift."
+    "note": "A twist on 'up the creek without a paddle': stuck in trouble with no way to steer. Lose your savings in a crisis and you are adrift."
   },
   {
     "id": "yeezy",
     "phrase": "They did me like how they reboot yeezy",
-    "note": "A nod to an internet conspiracy theory, mostly a meme, claiming Kanye West (Ye) was secretly replaced by a clone or body double. There is no evidence for it."
+    "note": "A nod to an internet conspiracy meme claiming Kanye West (Ye) was secretly replaced by a clone or body double. There is no evidence for it."
   },
   {
     "id": "vault",
-    "phrase": "Where\u2019s my money?\nIt\u2019s in the vault",
-    "note": "A bank vault holds only a small fraction of what depositors are owed. Most of 'your' money is a number in the bank's books, already lent out to someone else."
+    "phrase": "Where’s my money?\nIt’s in the vault",
+    "note": "A bank vault holds only a fraction of what depositors are owed. Most of 'your' money is a number on the bank's books, already lent out to someone else."
   },
   {
     "id": "maybe-tomorrow",
     "phrase": "Can I get it out now\nMaybe tomorrow",
-    "note": "Australian banks can make cash slow to reach: branches may need notice for large withdrawals, ATMs cap daily amounts, and staff may ask why you want your own money, citing scam and money-laundering checks."
+    "note": "In Australia, getting cash out of a bank is not always instant. Large withdrawals can need notice, ATMs cap how much you take per day, and staff may quiz you on why you want your own money, citing scam and money-laundering rules."
   },
   {
     "id": "my-money",
-    "phrase": "You know it\u2019s my money",
-    "note": "The Bitcoin answer is self-custody: hold your own keys and no teller, branch or policy can say 'maybe tomorrow'. Be your own bank."
+    "phrase": "You know it’s my money",
+    "note": "Self-custody is the Bitcoin reply: you hold the keys, so no teller, branch or bank policy gets to say 'maybe tomorrow'. Be your own bank."
   }
 ]
