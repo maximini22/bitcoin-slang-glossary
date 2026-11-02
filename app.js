@@ -147,6 +147,8 @@ function applyAnnotations(text, annotations) {
 }
 
 function showAnnotation(a) {
+  // Side panel is deprecated; kept null-safe for older markup that still has #phrase/#note.
+  if (!phraseEl || !noteEl) return;
   if (!a) {
     phraseEl.textContent = "";
     noteEl.innerHTML = '<p class="hint">Hover or tap a highlighted line.</p>';
@@ -203,25 +205,7 @@ async function boot() {
     return;
   }
 
-  lyricsEl.innerHTML = applyAnnotations(lyrics, annotations);
-
-  const byId = Object.fromEntries(annotations.map((a) => [a.id, a]));
-
-  lyricsEl.addEventListener("mouseover", (e) => {
-    const mark = e.target.closest("mark.ann");
-    if (!mark) return;
-    document.querySelectorAll("mark.ann.active").forEach((m) => m.classList.remove("active"));
-    mark.classList.add("active");
-    showAnnotation(byId[mark.dataset.id]);
-  });
-
-  lyricsEl.addEventListener("click", (e) => {
-    const mark = e.target.closest("mark.ann");
-    if (!mark) return;
-    document.querySelectorAll("mark.ann.active").forEach((m) => m.classList.remove("active"));
-    mark.classList.add("active");
-    showAnnotation(byId[mark.dataset.id]);
-  });
+  renderStatic(lyrics, annotations);
 }
 
 boot();
@@ -323,24 +307,11 @@ function renderMarkedLine(text, lineStart, marks) {
   return html;
 }
 
-async function renderRemix(lyrics, annotations) {
-  let lrcText = "";
-  try {
-    const res = await fetch(`songs/${slug}/lyrics.lrc`, { cache: "no-store" });
-    if (res.ok) lrcText = await res.text();
-  } catch (err) {
-    lrcText = "";
-  }
-
-  const items = parseDisplayLyrics(lyrics);
-  const timed = parseLrc(lrcText);
+// Builds one .lyric-line per lyric line, each followed by its own hidden .line-note
+// (opened under the line when tapped). `timed` is the parsed LRC, or null for songs
+// without synced lyrics (no "play song from here" button then).
+function buildLyricLines(items, annotations, timed) {
   const textItems = items.filter((item) => item.text);
-  if (!timed.length || timed.length !== textItems.length) {
-    lyricsEl.innerHTML = applyAnnotations(lyrics, annotations);
-    mountRemixPlayer([]);
-    return;
-  }
-
   const byId = Object.fromEntries(annotations.map((a) => [a.id, a]));
   const full = textItems.map((item) => item.text).join("\n");
   const marks = collectMarks(full, annotations);
@@ -348,12 +319,6 @@ async function renderRemix(lyrics, annotations) {
   const lines = [];
   let offset = 0;
   let timeIndex = 0;
-
-  const cta = document.createElement("button");
-  cta.type = "button";
-  cta.className = "read-along";
-  cta.textContent = "Play music and read along";
-  subEl.insertAdjacentElement("afterend", cta);
 
   for (const item of items) {
     if (item.section) {
@@ -363,11 +328,11 @@ async function renderRemix(lyrics, annotations) {
       frag.appendChild(label);
       continue;
     }
-    const entry = timed[timeIndex];
+    const entry = timed ? timed[timeIndex] : null;
     const el = document.createElement("div");
     el.className = "lyric-line";
     el.tabIndex = 0;
-    el.dataset.t = String(entry.t);
+    if (entry) el.dataset.t = String(entry.t);
     el.dataset.i = String(lines.length);
     el.innerHTML = renderMarkedLine(item.text, offset, marks);
     const ids = [];
@@ -378,6 +343,7 @@ async function renderRemix(lyrics, annotations) {
     }
     let note = null;
     if (ids.length) {
+      el.classList.add("has-ann");
       note = document.createElement("div");
       note.className = "line-note";
       note.hidden = true;
@@ -394,10 +360,6 @@ async function renderRemix(lyrics, annotations) {
         heading.textContent = ann.phrase;
         const body = document.createElement("p");
         body.textContent = ann.note;
-        const playHere = document.createElement("button");
-        playHere.type = "button";
-        playHere.className = "play-from";
-        playHere.textContent = "play song from here";
         entryNote.append(heading, body);
         if (ann.image) {
           const img = document.createElement("img");
@@ -406,18 +368,98 @@ async function renderRemix(lyrics, annotations) {
           img.alt = "";
           entryNote.append(img);
         }
-        entryNote.append(playHere);
+        if (entry) {
+          const playHere = document.createElement("button");
+          playHere.type = "button";
+          playHere.className = "play-from";
+          playHere.textContent = "play song from here";
+          entryNote.append(playHere);
+        }
         card.append(entryNote);
       }
       note.append(card);
     }
+    if (!entry && !note) el.removeAttribute("tabindex");
     frag.appendChild(el);
     if (note) frag.appendChild(note);
-    lines.push({ t: entry.t, el, note, anns });
+    lines.push({ t: entry ? entry.t : 0, el, note, anns });
     offset += item.text.length + 1;
     timeIndex += 1;
   }
+  return { frag, lines };
+}
 
+// Songs without synced lyrics: nothing shows until a highlighted line is tapped,
+// then its note opens directly under that line (one open at a time).
+function renderStatic(lyrics, annotations) {
+  const { frag, lines } = buildLyricLines(parseDisplayLyrics(lyrics), annotations, null);
+  lyricsEl.innerHTML = "";
+  lyricsEl.appendChild(frag);
+  let open = -1;
+  const close = () => {
+    if (open >= 0 && lines[open] && lines[open].note) {
+      lines[open].note.hidden = true;
+      lines[open].el.setAttribute("aria-expanded", "false");
+      lines[open].el.querySelectorAll("mark.ann.active").forEach((m) => m.classList.remove("active"));
+    }
+    open = -1;
+  };
+  const toggle = (i) => {
+    const line = lines[i];
+    if (!line || !line.note) return;
+    if (open === i) {
+      close();
+      return;
+    }
+    close();
+    line.note.hidden = false;
+    line.el.setAttribute("aria-expanded", "true");
+    line.el.querySelectorAll("mark.ann").forEach((m) => m.classList.add("active"));
+    open = i;
+  };
+  lyricsEl.addEventListener("click", (e) => {
+    const el = e.target.closest(".lyric-line");
+    if (!el || !lyricsEl.contains(el)) return;
+    toggle(Number(el.dataset.i));
+  });
+  lyricsEl.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const el = e.target.closest(".lyric-line");
+    if (!el || document.activeElement !== el) return;
+    e.preventDefault();
+    toggle(Number(el.dataset.i));
+  });
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".lyric-line, .line-note")) close();
+  });
+}
+
+
+async function renderRemix(lyrics, annotations) {
+  let lrcText = "";
+  try {
+    const res = await fetch(`songs/${slug}/lyrics.lrc`, { cache: "no-store" });
+    if (res.ok) lrcText = await res.text();
+  } catch (err) {
+    lrcText = "";
+  }
+
+  const items = parseDisplayLyrics(lyrics);
+  const timed = parseLrc(lrcText);
+  const textItems = items.filter((item) => item.text);
+  if (!timed.length || timed.length !== textItems.length) {
+    renderStatic(lyrics, annotations);
+    mountRemixPlayer([]);
+    return;
+  }
+
+  const cta = document.createElement("button");
+  cta.type = "button";
+  cta.className = "read-along";
+  cta.textContent = "Play music and read along";
+  subEl.insertAdjacentElement("afterend", cta);
+
+  const { frag, lines } = buildLyricLines(items, annotations, timed);
   lyricsEl.innerHTML = "";
   lyricsEl.appendChild(frag);
   mountRemixPlayer(lines);
@@ -850,25 +892,19 @@ function mountRemixPlayer(lines) {
 
   function hideNotes() {
     hideInline();
-    if (wideQuery.matches) clearSidePanel();
+    clearSidePanel();
   }
 
   function showLineNote(i) {
     const line = lines[i];
     if (!line) return;
-    if (wideQuery.matches) {
-      hideInline();
-      openNote = i;
-      if (line.anns.length) line.el.setAttribute("aria-expanded", "true");
-      renderSidePanel(i);
-      return;
-    }
     if (!line.note) {
       hideNotes();
       return;
     }
     if (openNote === i && !line.note.hidden) return;
     hideInline();
+    clearSidePanel();
     line.note.hidden = false;
     line.el.setAttribute("aria-expanded", "true");
     openNote = i;

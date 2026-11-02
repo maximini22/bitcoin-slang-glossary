@@ -42,7 +42,7 @@ h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 4.5vw
 
 .layout {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1fr;
   gap: 2rem;
   align-items: start;
 }
@@ -83,11 +83,13 @@ mark.ann.active {
 }
 
 .panel {
+  /* Side/bottom annotation panel retired — notes open under the tapped line. */
+  display: none !important;
   position: sticky;
   top: 1rem;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 0;
   padding: 1.25rem 1.35rem;
   min-height: 180px;
 }
@@ -326,22 +328,9 @@ mark.ann.active {
 @media (max-width: 800px) {
   .hero { grid-template-columns: 1fr; }
   .hero-art { max-width: 280px; }
-  .panel {
-    position: fixed;
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.75rem;
-    top: auto;
-    z-index: 3;
-    max-height: 34vh;
-    overflow: auto;
-    min-height: 0;
-    background: #1f1f24;
-    border-color: #3a3a44;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
-  }
-  .lyrics { padding-bottom: 38vh; }
+  /* .panel stays display:none; no bottom dock, no reserved lyric padding. */
 }
+
 
 /* Remix player only. Other songs never get body.has-player. */
 body.has-player .wrap {
@@ -359,7 +348,7 @@ body.has-player .read-along {
   font-weight: 600;
   font-size: 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 0.8rem 1.1rem;
   margin: 0 0 1.5rem;
   cursor: pointer;
@@ -375,7 +364,7 @@ body.has-player .lyric-line {
   color: inherit;
   padding: 0.42rem 0.4rem;
   margin: 0;
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -400,9 +389,10 @@ body.has-player .lyric-line:focus-visible {
 body.has-player .line-note { margin: 0.15rem 0.2rem 0.7rem; }
 body.has-player .line-note[hidden] { display: none; }
 body.has-player .line-note-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 10px;
+  background: var(--bg);
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset 3px 0 0 var(--accent);
   padding: 0.75rem 0.9rem 0.7rem;
 }
 body.has-player .line-note-entry + .line-note-entry {
@@ -667,23 +657,12 @@ body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
 }
 @media (min-width: 900px) {
   body.has-player .layout {
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: 1fr;
     gap: 2rem;
     align-items: start;
   }
-  body.has-player .panel {
-    display: block;
-    position: sticky;
-    top: 1.25rem;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    max-height: calc(100vh - 7.5rem);
-    overflow: auto;
-    z-index: 1;
-    box-shadow: none;
-  }
-  body.has-player .line-note { display: none; }
+  body.has-player .panel { display: none !important; }
+  body.has-player .line-note:not([hidden]) { display: block; }
   body.has-player .lyrics { padding-bottom: 0; }
   body.has-player .read-along {
     display: block;
@@ -691,29 +670,6 @@ body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
     margin-left: 0;
     margin-right: auto;
     margin-bottom: 1.5rem;
-  }
-  body.has-player .panel > .phrase:empty { display: none; }
-  body.has-player .panel-entry .phrase {
-    color: var(--text);
-    font-weight: 600;
-    margin: 0 0 0.45rem;
-  }
-  body.has-player .panel-entry p {
-    margin: 0;
-    color: #d2cec8;
-    line-height: 1.55;
-  }
-  body.has-player .panel-entry + .panel-entry {
-    margin-top: 0.9rem;
-    padding-top: 0.9rem;
-    border-top: 1px solid var(--line);
-  }
-  body.has-player .panel .note-fig {
-    display: block;
-    width: 100%;
-    margin-top: 0.75rem;
-    border-radius: 8px;
-    border: 1px solid var(--line);
   }
   body.has-player .player-vol {
     display: block;
@@ -908,12 +864,56 @@ body.has-player .lyrics .play-from:focus-visible { color: var(--accent); }
 body.has-player.is-playing .lyrics .play-from { display: none; }
 @media (min-width: 900px) {
   body.has-player .lyrics .line-note:not([hidden]) { display: block; }
+
+/* Under-line notes for all songs (player and static). Square corners, bitcoinslang palette. */
+.lyrics .line-note { margin: 6px 0 14px; }
+.lyrics .line-note[hidden] { display: none; }
+.lyrics .lyric-line.has-ann { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.lyrics .line-note-card {
+  background: var(--bg);
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset 3px 0 0 var(--accent);
+  padding: 14px 18px 14px 20px;
+}
+.lyrics .line-note-entry + .line-note-entry {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.lyrics .line-note-card h3 {
+  margin: 0 0 6px;
+  font-family: "Orbitron", "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  letter-spacing: 0.16rem;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.lyrics .line-note-card p {
+  margin: 0;
+  color: #d2cec8;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  font-weight: 400;
+}
+.lyrics .line-note-fig {
+  display: block;
+  width: 100%;
+  margin-top: 0.65rem;
+  border-radius: 0;
+  border: 1px solid var(--line);
+}
+.layout { grid-template-columns: 1fr; }
+
 }
 @media (max-width: 900px) {
   .lyrics { max-width: none; }
 }
 @media (max-width: 800px) {
-  body:not(.has-player) .lyrics { padding-bottom: 38vh; }
+  body:not(.has-player) .lyrics { padding-bottom: 1.5rem; }
 }
 @media (max-width: 600px) {
   .lyrics .section-label { margin: 40px 0 14px; }
