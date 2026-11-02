@@ -1,0 +1,17 @@
+name = "bitcoinslang-lrc-preview"
+main = "index.js"
+compatibility_date = "2026-10-27"
+account_id = "5c6d5b727098258f124ea45e456b0aa8"
+workers_dev = true
+
+[assets]
+directory = "../lrc-preview-deploy"
+binding = "ASSETS"
+run_worker_first = true
+
+[[r2_buckets]]
+binding = "AUDIO"
+bucket_name = "bitcoin-slang-audio"
+
+[secrets]
+required = [ "PREVIEW_PASSWORD" ]

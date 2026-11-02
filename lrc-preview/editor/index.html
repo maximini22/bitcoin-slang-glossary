@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>LRC editor — Bitcoin Slang</title>
+<link rel="stylesheet" href="/styles.css"/>
+<link rel="stylesheet" href="/editor/editor.css"/>
+</head>
+<body class="editor-page">
+<header class="ed-top">
+  <div class="ed-brand"><a href="/">LRC preview</a> · <span>Editor</span></div>
+  <label class="ed-song-label">
+    <span class="sr-only">Song</span>
+    <select id="song" aria-label="Song">
+      <optgroup label="Five packs">
+        <option value="circular-economy-scifi-world">circular-economy-scifi-world</option>
+        <option value="in-the-vault">in-the-vault</option>
+        <option value="rich-in-bitcoin" selected>rich-in-bitcoin</option>
+        <option value="radioactive-bitcoin-hope">radioactive-bitcoin-hope</option>
+        <option value="most-humble-fiat-minimalist">most-humble-fiat-minimalist</option>
+      </optgroup>
+      <optgroup label="Other preview">
+        <option value="bitcoin-slang-remix">bitcoin-slang-remix</option>
+        <option value="chester">chester</option>
+        <option value="fliponomics">fliponomics</option>
+        <option value="freedom">freedom</option>
+        <option value="going-cashless">going-cashless</option>
+        <option value="if-it-wasnt-for-satoshi">if-it-wasnt-for-satoshi</option>
+      </optgroup>
+    </select>
+  </label>
+</header>
+
+<section class="ed-transport" aria-label="Playback">
+  <div class="ed-time-row">
+    <span id="curTime">0:00.00</span>
+    <input id="seek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek"/>
+    <span id="durTime">0:00.00</span>
+  </div>
+  <div class="ed-btns">
+    <button type="button" id="btnBack" class="ed-btn" title="Back 2s">−2s</button>
+    <button type="button" id="btnPlay" class="ed-btn ed-btn-accent" title="Play/Pause">Play</button>
+    <button type="button" id="btnFwd" class="ed-btn" title="Forward 2s">+2s</button>
+    <button type="button" id="btnSpeed" class="ed-btn" title="Playback speed">1×</button>
+    <button type="button" id="btnUndo" class="ed-btn" title="Undo">Undo</button>
+  </div>
+  <button type="button" id="btnStamp" class="ed-stamp" title="Stamp current time on selected line (Space)">STAMP</button>
+  <p class="ed-hint">Space = stamp · tap line = select · double-tap = seek</p>
+</section>
+
+<section class="ed-actions" aria-label="Save">
+  <button type="button" id="btnSave" class="ed-btn ed-btn-accent">Save draft</button>
+  <button type="button" id="btnCopy" class="ed-btn">Copy text</button>
+  <button type="button" id="btnDownload" class="ed-btn">Download .lrc</button>
+  <button type="button" id="btnAddSection" class="ed-btn">+ Section</button>
+  <span id="status" class="ed-status" role="status"></span>
+</section>
+
+<audio id="audio" preload="metadata"></audio>
+
+<div id="lines" class="ed-lines" role="list" aria-label="Lyrics lines"></div>
+
+<script src="/editor/editor.js"></script>
+</body>
+</html>
