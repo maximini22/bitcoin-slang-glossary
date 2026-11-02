@@ -6,7 +6,7 @@
   },
   {
     "id": "stack-sats",
-    "phrase": "Stack satoshi\u2019s at whatever the cost",
+    "phrase": "Stack satoshi’s at whatever the cost",
     "note": "A satoshi, or 'sat', is the smallest unit of bitcoin: one hundred-millionth of a coin, named after creator Satoshi Nakamoto. Stacking sats means buying small amounts regularly, whatever the price."
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "id": "man-now",
-    "phrase": "Mummy look I\u2019m a man now",
+    "phrase": "Mummy look I’m a man now",
     "note": "Growing up the Bitcoin way: no handouts, no bailouts, just building your own stack and taking full responsibility for keeping it safe."
   },
   {
@@ -26,7 +26,7 @@
   },
   {
     "id": "when-sell",
-    "phrase": "When\u2019s a good time to sell?",
+    "phrase": "When’s a good time to sell?",
     "note": "Ask a long-term holder when to sell bitcoin and the stock answer is 'never'. They treat it as savings, and see fiat money, not bitcoin, as the thing worth spending."
   },
   {
@@ -51,7 +51,7 @@
   },
   {
     "id": "21-million",
-    "phrase": "It\u2019s 21 million\nMinus my stack",
+    "phrase": "It’s 21 million\nMinus my stack",
     "note": "Bitcoin's supply is capped at 21 million coins by its code. Subtract what's in your wallet and the rest is shared among everyone else; every coin you hold is one no one else can."
   },
   {
@@ -65,6 +65,11 @@
     "note": "Most traditional wealth sits in shares (equity) and bonds or loans (debt), all priced in currency that can be printed. The matrix is that system: assets built on other people's promises."
   },
   {
+    "id": "manlikekweks",
+    "phrase": "[Verse 3 - ManLikeKweks]",
+    "note": "ManLikeKweks is a Bitcoin rapper who features on Rich in Bitcoin with his own verse. He is on Nostr and X, and his music has since broadened into Christ-themed tracks."
+  },
+  {
     "id": "orange-pill",
     "phrase": "Orange pill the barber",
     "note": "To orange-pill someone is to convince them about Bitcoin, a play on the red pill in The Matrix. Bitcoiners love starting with everyday people, like the local barber."
@@ -76,7 +81,7 @@
   },
   {
     "id": "nostr",
-    "phrase": "When I\u2019m on Nostr\nZap zap zap zap zap zap",
+    "phrase": "When I’m on Nostr\nZap zap zap zap zap zap",
     "note": "Nostr is an open, decentralised social network where no company owns your account. 'Zaps' are small bitcoin tips sent instantly over the Lightning Network to posts you like."
   },
   {

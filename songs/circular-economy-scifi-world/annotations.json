@@ -6,7 +6,7 @@
   },
   {
     "id": "uncollateralised",
-    "phrase": "I take the debt\nIt\u2019s uncollateralised",
+    "phrase": "I take the debt\nIt’s uncollateralised",
     "note": "Strategy's convertible notes are unsecured: no specific asset is pledged as collateral. Lenders are betting on the company, and really on bitcoin, rather than holding a claim on property."
   },
   {
@@ -62,12 +62,12 @@
   {
     "id": "scifi-world",
     "phrase": "Circular economy scifi world",
-    "note": "Futurist Clif High uses 'sci-fi world' for a coming era he links to AI, precious metals, crypto and the end of fiat money. A circular economy is one where value keeps cycling around a closed network."
+    "note": "Clif High inspired the 'sci-fi world' part of the title. He runs the Web Bot, which scrapes online chatter for predictive linguistics, and has covered Bitcoin, crypto and the fiat 'crack-up boom' among other fringe topics. Years ago he pointed his Web Bot at crypto conversations in his crypto reports."
   },
   {
     "id": "bye-bye",
-    "phrase": "Bye bye Sherryl",
-    "note": "A farewell to a human left behind: wiped out in a dystopian future, or uploaded into the machine. Either way, gone into a matrix within a matrix."
+    "phrase": "Bye bye Sheryl",
+    "note": "A farewell to people left behind or uploaded into the machine. The song waves goodbye to Sheryl, then Neville, then Farrell as the circular sci-fi world takes over."
   },
   {
     "id": "jamie",
@@ -95,6 +95,16 @@
     "note": "The upload dream taken literally: the mind arrives as data while the physical body stays behind, or no longer exists at all."
   },
   {
+    "id": "robert-jr",
+    "phrase": "I created Robert Jr\nCalled it Mr Tony Stark",
+    "note": "Robbie's real name is Robert. In the song's story he builds an AI called Robert Jr, a digital mini-me (like Dr Evil's Mini-Me) that acts like the AI assistant Tony Stark talks to, and he names that assistant Tony Stark: a Russian-doll loop of names."
+  },
+  {
+    "id": "47-lines",
+    "phrase": "47 lines of code",
+    "note": "In the story, a tiny script that runs his errands and makes his art: the dream of AI agents doing chores. Not a claim about a real script."
+  },
+  {
     "id": "alice-bob",
     "phrase": "Bob went off and asked Alice",
     "note": "Alice and Bob are the classic placeholder names in cryptography, used to explain how two parties exchange secure messages. Bitcoin's technical writing still uses them."
@@ -106,13 +116,18 @@
   },
   {
     "id": "llm",
-    "phrase": "I\u2019m just LLM\u2019ing",
+    "phrase": "I’m just LLM’ing",
     "note": "An LLM, or large language model, is the AI behind chatbots like ChatGPT: software trained on huge amounts of text to predict and generate words."
   },
   {
     "id": "prompt-injection",
     "phrase": "Prompt injection a lil scary",
     "note": "Prompt injection is an attack where hidden instructions inside text or images trick an AI into ignoring its rules, leaking data or doing things its user never asked for."
+  },
+  {
+    "id": "rogan-rotisseries",
+    "phrase": "Rogan was left speechless\nIn reaction to human flesh\nOn rotisseries",
+    "note": "Joe Rogan left speechless at the dystopian image of human flesh on rotisseries. The lyric plays that shock for sci-fi horror; no specific episode is pinned here."
   },
   {
     "id": "agi",

@@ -1,7 +1,7 @@
 [
   {
     "id": "hard-drive",
-    "phrase": "I\u2019m digging through the trash\nFor a hard drive",
+    "phrase": "I’m digging through the trash\nFor a hard drive",
     "note": "Welsh IT worker James Howells threw away a hard drive holding about 8,000 bitcoin in 2013. He spent years trying to dig it out of a Newport landfill before UK courts ruled against him in 2025."
   },
   {
@@ -11,13 +11,18 @@
   },
   {
     "id": "12-words",
-    "phrase": "I\u2019ll remember 12 words\nFrom my past life",
+    "phrase": "I’ll remember 12 words\nFrom my past life",
     "note": "A seed phrase is a list of 12 or 24 words that can restore a bitcoin wallet anywhere. Remember them and the coins survive even if every device is lost."
+  },
+  {
+    "id": "walton-gspot",
+    "phrase": "I’m like Walton when he fucks\nG spot order filled",
+    "note": "Walton was a co-host on the Pleb Underground podcast who shared Bitcoin bars. He had a line punning 'G spot' (sexual innuendo) with 'spot order' (buying at the current market price), which Robbie borrowed."
   },
   {
     "id": "hopium",
     "phrase": "With hopium from my cup",
-    "note": "Hopium, hope plus opium, is crypto slang for comforting optimism that prices will bounce back, whether or not the evidence agrees."
+    "note": "Hopium, hope plus opium, is crypto slang for comforting optimism that the price will pump. Here it also nods to Pleb Underground's hopium segments, where the podcast looks at positive news that could lift bitcoin."
   },
   {
     "id": "fud",
@@ -26,7 +31,7 @@
   },
   {
     "id": "diamond-hands",
-    "phrase": "I\u2019ll sell my diamond hands\nTo buy more sats",
+    "phrase": "I’ll sell my diamond hands\nTo buy more sats",
     "note": "Diamond hands means holding through any crash without selling. Sats are satoshis, bitcoin's smallest unit: one hundred-millionth of a coin."
   },
   {
@@ -36,7 +41,7 @@
   },
   {
     "id": "bears",
-    "phrase": "If bears hibernate\nI\u2019m calling that a long nap",
+    "phrase": "If bears hibernate\nI’m calling that a long nap",
     "note": "A bear market is a long stretch of falling prices. When the bears 'hibernate', the market goes quiet and sideways, sometimes for months."
   },
   {
