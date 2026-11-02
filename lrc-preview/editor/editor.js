@@ -1,21 +1,31 @@
 (() => {
-  const FIVE = [
-    "circular-economy-scifi-world",
-    "in-the-vault",
-    "rich-in-bitcoin",
-    "radioactive-bitcoin-hope",
-    "most-humble-fiat-minimalist",
+  // All bitcoinslang.com songs that have lyrics in the glossary repo
+  const SONGS = [
+    { slug: "all-time-high-lessons-of-regret", title: "All Time High, Lessons of Regret", group: "Needs stamp" },
+    { slug: "bitcoin-slang-remix", title: "Bitcoin Slang Remix", group: "Has LRC" },
+    { slug: "chester", title: "Chester", group: "Has LRC" },
+    { slug: "circular-economy-scifi-world", title: "Circular Economy Scifi World", group: "Five packs" },
+    { slug: "diamond-hands-and-laser-eyes", title: "Diamond Hands & Laser Eyes", group: "Needs stamp" },
+    { slug: "dread-pirate-robbie", title: "Dread Pirate Robbie", group: "Needs stamp" },
+    { slug: "fliponomics", title: "Fliponomics", group: "Has LRC" },
+    { slug: "freedom", title: "Freedom", group: "Has LRC" },
+    { slug: "going-cashless", title: "Going Cashless", group: "Has LRC" },
+    { slug: "if-it-wasnt-for-satoshi", title: "If It Wasn't For Satoshi", group: "Has LRC" },
+    { slug: "in-the-vault", title: "In The Vault", group: "Five packs" },
+    { slug: "most-humble-fiat-minimalist", title: "Most Humble Fiat Minimalist", group: "Five packs" },
+    { slug: "most-toxic-bitcoin-maxi", title: "Most Toxic Bitcoin Maxi", group: "Needs stamp" },
+    { slug: "radioactive-bitcoin-hope", title: "Radioactive Bitcoin Hope", group: "Five packs" },
+    { slug: "rich-in-bitcoin", title: "Rich In Bitcoin", group: "Five packs" },
   ];
-  const OTHER = [
-    "bitcoin-slang-remix",
-    "chester",
-    "fliponomics",
-    "freedom",
-    "going-cashless",
-    "if-it-wasnt-for-satoshi",
-  ];
-  const ALL = [...FIVE, ...OTHER];
+  const ALL = SONGS.map((s) => s.slug);
+  const SONG_META = Object.fromEntries(SONGS.map((s) => [s.slug, s]));
+  let draftMeta = {}; // slug -> { name, stamp, uploaded, final }
+
   const LS_PREFIX = "lrc-editor-v1:";
+  const TAP_PREROLL = 1.0;
+  const NUDGE_PREROLL = 1.5;
+  const NUDGE_REPLAY_DEBOUNCE_MS = 300;
+  const SKIP_SEC = 5;
 
   const $ = (id) => document.getElementById(id);
   const songEl = $("song");
@@ -36,7 +46,8 @@
   let speeds = [1, 0.75];
   let speedIdx = 0;
   let suppressSeek = false;
-  let lastTap = { i: -1, t: 0 };
+  let nudgeReplayTimer = null;
+  let suppressTapPlay = false;
 
   function setStatus(msg, kind = "") {
     statusEl.textContent = msg || "";
@@ -92,6 +103,27 @@
       out.push({ kind: "section", time: null, text: line });
     }
     // Drop trailing blank that came from final newline (we'll re-add on serialize)
+    while (out.length && out[out.length - 1].kind === "blank" && out[out.length - 1].text === "") {
+      out.pop();
+    }
+    return out;
+  }
+
+  function parsePlainLyrics(text) {
+    const raw = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    const out = [];
+    for (const line of raw.split("\n")) {
+      if (line === "") {
+        out.push({ kind: "blank", time: null, text: "" });
+        continue;
+      }
+      // Bracket-only / section headers without a timestamp
+      if (/^\[[^\]]*\]\s*$/.test(line) || (/^\[/.test(line) && !/^\[\d{1,3}:\d{2}/.test(line))) {
+        out.push({ kind: "section", time: null, text: line });
+        continue;
+      }
+      out.push({ kind: "timed", time: null, text: line });
+    }
     while (out.length && out[out.length - 1].kind === "blank" && out[out.length - 1].text === "") {
       out.pop();
     }
@@ -168,6 +200,47 @@
     return idx;
   }
 
+  function playFrom(sec) {
+    const t = Math.max(0, sec);
+    audio.currentTime = t;
+    if (!suppressSeek) seekEl.value = String(t);
+    curTimeEl.textContent = displayClock(t);
+    const p = audio.play();
+    if (p && typeof p.catch === "function") {
+      p.catch((e) => setStatus(String(e.message || e), "err"));
+    }
+  }
+
+  function skipBy(delta) {
+    const dur = Number.isFinite(audio.duration) ? audio.duration : 0;
+    const next = Math.max(0, Math.min(dur || Infinity, (audio.currentTime || 0) + delta));
+    audio.currentTime = next;
+    if (!suppressSeek) seekEl.value = String(next);
+    curTimeEl.textContent = displayClock(next);
+  }
+
+  function scheduleNudgeReplay(lineTime) {
+    if (nudgeReplayTimer) clearTimeout(nudgeReplayTimer);
+    nudgeReplayTimer = setTimeout(() => {
+      nudgeReplayTimer = null;
+      if (lineTime == null || !Number.isFinite(lineTime)) return;
+      playFrom(Math.max(0, lineTime - NUDGE_PREROLL));
+    }, NUDGE_REPLAY_DEBOUNCE_MS);
+  }
+
+  function clearAllTimestamps() {
+    if (!window.confirm("Clear all timestamps? Lyric text stays; you can Undo.")) return;
+    pushUndo();
+    for (const row of lines) {
+      if (row.kind === "timed") row.time = null;
+    }
+    const first = nextStampable(0);
+    selected = first >= 0 ? first : 0;
+    persistLocal();
+    render();
+    setStatus("Cleared all timestamps", "ok");
+  }
+
   function render() {
     const frag = document.createDocumentFragment();
     const playIdx = activePlayIndex(audio.currentTime || 0);
@@ -197,6 +270,17 @@
         ta.addEventListener("focus", () => {
           selected = i;
           highlightOnly();
+        });
+        // First tap on lyric text = select + play; already-focused edits stay quiet.
+        // "Edit text" sets suppressTapPlay so focus alone does not restart audio.
+        ta.addEventListener("pointerdown", () => {
+          if (suppressTapPlay) return;
+          if (document.activeElement === ta) return;
+          selected = i;
+          highlightOnly();
+          if (lines[i].kind === "timed" && lines[i].time != null && Number.isFinite(lines[i].time)) {
+            playFrom(Math.max(0, lines[i].time - TAP_PREROLL));
+          }
         });
         ta.addEventListener("input", () => {
           pushUndo();
@@ -246,6 +330,11 @@
           persistLocal();
           render();
         });
+        mk("Edit text", () => {
+          suppressTapPlay = true;
+          focusText(i);
+          setTimeout(() => { suppressTapPlay = false; }, 0);
+        });
       }
       mk("Insert below", () => {
         pushUndo();
@@ -265,20 +354,14 @@
       }, "warn");
       div.appendChild(tools);
 
+      // Single tap on row chrome (not textarea/button): select + play with ~1s pre-roll
       div.addEventListener("click", (e) => {
         if (e.target.closest("textarea") || e.target.closest("button")) return;
-        const now = Date.now();
-        if (lastTap.i === i && now - lastTap.t < 350) {
-          // double tap -> seek
-          if (lines[i].kind === "timed" && lines[i].time != null) {
-            audio.currentTime = Math.max(0, lines[i].time);
-          }
-          lastTap = { i: -1, t: 0 };
-        } else {
-          lastTap = { i, t: now };
-        }
         selected = i;
         highlightOnly();
+        if (lines[i].kind === "timed" && lines[i].time != null && Number.isFinite(lines[i].time)) {
+          playFrom(Math.max(0, lines[i].time - TAP_PREROLL));
+        }
       });
 
       frag.appendChild(div);
@@ -315,6 +398,7 @@
     row.time = Math.max(0, Math.round((base + delta) * 100) / 100);
     persistLocal();
     render();
+    scheduleNudgeReplay(row.time);
   }
 
   function nextStampable(from) {
@@ -386,11 +470,19 @@
     } catch (_) {}
 
     if (!text) {
-      text = await fetchText(`/songs/${slug}/lyrics.lrc`);
-      sourceLabel = "repo lyrics.lrc";
+      try {
+        text = await fetchText(`/songs/${slug}/lyrics.lrc`);
+        sourceLabel = "repo lyrics.lrc";
+        lines = parseLrc(text);
+      } catch (_) {
+        text = await fetchText(`/songs/${slug}/lyrics.txt`);
+        sourceLabel = "repo lyrics.txt (untimed)";
+        lines = parsePlainLyrics(text);
+      }
+    } else {
+      lines = parseLrc(text);
     }
 
-    lines = parseLrc(text);
     selected = nextStampable(0);
     if (selected < 0) selected = 0;
     undoStack = [];
@@ -413,8 +505,9 @@
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-      sourceLabel = `R2 draft ${data.name}`;
-      setStatus(`Saved ${data.key}`, "ok");
+      sourceLabel = `R2 draft ${data.name} (final)`;
+      setStatus(`Saved ${data.key} — final for push`, "ok");
+      await refreshDraftMeta();
       return data;
     } catch (e) {
       setStatus(`Save failed: ${e.message}`, "err");
@@ -451,6 +544,51 @@
     focusText(selected);
   }
 
+
+  function formatDraftLabel(meta) {
+    if (!meta) return "";
+    // stamp is YYYYMMDD-HHMMSS in Perth
+    const s = meta.stamp || (meta.name || "").replace(/\.lrc$/, "");
+    if (/^\d{8}-\d{6}$/.test(s)) {
+      const y = s.slice(0, 4), mo = s.slice(4, 6), da = s.slice(6, 8);
+      return ` · saved ${y}-${mo}-${da} (final)`;
+    }
+    return ` · saved ${s} (final)`;
+  }
+
+  function rebuildSongSelect(preferred) {
+    const keep = preferred || songEl.value || "rich-in-bitcoin";
+    const groups = {};
+    for (const s of SONGS) {
+      (groups[s.group] ||= []).push(s);
+    }
+    const order = ["Five packs", "Has LRC", "Needs stamp"];
+    songEl.innerHTML = "";
+    for (const g of order) {
+      if (!groups[g]) continue;
+      const og = document.createElement("optgroup");
+      og.label = g;
+      for (const s of groups[g]) {
+        const opt = document.createElement("option");
+        opt.value = s.slug;
+        opt.textContent = s.title + formatDraftLabel(draftMeta[s.slug]);
+        og.appendChild(opt);
+      }
+      songEl.appendChild(og);
+    }
+    if (ALL.includes(keep)) songEl.value = keep;
+  }
+
+  async function refreshDraftMeta() {
+    try {
+      const res = await fetch("/api/lrc-drafts", { credentials: "same-origin" });
+      if (!res.ok) return;
+      const data = await res.json();
+      draftMeta = data.drafts || {};
+      rebuildSongSelect(songEl.value);
+    } catch (_) {}
+  }
+
   // Transport
   btnPlay.addEventListener("click", () => {
     if (audio.paused) {
@@ -459,12 +597,8 @@
       audio.pause();
     }
   });
-  $("btnBack").addEventListener("click", () => {
-    audio.currentTime = Math.max(0, (audio.currentTime || 0) - 2);
-  });
-  $("btnFwd").addEventListener("click", () => {
-    audio.currentTime = Math.min(audio.duration || 0, (audio.currentTime || 0) + 2);
-  });
+  $("btnBack").addEventListener("click", () => skipBy(-SKIP_SEC));
+  $("btnFwd").addEventListener("click", () => skipBy(SKIP_SEC));
   btnSpeed.addEventListener("click", () => {
     speedIdx = (speedIdx + 1) % speeds.length;
     audio.playbackRate = speeds[speedIdx];
@@ -476,6 +610,7 @@
   $("btnCopy").addEventListener("click", copyText);
   $("btnDownload").addEventListener("click", downloadLrc);
   $("btnAddSection").addEventListener("click", addSection);
+  $("btnClearTimes").addEventListener("click", clearAllTimestamps);
 
   seekEl.addEventListener("input", () => {
     suppressSeek = true;
@@ -517,16 +652,26 @@
   });
 
   window.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) || "";
+    const inField = tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT";
     if (e.code === "Space" && !e.repeat) {
-      const tag = (e.target && e.target.tagName) || "";
-      if (tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT") return;
+      if (inField) return;
       e.preventDefault();
       stamp();
     }
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z") {
-      if ((e.target && e.target.tagName) === "TEXTAREA") return;
+      if (tag === "TEXTAREA") return;
       e.preventDefault();
       undo();
+    }
+    if (!inField && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        skipBy(-SKIP_SEC);
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        skipBy(SKIP_SEC);
+      }
     }
   });
 
@@ -535,16 +680,30 @@
     get lines() {
       return lines;
     },
+    get selected() {
+      return selected;
+    },
     serialize: () => serializeLrc(lines),
     stamp,
     saveDraft,
     loadSong,
     nudge,
+    clearAllTimestamps,
+    skipBy,
+    playFrom,
     ALL,
+    SONGS,
+    refreshDraftMeta,
+    draftMeta: () => draftMeta,
   };
 
+  rebuildSongSelect("rich-in-bitcoin");
   const params = new URLSearchParams(location.search);
   const initial = params.get("song");
   if (initial && ALL.includes(initial)) songEl.value = initial;
-  loadSong(songEl.value).catch((e) => setStatus(String(e.message || e), "err"));
+  refreshDraftMeta()
+    .catch(() => {})
+    .finally(() => {
+      loadSong(songEl.value).catch((e) => setStatus(String(e.message || e), "err"));
+    });
 })();

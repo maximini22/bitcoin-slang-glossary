@@ -14,23 +14,10 @@
   <label class="ed-song-label">
     <span class="sr-only">Song</span>
     <select id="song" aria-label="Song">
-      <optgroup label="Five packs">
-        <option value="circular-economy-scifi-world">circular-economy-scifi-world</option>
-        <option value="in-the-vault">in-the-vault</option>
-        <option value="rich-in-bitcoin" selected>rich-in-bitcoin</option>
-        <option value="radioactive-bitcoin-hope">radioactive-bitcoin-hope</option>
-        <option value="most-humble-fiat-minimalist">most-humble-fiat-minimalist</option>
-      </optgroup>
-      <optgroup label="Other preview">
-        <option value="bitcoin-slang-remix">bitcoin-slang-remix</option>
-        <option value="chester">chester</option>
-        <option value="fliponomics">fliponomics</option>
-        <option value="freedom">freedom</option>
-        <option value="going-cashless">going-cashless</option>
-        <option value="if-it-wasnt-for-satoshi">if-it-wasnt-for-satoshi</option>
-      </optgroup>
+      <!-- filled by editor.js -->
     </select>
   </label>
+  <p class="ed-final-note">Latest R2 draft per song is the <strong>final</strong> that will be pushed.</p>
 </header>
 
 <section class="ed-transport" aria-label="Playback">
@@ -40,14 +27,14 @@
     <span id="durTime">0:00.00</span>
   </div>
   <div class="ed-btns">
-    <button type="button" id="btnBack" class="ed-btn" title="Back 2s">−2s</button>
+    <button type="button" id="btnBack" class="ed-btn" title="Back 5s (←)">−5s</button>
     <button type="button" id="btnPlay" class="ed-btn ed-btn-accent" title="Play/Pause">Play</button>
-    <button type="button" id="btnFwd" class="ed-btn" title="Forward 2s">+2s</button>
+    <button type="button" id="btnFwd" class="ed-btn" title="Forward 5s (→)">+5s</button>
     <button type="button" id="btnSpeed" class="ed-btn" title="Playback speed">1×</button>
     <button type="button" id="btnUndo" class="ed-btn" title="Undo">Undo</button>
   </div>
   <button type="button" id="btnStamp" class="ed-stamp" title="Stamp current time on selected line (Space)">STAMP</button>
-  <p class="ed-hint">Space = stamp · tap line = select · double-tap = seek</p>
+  <p class="ed-hint">Space = stamp · tap line = play from there · ←/→ = ±5s · Edit text in the field</p>
 </section>
 
 <section class="ed-actions" aria-label="Save">
@@ -55,6 +42,7 @@
   <button type="button" id="btnCopy" class="ed-btn">Copy text</button>
   <button type="button" id="btnDownload" class="ed-btn">Download .lrc</button>
   <button type="button" id="btnAddSection" class="ed-btn">+ Section</button>
+  <button type="button" id="btnClearTimes" class="ed-btn ed-btn-warn" title="Blank every timestamp, keep lyric text">Clear all timestamps</button>
   <span id="status" class="ed-status" role="status"></span>
 </section>
 

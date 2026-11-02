@@ -54,12 +54,42 @@ function perthStamp(d = new Date()) {
   return `${y}${mo}${da}-${h}${mi}${s}`;
 }
 
-async function audio(req, env, url) {
-  if (!/^\/preview-audio\/[a-z0-9-]+\.mp3$/.test(url.pathname)) {
-    return withHeaders(new Response("Not found", { status: 404 }));
+function pickMainMp3(keys) {
+  const scored = [];
+  for (const key of keys) {
+    if (!key.toLowerCase().endsWith(".mp3")) continue;
+    const name = key.split("/").pop().toLowerCase();
+    let score = 10;
+    if (/(instrumental|acapella|a\s*cappella|radio\s*edit|clean\s*edit)/i.test(name)) score -= 20;
+    scored.push({ key, score });
   }
-  const res = await env.ASSETS.fetch(new Request(url.toString(), { method: "GET" }));
-  if (!res.ok) return withHeaders(res);
+  scored.sort((a, b) => b.score - a.score || a.key.localeCompare(b.key));
+  return scored.length ? scored[0].key : null;
+}
+
+async function resolveR2AudioKey(env, slug) {
+  if (!env.AUDIO) return null;
+  // Prefer 320 kbps folder, then 320a, then slug root
+  for (const prefix of [`downloads/${slug}/320/`, `downloads/${slug}/320a/`, `downloads/${slug}/`]) {
+    const keys = [];
+    let cursor;
+    do {
+      const listed = await env.AUDIO.list({ prefix, cursor, limit: 100 });
+      for (const obj of listed.objects || []) keys.push(obj.key);
+      cursor = listed.truncated ? listed.cursor : undefined;
+    } while (cursor);
+    // Only consider keys directly under this prefix (not deeper unexpected paths for root)
+    const direct = keys.filter((k) => {
+      const rest = k.slice(prefix.length);
+      return rest && !rest.includes("/");
+    });
+    const picked = pickMainMp3(direct.length ? direct : keys);
+    if (picked) return picked;
+  }
+  return null;
+}
+
+async function streamAudioBody(req, obj, sizeHint) {
   const base = {
     "Content-Type": "audio/mpeg",
     "Accept-Ranges": "bytes",
@@ -67,34 +97,94 @@ async function audio(req, env, url) {
   };
   const range = req.headers.get("Range");
   const head = req.method === "HEAD";
+  const size = sizeHint != null ? sizeHint : (obj.size != null ? obj.size : null);
+
   if (!range) {
-    const len = res.headers.get("Content-Length");
-    if (len) base["Content-Length"] = len;
-    return withHeaders(new Response(head ? null : res.body, { status: 200, headers: base }));
+    if (size != null) base["Content-Length"] = String(size);
+    return withHeaders(new Response(head ? null : obj.body, { status: 200, headers: base }));
   }
-  const buf = await res.arrayBuffer();
-  const size = buf.byteLength;
+
+  // For ranged requests, buffer (preview tracks are small enough)
+  const buf = await obj.arrayBuffer();
+  const sz = buf.byteLength;
   const m = /^bytes=(\d*)-(\d*)$/.exec(range.trim());
   let start, end;
   if (m && m[1] !== "") {
     start = +m[1];
-    end = m[2] !== "" ? Math.min(+m[2], size - 1) : size - 1;
+    end = m[2] !== "" ? Math.min(+m[2], sz - 1) : sz - 1;
   } else if (m && m[2] !== "") {
-    start = Math.max(0, size - +m[2]);
-    end = size - 1;
+    start = Math.max(0, sz - +m[2]);
+    end = sz - 1;
   }
-  if (!m || start > end || start >= size) {
-    return withHeaders(new Response(null, { status: 416, headers: { "Content-Range": `bytes */${size}` } }));
+  if (!m || start > end || start >= sz) {
+    return withHeaders(new Response(null, { status: 416, headers: { "Content-Range": `bytes */${sz}` } }));
   }
   const part = buf.slice(start, end + 1);
   return withHeaders(new Response(head ? null : part, {
     status: 206,
     headers: {
       ...base,
-      "Content-Range": `bytes ${start}-${end}/${size}`,
+      "Content-Range": `bytes ${start}-${end}/${sz}`,
       "Content-Length": String(part.byteLength),
     },
   }));
+}
+
+async function audio(req, env, url) {
+  const mPath = /^\/preview-audio\/([a-z0-9-]+)\.mp3$/.exec(url.pathname);
+  if (!mPath) {
+    return withHeaders(new Response("Not found", { status: 404 }));
+  }
+  const slug = mPath[1];
+
+  // Prefer Workers Assets copy when present
+  const assetRes = await env.ASSETS.fetch(new Request(url.toString(), { method: "GET" }));
+  if (assetRes.ok) {
+    const base = {
+      "Content-Type": "audio/mpeg",
+      "Accept-Ranges": "bytes",
+      "Content-Disposition": "inline",
+    };
+    const range = req.headers.get("Range");
+    const head = req.method === "HEAD";
+    if (!range) {
+      const len = assetRes.headers.get("Content-Length");
+      if (len) base["Content-Length"] = len;
+      return withHeaders(new Response(head ? null : assetRes.body, { status: 200, headers: base }));
+    }
+    const buf = await assetRes.arrayBuffer();
+    const size = buf.byteLength;
+    const m = /^bytes=(\d*)-(\d*)$/.exec(range.trim());
+    let start, end;
+    if (m && m[1] !== "") {
+      start = +m[1];
+      end = m[2] !== "" ? Math.min(+m[2], size - 1) : size - 1;
+    } else if (m && m[2] !== "") {
+      start = Math.max(0, size - +m[2]);
+      end = size - 1;
+    }
+    if (!m || start > end || start >= size) {
+      return withHeaders(new Response(null, { status: 416, headers: { "Content-Range": `bytes */${size}` } }));
+    }
+    const part = buf.slice(start, end + 1);
+    return withHeaders(new Response(head ? null : part, {
+      status: 206,
+      headers: {
+        ...base,
+        "Content-Range": `bytes ${start}-${end}/${size}`,
+        "Content-Length": String(part.byteLength),
+      },
+    }));
+  }
+
+  // Fall back to R2 downloads/<slug>/…
+  const key = await resolveR2AudioKey(env, slug);
+  if (!key) return withHeaders(new Response("Audio not found", { status: 404 }));
+  const obj = await env.AUDIO.get(key);
+  if (!obj) return withHeaders(new Response("Audio not found", { status: 404 }));
+  const res = await streamAudioBody(req, obj, obj.size);
+  res.headers.set("X-Audio-Source", `r2:${key}`);
+  return res;
 }
 
 async function listDraftKeys(env, slug) {
@@ -112,10 +202,45 @@ async function listDraftKeys(env, slug) {
   return keys;
 }
 
+async function listAllLatestDrafts(env) {
+  const prefix = "lrc-drafts/";
+  const bySlug = {};
+  let cursor;
+  do {
+    const listed = await env.AUDIO.list({ prefix, cursor, limit: 1000 });
+    for (const obj of listed.objects || []) {
+      const m = DRAFT_KEY_RE.exec(obj.key);
+      if (!m) continue;
+      const slug = m[1];
+      const stamp = m[2];
+      const prev = bySlug[slug];
+      if (!prev || stamp > prev.stamp) {
+        bySlug[slug] = {
+          slug,
+          stamp,
+          key: obj.key,
+          name: `${stamp}.lrc`,
+          uploaded: obj.uploaded ? obj.uploaded.toISOString() : null,
+          final: true,
+        };
+      }
+    }
+    cursor = listed.truncated ? listed.cursor : undefined;
+  } while (cursor);
+  return bySlug;
+}
+
 async function handleApi(req, env, url) {
   if (!env.AUDIO) return json({ error: "R2 binding missing" }, 500);
 
-  // GET /api/lrc-drafts/:slug  -> latest draft text + meta (404 if none)
+  // GET /api/lrc-drafts  -> latest draft meta per slug (for picker labels)
+  if (url.pathname === "/api/lrc-drafts" || url.pathname === "/api/lrc-drafts/") {
+    if (req.method !== "GET") return json({ error: "Method not allowed" }, 405);
+    const drafts = await listAllLatestDrafts(env);
+    return json({ drafts, note: "Latest draft per song is the final that will be pushed." });
+  }
+
+  // GET /api/lrc-drafts/:slug  -> latest draft text + meta
   // POST /api/lrc-drafts/:slug -> save body as new draft
   // DELETE /api/lrc-drafts/:slug/:stamp -> delete one draft (test cleanup)
   const m = url.pathname.match(/^\/api\/lrc-drafts\/([a-z0-9-]+)(?:\/(\d{8}-\d{6}))?\/?$/);
@@ -138,8 +263,10 @@ async function handleApi(req, env, url) {
         name,
         uploaded: obj.uploaded ? obj.uploaded.toISOString() : null,
         text,
+        final: true,
       },
       drafts: keys.map((k) => k.split("/").pop()),
+      note: "Latest draft is the final that will be pushed.",
     });
   }
 
@@ -164,7 +291,7 @@ async function handleApi(req, env, url) {
       httpMetadata: { contentType: "text/plain; charset=utf-8" },
       customMetadata: { slug, source: "lrc-preview-editor" },
     });
-    return json({ ok: true, key, name: `${ts}.lrc` });
+    return json({ ok: true, key, name: `${ts}.lrc`, final: true });
   }
 
   if (req.method === "DELETE" && stamp) {
@@ -199,7 +326,7 @@ export default {
     const ok = (await safeEqual(user, USER)) & (await safeEqual(pass, pw));
     if (!ok) return deny();
 
-    if (url.pathname.startsWith("/api/lrc-drafts/")) {
+    if (url.pathname === "/api/lrc-drafts" || url.pathname.startsWith("/api/lrc-drafts/")) {
       try {
         return await handleApi(req, env, url);
       } catch (e) {

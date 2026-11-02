@@ -112,6 +112,10 @@
 }
 .ed-btn-accent:active { filter: brightness(0.92); }
 .ed-btn:disabled { opacity: 0.4; cursor: default; }
+.ed-btn-warn {
+  color: #e57373;
+  border-color: #5a3030;
+}
 
 .ed-stamp {
   width: 100%;
@@ -274,3 +278,11 @@
   .ed-btns { grid-template-columns: repeat(3, 1fr); }
   .ed-stamp { min-height: 72px; font-size: 1.5rem; }
 }
+
+.ed-final-note {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+.ed-final-note strong { color: var(--accent); font-weight: 700; }
