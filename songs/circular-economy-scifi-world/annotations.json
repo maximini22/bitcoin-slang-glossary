@@ -1,0 +1,167 @@
+[
+  {
+    "id": "one-more",
+    "phrase": "I just wanna buy myself one more",
+    "note": "The 'one more' mindset of corporate bitcoin treasuries. Strategy (formerly MicroStrategy), led by Michael Saylor, kept announcing fresh bitcoin purchases through the 2024-25 bull run, funded by selling shares and borrowing."
+  },
+  {
+    "id": "uncollateralised",
+    "phrase": "I take the debt\nIt\u2019s uncollateralised",
+    "note": "Strategy's convertible notes are unsecured: no specific asset is pledged as collateral. Lenders are betting on the company, and really on bitcoin, rather than holding a claim on property."
+  },
+  {
+    "id": "print-more-stock",
+    "phrase": "I print more stock",
+    "note": "Companies can raise cash by issuing new shares, often through an 'at-the-market' program that sells stock gradually. Strategy used this alongside debt to buy bitcoin, diluting existing shareholders."
+  },
+  {
+    "id": "convertible-bond",
+    "phrase": "Convertible bond",
+    "note": "A convertible bond is a loan that can turn into company shares if the share price rises enough. In November 2024 Strategy sold US$3 billion of these notes and used the money to buy bitcoin."
+  },
+  {
+    "id": "zero-interest",
+    "phrase": "Zero interest",
+    "note": "Those notes paid 0% interest. Investors gave up regular payments for the chance to convert into shares later, which made it very cheap money for buying bitcoin."
+  },
+  {
+    "id": "fiat-glitch",
+    "phrase": "fiat funny money glitch",
+    "note": "Fiat money is government-issued currency backed by no commodity. Borrowing it at zero interest to buy a scarce asset looks like a glitch: the debt is owed in money that keeps losing value."
+  },
+  {
+    "id": "nasdaq",
+    "phrase": "We in the Nasdaq",
+    "note": "Strategy trades on the Nasdaq stock exchange under the ticker MSTR, giving ordinary share investors indirect exposure to bitcoin."
+  },
+  {
+    "id": "meme-stock",
+    "phrase": "Stock ticker now is a meme",
+    "note": "A meme stock trades on online hype and community excitement as much as on business results. MSTR became a retail-trader favourite, often treated as a turbocharged bet on bitcoin."
+  },
+  {
+    "id": "etf-inflows",
+    "phrase": "The ETFs got the inflows",
+    "note": "US spot bitcoin ETFs began trading in January 2024, letting people buy bitcoin exposure through ordinary brokerage and retirement accounts. They took in roughly US$36 billion of net inflows in their first year."
+  },
+  {
+    "id": "orange",
+    "phrase": "To the orange blingy",
+    "note": "Orange is Bitcoin's signature colour, from its logo. Retirees getting exposed to 'the orange' means pension and retirement funds quietly holding bitcoin through ETFs, sometimes without savers realising."
+  },
+  {
+    "id": "upload-brain",
+    "phrase": "Upload your brain to the AI nearest me",
+    "note": "Mind uploading, copying a person's mind into a computer, is still science fiction. Real brain-computer interfaces are far more limited: Neuralink's first human patient, implanted in 2024, moves a cursor by thought."
+  },
+  {
+    "id": "sandbox",
+    "phrase": "Put you in a sandbox",
+    "note": "In computing, a sandbox is a sealed-off environment where software runs without touching the real system. For an uploaded mind, it is a digital enclosure: a simulation inside a simulation."
+  },
+  {
+    "id": "scifi-world",
+    "phrase": "Circular economy scifi world",
+    "note": "Futurist Clif High uses 'sci-fi world' for a coming era he links to AI, precious metals, crypto and the end of fiat money. A circular economy is one where value keeps cycling around a closed network."
+  },
+  {
+    "id": "bye-bye",
+    "phrase": "Bye bye Sherryl",
+    "note": "A farewell to a human left behind: wiped out in a dystopian future, or uploaded into the machine. Either way, gone into a matrix within a matrix."
+  },
+  {
+    "id": "jamie",
+    "phrase": "Jamie make me really liquid",
+    "note": "Jamie Dimon, CEO of JPMorgan Chase, once called bitcoin a 'fraud'. Being liquid means having cash, or assets easily turned into cash, the very service big banks sell."
+  },
+  {
+    "id": "mark",
+    "phrase": "Mark make a holographic",
+    "note": "Mark Zuckerberg's Meta is building augmented-reality glasses. In 2024 it showed Orion, a prototype that projects holographic images over the real world."
+  },
+  {
+    "id": "altman",
+    "phrase": "Altman sell me out a bot",
+    "note": "Sam Altman leads OpenAI, the company behind ChatGPT. AI chatbots and assistants are now sold to the public by monthly subscription."
+  },
+  {
+    "id": "mars",
+    "phrase": "Elon let me go to Mars",
+    "note": "Elon Musk's SpaceX is developing its Starship rocket with the stated goal of carrying people to Mars."
+  },
+  {
+    "id": "without-body",
+    "phrase": "I got there without any body",
+    "note": "The upload dream taken literally: the mind arrives as data while the physical body stays behind, or no longer exists at all."
+  },
+  {
+    "id": "alice-bob",
+    "phrase": "Bob went off and asked Alice",
+    "note": "Alice and Bob are the classic placeholder names in cryptography, used to explain how two parties exchange secure messages. Bitcoin's technical writing still uses them."
+  },
+  {
+    "id": "captcha",
+    "phrase": "Capture code",
+    "note": "A CAPTCHA is the puzzle websites use to check you're human, like picking every square with a traffic light. Modern AI can often solve them, which defeats the point."
+  },
+  {
+    "id": "llm",
+    "phrase": "I\u2019m just LLM\u2019ing",
+    "note": "An LLM, or large language model, is the AI behind chatbots like ChatGPT: software trained on huge amounts of text to predict and generate words."
+  },
+  {
+    "id": "prompt-injection",
+    "phrase": "Prompt injection a lil scary",
+    "note": "Prompt injection is an attack where hidden instructions inside text or images trick an AI into ignoring its rules, leaking data or doing things its user never asked for."
+  },
+  {
+    "id": "agi",
+    "phrase": "AGI dress casual",
+    "note": "AGI, or artificial general intelligence, is hypothetical AI that could match humans at almost any task, not just one narrow job."
+  },
+  {
+    "id": "solvent",
+    "phrase": "Computer code stay solvent\nLonger than these human beings\nCan be rational",
+    "note": "Flips an old market saying often credited to economist John Maynard Keynes: 'The market can remain irrational longer than you can remain solvent.' Here the machines outlast human patience."
+  },
+  {
+    "id": "immortal",
+    "phrase": "Cause I just wanna be immortal",
+    "note": "Radical life extension is a real Silicon Valley pursuit. Billionaire Peter Thiel pledged US$3.5 million to the Methuselah Foundation in 2006 to fund research aimed at reversing ageing."
+  },
+  {
+    "id": "nanotech",
+    "phrase": "In nano tech regeneration",
+    "note": "Regenerative medicine aims to repair or replace damaged tissue; nanotechnology engineers materials at the scale of molecules. Both feature heavily in anti-ageing research and its sci-fi promises."
+  },
+  {
+    "id": "ath",
+    "phrase": "Secure the bag\nAt an all time high",
+    "note": "An all-time high is the highest price an asset has ever reached. Bitcoin set a record of about US$126,000 on 6 October 2025. Securing the bag means cashing in at the top."
+  },
+  {
+    "id": "pound-flesh",
+    "phrase": "For a pound of the flesh",
+    "note": "From Shakespeare's The Merchant of Venice, where a lender demands a pound of flesh as payment. It means a harsh price paid in full, here, quite literally, for a new body."
+  },
+  {
+    "id": "bioprint",
+    "phrase": "Printed and woven inside of the lab",
+    "note": "Bioprinting uses 3D printers loaded with living cells to build tissue layer by layer. Simple tissues can be printed today; working organs and limbs remain experimental."
+  },
+  {
+    "id": "chad",
+    "phrase": "I am a chad",
+    "note": "'Chad' is internet slang for a supremely confident, alpha type. In crypto memes the chad buys and holds calmly while everyone else panics."
+  },
+  {
+    "id": "brokie",
+    "phrase": "Brokie bots",
+    "note": "'Brokie' is slang for someone who is broke. 'Bots' are automated or copycat accounts, here the crowd left grumbling in the comments."
+  },
+  {
+    "id": "traffic",
+    "phrase": "Stuck in the traffic\nPunching the dash",
+    "note": "Immortality spent: every bitcoin gone on becoming superhuman, the stack back to zero, and an ordinary human body stuck in peak-hour traffic."
+  }
+]

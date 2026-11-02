@@ -26,6 +26,11 @@ const READ_ALONG_SLUGS = new Set([
   "freedom",
   "fliponomics",
   "chester",
+  "circular-economy-scifi-world",
+  "in-the-vault",
+  "rich-in-bitcoin",
+  "radioactive-bitcoin-hope",
+  "most-humble-fiat-minimalist",
 ]);
 
 const lyricsEl = document.getElementById("lyrics");

@@ -1,0 +1,127 @@
+[
+  {
+    "id": "hard-drive",
+    "phrase": "I\u2019m digging through the trash\nFor a hard drive",
+    "note": "Welsh IT worker James Howells threw away a hard drive holding about 8,000 bitcoin in 2013. He spent years trying to dig it out of a Newport landfill before UK courts ruled against him in 2025."
+  },
+  {
+    "id": "el-salvador",
+    "phrase": "Heading to El Salvador",
+    "note": "In 2021 El Salvador became the first country to make bitcoin legal tender. A 2025 change tied to an IMF loan made accepting it voluntary for businesses."
+  },
+  {
+    "id": "12-words",
+    "phrase": "I\u2019ll remember 12 words\nFrom my past life",
+    "note": "A seed phrase is a list of 12 or 24 words that can restore a bitcoin wallet anywhere. Remember them and the coins survive even if every device is lost."
+  },
+  {
+    "id": "hopium",
+    "phrase": "With hopium from my cup",
+    "note": "Hopium, hope plus opium, is crypto slang for comforting optimism that prices will bounce back, whether or not the evidence agrees."
+  },
+  {
+    "id": "fud",
+    "phrase": "Fudsters on the internet",
+    "note": "FUD stands for fear, uncertainty and doubt. FUDsters spread scary claims about Bitcoin, sometimes sincerely, sometimes to shake people into selling."
+  },
+  {
+    "id": "diamond-hands",
+    "phrase": "I\u2019ll sell my diamond hands\nTo buy more sats",
+    "note": "Diamond hands means holding through any crash without selling. Sats are satoshis, bitcoin's smallest unit: one hundred-millionth of a coin."
+  },
+  {
+    "id": "asics",
+    "phrase": "Stack ASICs on some tall racks",
+    "note": "ASICs are computers built for one job: Bitcoin mining. Miners rack thousands of them, competing to add the next block of transactions and earn new bitcoin."
+  },
+  {
+    "id": "bears",
+    "phrase": "If bears hibernate\nI\u2019m calling that a long nap",
+    "note": "A bear market is a long stretch of falling prices. When the bears 'hibernate', the market goes quiet and sideways, sometimes for months."
+  },
+  {
+    "id": "hashrate",
+    "phrase": "Half a milly\nWhat hashrate foretells",
+    "note": "'Half a milly' is a US$500,000 bitcoin. Hashrate is the total computing power securing the network; bulls read rising hashrate as miners investing heavily because they expect higher prices."
+  },
+  {
+    "id": "doof",
+    "phrase": "doof nights",
+    "note": "A doof is Australian slang for a dance party with thumping electronic music, named after the 'doof doof' of the bass."
+  },
+  {
+    "id": "orange-pill",
+    "phrase": "Got an orange pill",
+    "note": "Being orange-pilled means becoming convinced about Bitcoin, a play on the red pill in The Matrix, with orange for Bitcoin's logo."
+  },
+  {
+    "id": "toxic-maxis",
+    "phrase": "Cause we just made toxic maxis\nRadioactive",
+    "note": "'Toxic maxis' are Bitcoin maximalists known for blunt, uncompromising defence of Bitcoin and rejection of other cryptocurrencies. Radioactive is the next level of toxic."
+  },
+  {
+    "id": "fiat-maxis",
+    "phrase": "Fiat maxis disrespecting",
+    "note": "A fiat maxi trusts only government-issued money, the mirror image of a Bitcoin maximalist."
+  },
+  {
+    "id": "sovereign",
+    "phrase": "Sovereignty of individual",
+    "note": "The Sovereign Individual (1997), by James Dale Davidson and William Rees-Mogg, predicted that digital money would weaken governments' grip and shift power to individuals. Many Bitcoiners treat it as a prophecy."
+  },
+  {
+    "id": "time-thieves",
+    "phrase": "Time thieves is the criminals",
+    "note": "Money stores the hours you worked. When inflation shrinks its buying power, those hours are quietly taken, so Bitcoiners call money printers time thieves."
+  },
+  {
+    "id": "block-time",
+    "phrase": "Operate on block time\nWith ten minute intervals",
+    "note": "Bitcoin adds a new block of transactions roughly every ten minutes. 'Block time' is the network's own clock, counted in blocks rather than calendar dates."
+  },
+  {
+    "id": "hashrate-ath",
+    "phrase": "Hashrate at an all time high",
+    "note": "A record hashrate means more computing power than ever is protecting Bitcoin, making any attack on the network more expensive."
+  },
+  {
+    "id": "opt-out",
+    "phrase": "As we opt out and we exit",
+    "note": "Opting out, or 'exit', means leaving a system instead of fighting it: moving savings from fiat into money no central authority controls."
+  },
+  {
+    "id": "genesis",
+    "phrase": "Since the genesis",
+    "note": "The genesis block is Bitcoin's first block, mined in January 2009. It contains a newspaper headline: 'Chancellor on brink of second bailout for banks'."
+  },
+  {
+    "id": "white-paper",
+    "phrase": "Of a paper Nakamoto wrote\nJust 9 pages to inspire",
+    "note": "The Bitcoin white paper, published by the pseudonymous Satoshi Nakamoto on 31 October 2008, is just nine pages long, and it describes the entire system."
+  },
+  {
+    "id": "pupusa",
+    "phrase": "Kiss on my baby pupusa",
+    "note": "Pupusas are El Salvador's national dish: thick corn tortillas stuffed with cheese, beans or pork."
+  },
+  {
+    "id": "dream",
+    "phrase": "Martin had a dream",
+    "note": "Martin Luther King Jr's 1963 'I Have a Dream' speech called for equality for all. Bitcoin's version is money with the same rules for every user."
+  },
+  {
+    "id": "cold-storage",
+    "phrase": "Cold storage made a cooler",
+    "note": "Cold storage means keeping bitcoin keys completely offline, on a hardware wallet or written down, out of reach of online hackers."
+  },
+  {
+    "id": "consensus",
+    "phrase": "Consensus to follow",
+    "note": "Consensus is how thousands of independent computers agree on one shared record of who owns what: everyone runs the same rules, and no one is in charge."
+  },
+  {
+    "id": "tweak-model",
+    "phrase": "Because they tried\nTo tweak the model",
+    "note": "Changing Bitcoin's rules needs broad agreement. In the 'block size wars', a push for bigger blocks failed to win users over, and its backers split off in 2017 to create Bitcoin Cash."
+  }
+]
