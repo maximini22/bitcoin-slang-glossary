@@ -226,11 +226,23 @@ const LISTEN_PAGES = {
   "most-toxic-bitcoin-maxi": "https://links.robbiep.net/most-toxic-bitcoin-maxi/",
 };
 const FREE_MP3_SLUGS = new Set([
-  ...Object.keys(LISTEN_PAGES),
-  "vitamin",
-  "take-money-off-mainstreet",
+  "all-time-high-lessons-of-regret",
+  "bitcoin-slang-remix",
+  "chester",
+  "circular-economy-scifi-world",
+  "diamond-hands-and-laser-eyes",
+  "dread-pirate-robbie",
+  "fliponomics",
+  "freedom",
+  "going-cashless",
+  "if-it-wasnt-for-satoshi",
   "in-the-vault",
   "most-humble-fiat-minimalist",
+  "most-toxic-bitcoin-maxi",
+  "radioactive-bitcoin-hope",
+  "rich-in-bitcoin",
+  "take-money-off-mainstreet",
+  "vitamin",
 ]);
 const SIGN_HOSTS = [
   "https://audio.btcslang.com",
