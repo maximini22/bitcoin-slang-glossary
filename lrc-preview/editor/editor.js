@@ -16,6 +16,8 @@
     { slug: "most-toxic-bitcoin-maxi", title: "Most Toxic Bitcoin Maxi", group: "Needs stamp" },
     { slug: "radioactive-bitcoin-hope", title: "Radioactive Bitcoin Hope", group: "Five packs" },
     { slug: "rich-in-bitcoin", title: "Rich In Bitcoin", group: "Five packs" },
+    { slug: "take-money-off-mainstreet", title: "Take Money Off Mainstreet", group: "Needs stamp" },
+    { slug: "vitamin", title: "Vitamin", group: "Needs stamp" },
   ];
   const ALL = SONGS.map((s) => s.slug);
   const SONG_META = Object.fromEntries(SONGS.map((s) => [s.slug, s]));
