@@ -1,0 +1,524 @@
+/* Bundle mockup additions — square corners already forced site-wide */
+
+/* ---- Pricing: flat A$17.00 only (no strike / save) ---- */
+.price-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.65rem 1rem; margin: 0.5rem 0 1rem; }
+.price-now { font-family: var(--display); font-weight: 700; font-size: 1.75rem; color: var(--text); }
+.price-was, .price-note { display: none !important; }
+
+/* ---- Andy Rail hero: photo strip + soft fade; face clear; no fan ---- */
+.bundle-visual {
+  position: relative;
+  overflow: hidden;
+  margin: 1.25rem 0 1.5rem;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  background: #0b0b0d;
+  display: flex;
+  flex-direction: column;
+}
+.bundle-visual.bv-sm {
+  display: block;
+  min-height: 112px;
+  margin: 0 0 1.25rem;
+  border-top-width: 2px;
+}
+.bv-bg {
+  position: relative;
+  order: 1;
+  width: 100%;
+  height: clamp(200px, 32vw, 340px);
+  flex: 0 0 auto;
+  pointer-events: none;
+  z-index: 0;
+}
+.bv-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Face upper-right — fully lit, no dark wash over it */
+  object-position: 72% 12%;
+  display: block;
+}
+.bv-grad {
+  position: absolute;
+  inset: 0;
+  /* Soft, long bottom fade into page bg — face stays clear */
+  background: linear-gradient(
+    180deg,
+    rgba(11,11,13,0) 0%,
+    rgba(11,11,13,0) 42%,
+    rgba(11,11,13,0.18) 62%,
+    rgba(11,11,13,0.55) 82%,
+    #0b0b0d 100%
+  );
+}
+.bv-fan { display: none !important; } /* removed per redesign */
+
+.bv-content {
+  position: relative;
+  z-index: 2;
+  order: 2;
+  padding: 0.35rem 1.15rem 1.15rem; /* tight under photo */
+  max-width: 40rem;
+  background: #0b0b0d;
+}
+.bv-content .eyebrow {
+  font-family: var(--font);
+  font-size: 0.75rem;
+  letter-spacing: 0.175rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.35rem;
+}
+.bv-content h1,
+.bv-content h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.45rem, 3.2vw, 2.15rem);
+  margin: 0 0 0.5rem;
+  line-height: 1.15;
+  color: var(--text);
+}
+.bv-content p {
+  margin: 0 0 0.7rem;
+  color: #d8d4ce;
+  line-height: 1.55;
+  max-width: 38rem;
+}
+.bv-content .price-row { margin: 0.35rem 0 0.85rem; }
+.bv-content .btn { margin-top: 0.15rem; }
+
+@media (max-width: 640px) {
+  .bv-bg {
+    height: 220px;
+  }
+  .bv-bg img { object-position: 70% 8%; }
+  .bv-grad {
+    background: linear-gradient(
+      180deg,
+      rgba(11,11,13,0) 0%,
+      rgba(11,11,13,0) 48%,
+      rgba(11,11,13,0.22) 70%,
+      rgba(11,11,13,0.65) 88%,
+      #0b0b0d 100%
+    );
+  }
+  .bv-content {
+    max-width: none;
+    padding: 0.2rem 1rem 1.1rem;
+  }
+}
+@media (max-width: 400px) {
+  .bv-bg { height: 200px; }
+  .bv-bg img { object-position: 68% 6%; }
+}
+
+/* Checkout small banner keeps compact overlay; face clear on right */
+.bundle-visual.bv-sm .bv-bg {
+  position: absolute;
+  inset: 0;
+  height: auto;
+}
+.bundle-visual.bv-sm .bv-bg img { object-position: 88% 14%; }
+.bundle-visual.bv-sm .bv-grad {
+  background: linear-gradient(
+    90deg,
+    #0b0b0d 0%,
+    rgba(11,11,13,0.55) 28%,
+    rgba(11,11,13,0.12) 52%,
+    rgba(11,11,13,0) 68%
+  );
+}
+.bundle-visual.bv-sm .bv-content {
+  max-width: min(22rem, 62%);
+  padding: 0.85rem 0.9rem;
+  background: rgba(11,11,13,0.92);
+}
+.bundle-visual.bv-sm .bv-content h2 { font-size: 1.05rem; margin: 0 0 0.25rem; }
+.bundle-visual.bv-sm .bv-content p { font-size: 0.85rem; margin: 0; }
+@media (max-width: 640px) {
+  .bundle-visual.bv-sm .bv-content { max-width: 70%; }
+  .bundle-visual.bv-sm .bv-bg img { object-position: 90% 12%; }
+}
+
+/* What's included — plain song list + file count */
+.include-grid { display: none !important; }
+.include-summary {
+  margin: 0.35rem 0 0.85rem;
+  color: #d8d4ce;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.include-summary strong { color: var(--text); font-weight: 600; }
+.include-list {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--panel, #121214);
+}
+.include-list li {
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+.include-list li:last-child { border-bottom: none; }
+.include-list .group {
+  font-size: 0.7rem;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(247,147,27,0.06);
+  font-weight: 600;
+}
+.include-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: #9a9690;
+  line-height: 1.45;
+}
+
+/* Legacy art-stack / include-grid still used for "what's included" list */
+.art-stack { display: none; } /* replaced by bv-fan */
+.include-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+}
+.include-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 0.5rem;
+}
+.include-card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--line); }
+.include-card .t {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: var(--text);
+}
+.include-card .tag {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 0.2rem;
+}
+
+/* ---- Format picker (FLAC default) ---- */
+.format-pick {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  margin: 0.85rem 0 1.15rem;
+  max-width: 36rem;
+}
+@media (min-width: 560px) {
+  .format-pick { grid-template-columns: 1fr 1fr; }
+}
+.format-opt { display: block; cursor: pointer; margin: 0; }
+.format-opt input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.format-card {
+  display: block;
+  border: 1px solid #5a564e;
+  background: #0e0e12;
+  padding: 0.85rem 0.9rem 0.95rem;
+  border-radius: 0;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+  min-height: 100%;
+  position: relative;
+}
+.format-opt input:focus-visible + .format-card {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.format-opt input:checked + .format-card {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.format-card .rec {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0b0b0d;
+  background: var(--accent);
+  padding: 0.15rem 0.45rem;
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+}
+.format-card strong {
+  display: block;
+  font-size: 0.98rem;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.format-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+.format-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.45rem;
+}
+
+.checkout-box {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 1.35rem 1.25rem;
+  max-width: 480px;
+}
+.checkout-box h2 { margin: 0 0 1rem; }
+.order-line {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 0.85rem;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.order-line img { width: 64px; height: 64px; object-fit: cover; border: 1px solid var(--line); }
+.order-line .meta strong { display: block; margin-bottom: 0.15rem; }
+.order-line .meta span { color: var(--muted); font-size: 0.85rem; }
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0.75rem 0 1.25rem;
+  font-size: 1.05rem;
+}
+.total-row strong { font-family: var(--display); font-size: 1.35rem; }
+.field { margin-bottom: 1rem; }
+.field label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.field input[type="email"] {
+  width: 100%;
+  height: 2.9rem;
+  padding: 0 0.85rem;
+  background: #0e0e12;
+  color: var(--text);
+  border: 1px solid #5a564e;
+  font: inherit;
+  border-radius: 0;
+}
+.field input[type="email"]:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+  border-color: var(--accent);
+}
+.btn.full { width: 100%; }
+.mock-confirm {
+  display: none;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid var(--accent);
+  background: var(--accent-dim);
+  color: var(--text);
+  line-height: 1.5;
+}
+.mock-confirm.show { display: block; }
+.back-link { display: inline-block; margin-bottom: 1.25rem; font-size: 0.85rem; }
+.crumb { color: var(--muted); font-size: 0.85rem; margin: 0 0 1rem; }
+.crumb a { color: var(--accent); }
+
+/* Robbie P Buy Now (Chester pages) — keep prior */
+.rp-buy-now {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.9rem;
+  padding: 0 1.25rem;
+  background: var(--gold, #c9a87c);
+  color: #1D1B24;
+  font-weight: 700;
+  text-decoration: none;
+  border: 0;
+  border-radius: 0;
+}
+.rp-buy-bottom {
+  margin: 2.5rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(184,156,130,.28);
+}
+.rp-buy-bottom .rp-buy-now {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  height: 2.9rem;
+  text-align: center;
+}
+.rp-mock-note { color: var(--dim, #9a958c); font-size: 0.78rem; margin-top: 0.75rem; line-height: 1.4; }
+
+/* Sovereign ownership lines — tight, near price */
+.own-line {
+  margin: 0.35rem 0 0;
+  max-width: 34rem;
+  color: #c8c4be;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+.own-line-em {
+  margin-top: 0.15rem;
+  color: #f7931b;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.bundle-visual .price-row { margin-bottom: 0.15rem; }
+.bundle-visual .own-line + .own-line-em { margin-bottom: 0.85rem; }
+.bundle-visual .bv-content > .own-line-em + .btn,
+.bundle-visual .bv-content > .own-line-em + .format-label { margin-top: 0.55rem; }
+
+.bundle-visual .include-note {
+  margin: 0.35rem 0 0.55rem;
+  color: #b0aaa2;
+}
+
+/* ---- v6 desktop layout (min-width 900px only; phone unchanged) ---- */
+
+/* Mobile/default: songs line lives under What's included; hide hero copy of it */
+.bv-songs-line { display: none; }
+.include-summary-mobile { display: block; }
+.include-covers { display: none; } /* phone: no cover fan (v7) */
+.bv-buy-row { display: block; }
+.bv-buy-col { margin-top: 0.15rem; }
+.bv-buy-col .btn { display: inline-flex; }
+
+@media (min-width: 900px) {
+  /* Hero content: left copy/ownership/23-songs, right price; then formats+buy row */
+  .bv-content {
+    max-width: none;
+    padding: 0.5rem 1.35rem 1.35rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 2.5rem;
+    row-gap: 0;
+    align-items: start;
+  }
+  .bv-content > .eyebrow { grid-column: 1; grid-row: 1; }
+  .bv-content > h1 { grid-column: 1; grid-row: 2; }
+  .bv-content > .lede { grid-column: 1; grid-row: 3; max-width: 40rem; }
+  .bv-content > .own-line:not(.own-line-em) { grid-column: 1; grid-row: 4; }
+  .bv-content > .own-line-em { grid-column: 1; grid-row: 5; margin-bottom: 0.35rem; }
+  .bv-content > .bv-songs-line {
+    display: block;
+    grid-column: 1;
+    grid-row: 6;
+    margin: 0.35rem 0 0.85rem;
+    max-width: 40rem;
+  }
+  .bv-content > .price-row {
+    grid-column: 2;
+    grid-row: 1 / 7;
+    align-self: start;
+    justify-self: end;
+    margin: 0.15rem 0 0;
+  }
+  .bv-content > .price-row .price-now {
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    white-space: nowrap;
+  }
+  .bv-content > .bv-buy-row {
+    grid-column: 1 / -1;
+    grid-row: 7;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem 1.5rem;
+    margin-top: 0.35rem;
+  }
+  .bv-formats { flex: 1 1 28rem; min-width: 0; }
+  .bv-formats .format-pick {
+    max-width: none;
+    margin: 0.45rem 0 0;
+  }
+  .bv-buy-col {
+    flex: 0 0 auto;
+    margin: 0;
+    padding-bottom: 0.15rem;
+  }
+  .bv-buy-col .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.1rem;
+    padding: 0 1.6rem;
+    white-space: nowrap;
+  }
+
+  /* What's included: contained two-col — list | sticky covers */
+  #whats-included {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .include-summary-mobile { display: none; }
+  .include-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    gap: 1.5rem 2rem;
+    align-items: start;
+  }
+  .include-covers {
+    display: block;
+    position: sticky;
+    top: 1.25rem;
+    align-self: start;
+  }
+  /* v7: square covers cascading like a fanned deck (desktop only) */
+  .include-cover-fan {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    padding-bottom: 1.25rem;
+  }
+  .include-cover-fan img {
+    width: 200px;
+    height: 200px;
+    max-width: 78%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
+    background: #141418;
+    position: relative;
+  }
+  .include-cover-fan img + img {
+    margin-top: -7.5rem; /* ~60% overlap of 200px square */
+  }
+  .include-cover-fan img:nth-child(1)  { z-index: 1;  transform: rotate(-7deg) translateX(-10%); margin-left: 0; }
+  .include-cover-fan img:nth-child(2)  { z-index: 2;  transform: rotate(6deg)  translateX(12%); }
+  .include-cover-fan img:nth-child(3)  { z-index: 3;  transform: rotate(-5deg) translateX(-8%); }
+  .include-cover-fan img:nth-child(4)  { z-index: 4;  transform: rotate(7deg)  translateX(14%); }
+  .include-cover-fan img:nth-child(5)  { z-index: 5;  transform: rotate(-6deg) translateX(-12%); }
+  .include-cover-fan img:nth-child(6)  { z-index: 6;  transform: rotate(5deg)  translateX(10%); }
+  .include-cover-fan img:nth-child(7)  { z-index: 7;  transform: rotate(-4deg) translateX(-9%); }
+  .include-cover-fan img:nth-child(8)  { z-index: 8;  transform: rotate(6deg)  translateX(11%); }
+  .include-cover-fan img:nth-child(9)  { z-index: 9;  transform: rotate(-3deg) translateX(-6%); }
+}
+

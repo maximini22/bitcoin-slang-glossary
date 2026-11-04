@@ -578,7 +578,7 @@ function mountConfirmPanel(title) {
   return panel;
 }
 
-const BUNDLE_URL = "https://bs-bundle-mockup-87403d0f.bitcoinslang.workers.dev/bundle/";
+const BUNDLE_URL = "https://bitcoinslang.com/bundle/";
 
 function mountSongOffers(meta) {
   const layout = document.querySelector(".layout");
@@ -604,7 +604,7 @@ function mountSongOffers(meta) {
     <p class="tag">Streaming is renting. Own the files. Not your keys, not your coins. Be your own bank.</p>
     <p>The album, the singles and HD audio — 23 songs plus 10 bonus tracks. FLAC default · MP3 320 also available.</p>
     <p class="fine">*Bonus instrumentals and alternate versions on selected songs.</p>
-    <p class="price"><strong>A$17.50</strong> · BTC Slang Bundle</p>
+    <p class="price"><strong>A$17.00</strong> · BTC Slang Bundle</p>
     <a class="btn" href="${BUNDLE_URL}">Buy the bundle now</a>
   `;
   offers.append(bundle);

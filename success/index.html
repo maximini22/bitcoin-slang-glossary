@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Download — BTC Slang Bundle (TEST)</title>
+  <link rel="stylesheet" href="/bundle/styles.css" />
+  <link rel="stylesheet" href="/bundle/mockup-extra.css" />
+  <style>
+    .dl-box { max-width: 36rem; margin: 2rem auto; padding: 1.5rem; background: #151518; border-radius: 12px; border: 1px solid #2a2a30; }
+    .dl-box h1 { font-size: 1.5rem; margin: 0 0 .5rem; }
+    .dl-box .sub { color: #9a9690; margin-bottom: 1.25rem; }
+    .dl-links { display: flex; flex-direction: column; gap: .75rem; }
+    .dl-links a.btn { text-align: center; }
+    .meta { font-size: .85rem; color: #7a7670; margin-top: 1rem; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">Bitcoinslang.com · Educational lyrics</div>
+    <p class="crumb"><a href="/">Home</a> / <a href="/bundle/">BTC Slang Bundle</a> / Success</p>
+    <div class="dl-box">
+      <h1>Payment received</h1>
+      <p class="sub">Your BTC Slang Bundle is ready. Download FLAC (HD lossless) and/or MP3 (320 kbps). Your download links are below. The same links were emailed to you.</p>
+      <div class="dl-links">
+        <a class="btn" id="dl-flac" href="/dl/flac">Download FLAC zip</a>
+        <a class="btn" id="dl-mp3" href="/dl/mp3">Download MP3 zip</a>
+      </div>
+      <p class="meta" id="session-meta"></p>
+    </div>
+  </div>
+  
+  <script>
+    (function () {
+      var p = new URLSearchParams(location.search);
+      var sid = p.get('session_id') || p.get('sid') || '';
+      var el = document.getElementById('session-meta');
+      var STRIPE_ORIGIN = 'https://jlr-stripe-test.bitcoinslang.workers.dev';
+      if (sid) {
+        // Real post-checkout: stripe worker mints the gated download page
+        location.replace(STRIPE_ORIGIN + '/order/' + encodeURIComponent(sid));
+        return;
+      }
+      el.textContent = 'If you just paid, open the download link in your email, or use Resend on the download page.';
+      document.getElementById('dl-flac').href = STRIPE_ORIGIN + '/resend';
+      document.getElementById('dl-mp3').href = STRIPE_ORIGIN + '/resend';
+    })();
+  </script>
+
+</body>
+</html>

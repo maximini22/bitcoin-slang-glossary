@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Checkout — BTC Slang Bundle (mockup)</title>
+  <link rel="preload" href="/bundle/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/bundle/assets/fonts/orbitron-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/bundle/styles.css" />
+  <link rel="stylesheet" href="/bundle/mockup-extra.css" />
+  <script>
+    window.BTC_SLANG_BUNDLE = {
+      productId: "prod_VWUL05N8QKHdog",
+      priceId: "price_1UVRMTKgMY8eiZFzQTYM4hjv",
+      name: "BTC Slang Bundle",
+      amountAud: 17.00,
+      currency: "AUD"
+    };
+  </script>
+  
+<script>
+(function () {
+  var KEY = 'btcSlangBundleFormat';
+  function read() {
+    try {
+      var q = new URLSearchParams(location.search).get('format');
+      if (q === 'mp3' || q === 'flac') return q;
+      var s = localStorage.getItem(KEY);
+      if (s === 'mp3' || s === 'flac') return s;
+    } catch (e) {}
+    return 'flac';
+  }
+  function write(v) {
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+  }
+  function label(v) {
+    return v === 'mp3' ? 'MP3 (320 kbps)' : 'FLAC — HD lossless';
+  }
+  function apply() {
+    var fmt = read();
+    document.querySelectorAll('input[name="bundle-format"]').forEach(function (el) {
+      el.checked = (el.value === fmt);
+    });
+    var summary = document.getElementById('order-format');
+    if (summary) summary.textContent = label(fmt);
+    var buy = document.getElementById('bundle-buy');
+    if (buy) {
+      var u = new URL(buy.getAttribute('href'), location.origin);
+      u.searchParams.set('format', fmt);
+      buy.setAttribute('href', u.pathname + u.search);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    apply();
+    document.querySelectorAll('input[name="bundle-format"]').forEach(function (el) {
+      el.addEventListener('change', function () {
+        if (!el.checked) return;
+        write(el.value);
+        apply();
+      });
+    });
+  });
+  window.BTC_SLANG_FORMAT = { read: read, write: write, label: label };
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('checkout-form');
+  var payBtn = document.getElementById('pay-btn');
+  var confirm = document.getElementById('mock-confirm');
+  if (!form) return;
+  var PAY_URL = 'https://buy.stripe.com/test_28E3cwfhngNs0DCcVQ5EY00';
+  // LIVE: replace PAY_URL with live Payment Link for A$17.00 once STRIPE_LIVE_SECRET_KEY is set
+  // and product/price/webhook are created. Do not commit live secrets.
+  var LIVE_PAY_URL = ''; // e.g. https://buy.stripe.com/....
+  if (LIVE_PAY_URL) PAY_URL = LIVE_PAY_URL;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email');
+    if (email && !email.value.trim()) {
+      email.focus();
+      return;
+    }
+    if (payBtn) {
+      payBtn.setAttribute('disabled', 'disabled');
+      payBtn.textContent = 'Redirecting to Stripe…';
+    }
+    var u = new URL(PAY_URL);
+    if (email && email.value.trim()) u.searchParams.set('prefilled_email', email.value.trim());
+    var fmt = (window.BTC_SLANG_FORMAT && window.BTC_SLANG_FORMAT.read()) || 'flac';
+    u.searchParams.set('client_reference_id', 'bundle-' + fmt);
+    location.href = u.toString();
+  });
+  if (confirm) {
+    confirm.innerHTML = '<strong>TEST mode</strong> — you will pay on Stripe Checkout (card 4242…), then return here for FLAC + MP3 downloads.';
+    confirm.classList.add('show');
+  }
+});
+</script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">Bitcoinslang.com · Educational lyrics</div>
+    <p class="crumb"><a href="/">Home</a> / <a href="/bundle/">BTC Slang Bundle</a> / Checkout</p>
+    <h1>Checkout</h1>
+    <p class="sub">Mockup checkout on bitcoinslang.com. Payment would continue on Stripe hosted checkout — no card fields here.</p>
+
+    <section class="bundle-visual bv-sm" aria-hidden="true">
+      <div class="bv-bg">
+        <img src="/bundle/assets/andy-rail-hero-sm.jpg" alt="" />
+        <div class="bv-grad"></div>
+      </div>
+      <div class="bv-content">
+        <h2>BTC Slang Bundle</h2>
+        <p>23 songs · flat A$17.00 · Photo: AndyRails</p>
+      </div>
+    </section>
+
+    <div class="checkout-box">
+      <h2 class="section-title" style="font-size:1.4rem">Order summary</h2>
+      <div class="order-line">
+        <img src="/bundle/assets/dread-pirate-robbie-cover.jpg" alt="" />
+        <div class="meta">
+          <strong>BTC Slang Bundle</strong>
+          <span>Dread Pirate Robbie album + every other Bitcoin Slang track · <span id="order-format">FLAC — HD lossless</span></span>
+        </div>
+        <div>A$17.00</div>
+      </div>
+
+      
+        <p class="format-label" id="format-label">Download format</p>
+        <div class="format-pick" role="radiogroup" aria-labelledby="format-label">
+          <label class="format-opt">
+            <input type="radio" name="bundle-format" value="flac" checked />
+            <span class="format-card">
+              <span class="rec">Recommended</span>
+              <strong>FLAC — HD lossless</strong>
+              <small>HD lossless, with cover artwork and lyrics embedded in every file.</small>
+            </span>
+          </label>
+          <label class="format-opt">
+            <input type="radio" name="bundle-format" value="mp3" />
+            <span class="format-card">
+              <strong>MP3 (320 kbps)</strong>
+              <small>High-quality compressed downloads. Same flat price.</small>
+            </span>
+          </label>
+        </div>
+
+
+      <div class="total-row">
+        <span>Total (AUD)</span>
+        <strong>A$17.00</strong>
+      </div>
+
+      <form id="checkout-form" novalidate>
+        <div class="field">
+          <label for="email">Email for delivery</label>
+          <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+        </div>
+        <button id="pay-btn" class="btn full" type="submit"
+          data-stripe-product="prod_VWUL05N8QKHdog"
+          data-stripe-price="price_1UVRMTKgMY8eiZFzQTYM4hjv"
+          data-product-name="BTC Slang Bundle">Pay A$17.00</button>
+      </form>
+      <div id="mock-confirm" class="mock-confirm" role="status">
+        <strong>Mockup only — no payment taken.</strong><br />
+        In production this button would send you to Stripe Checkout for product <code>prod_VWUL05N8QKHdog</code> / price <code>price_1UVRMTKgMY8eiZFzQTYM4hjv</code> (BTC Slang Bundle, A$17.00 AUD).
+      </div>
+    </div>
+  </div>
+</body>
+</html>
