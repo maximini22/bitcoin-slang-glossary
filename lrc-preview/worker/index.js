@@ -137,6 +137,17 @@ async function audio(req, env, url) {
   }
   const slug = mPath[1];
 
+  // Freedom: editor uses original 320 from R2 (skip radio-edit Workers Asset)
+  if (slug === "freedom") {
+    const key = await resolveR2AudioKey(env, slug);
+    if (!key) return withHeaders(new Response("Audio not found", { status: 404 }));
+    const obj = await env.AUDIO.get(key);
+    if (!obj) return withHeaders(new Response("Audio not found", { status: 404 }));
+    const res = await streamAudioBody(req, obj, obj.size);
+    res.headers.set("X-Audio-Source", `r2:${key}`);
+    return res;
+  }
+
   // Prefer Workers Assets copy when present
   const assetRes = await env.ASSETS.fetch(new Request(url.toString(), { method: "GET" }));
   if (assetRes.ok) {

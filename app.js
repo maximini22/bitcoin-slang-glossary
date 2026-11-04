@@ -245,7 +245,7 @@ function foldLyric(s) {
     .replace(/[\u2018\u2019\u02bc]/g, "'");
 }
 
-const SECTION_LABEL_RE = /^(intro|verse(?:\s+\d+)?|hook|chorus|pre[-\s]?chorus|prechorus|bridge|outro)(?:\s*-\s*.+)?$/i;
+const SECTION_LABEL_RE = /^(intro|verse(?:\s+\d+)?|hook|chorus|pre[-\s]?chorus|prechorus|pre[-\s]?verse|preverse|bridge|outro)(?:\s*-\s*.+)?$/i;
 
 /** True section header line: plain whitelist label, or legacy [Label] / [Label - name]. */
 function matchSectionLabel(line) {
