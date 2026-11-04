@@ -164,5 +164,10 @@
     "id": "twenty",
     "phrase": "20x's",
     "note": "20x means the position became twenty times the money put in."
+  },
+  {
+    "id": "benjamin-graham",
+    "phrase": "Benjamin Graham",
+    "note": "Benjamin Graham (1894–1976) was a British-born American economist and investor known as the father of value investing. He wrote Security Analysis (1934) and The Intelligent Investor (1949), and taught Warren Buffett at Columbia Business School, becoming his mentor. Buffett later worked for Graham's firm, Graham-Newman."
   }
 ]
