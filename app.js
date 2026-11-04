@@ -47,20 +47,7 @@ const titleEl = document.getElementById("title");
 const subEl = document.getElementById("sub");
 
 const SHARE_HOOK = "The Bitcoin Slang Dictionary, line by line, with notes on every term.";
-const SHARE_COVERS = {
-  "bitcoin-slang-remix": ["assets/cover.jpg", 600, 600],
-  "most-toxic-bitcoin-maxi": ["assets/most-toxic-bitcoin-maxi-cover.jpg", 600, 600],
-  "diamond-hands-and-laser-eyes": ["assets/diamond-hands-and-laser-eyes-cover.jpg", 600, 600],
-  "all-time-high-lessons-of-regret": ["assets/all-time-high-lessons-of-regret-cover.jpg", 600, 600],
-  "going-cashless": ["assets/going-cashless-cover.jpg", 600, 600],
-  "if-it-wasnt-for-satoshi": ["assets/if-it-wasnt-for-satoshi-cover.jpg", 600, 600],
-  "freedom": ["assets/freedom-cover.jpg", 600, 600],
-  "chester": ["assets/chester-cover.jpg", 700, 700],
-  "fliponomics": ["assets/fliponomics-cover.jpg", 600, 600],
-  "dread-pirate-robbie": ["assets/dread-pirate-robbie-cover.jpg", 600, 600],
-  "vitamin": ["assets/vitamin-cover.jpg", 600, 600],
-  "take-money-off-mainstreet": ["assets/take-money-off-mainstreet-cover.jpg", 600, 600],
-};
+const SHARE_COVERS = {};
 
 function shareCopy(title) {
   return {
@@ -242,6 +229,8 @@ const FREE_MP3_SLUGS = new Set([
   ...Object.keys(LISTEN_PAGES),
   "vitamin",
   "take-money-off-mainstreet",
+  "in-the-vault",
+  "most-humble-fiat-minimalist",
 ]);
 const SIGN_HOSTS = [
   "https://audio.btcslang.com",
