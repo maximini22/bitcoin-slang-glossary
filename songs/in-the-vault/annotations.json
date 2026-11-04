@@ -1,7 +1,7 @@
 [
   {
     "id": "price-you-deserve",
-    "phrase": "You buy bitcoin at the price you deserve",
+    "phrase": "You buy Bitcoin at the price you deserve",
     "note": "A popular Bitcoin saying: the price you pay mirrors how early you understood it. Buying late, or selling early, is the tuition of learning slowly."
   },
   {
@@ -26,7 +26,7 @@
   },
   {
     "id": "liquidity",
-    "phrase": "Might sell with sell pressure\nBut no liquidity",
+    "phrase": "Might sell with sell pressure",
     "note": "Sell pressure is a wave of people trying to exit. Liquidity is how easily you can sell without crashing the price. When liquidity dries up, sellers find no buyers at a fair price."
   },
   {
@@ -101,12 +101,12 @@
   },
   {
     "id": "vault",
-    "phrase": "Where’s my money?\nIt’s in the vault",
+    "phrase": "It’s in the vault",
     "note": "A bank vault holds only a fraction of what depositors are owed. Most of 'your' money is a number on the bank's books, already lent out to someone else."
   },
   {
     "id": "maybe-tomorrow",
-    "phrase": "Can I get it out now?\nMaybe tomorrow",
+    "phrase": "Can I get it out now?",
     "note": "In Australia, getting cash out of a bank is not always instant. Large withdrawals can need notice, ATMs cap how much you take per day, and staff may quiz you on why you want your own money, citing scam and money-laundering rules."
   },
   {

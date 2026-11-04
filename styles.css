@@ -83,15 +83,17 @@ mark.ann.active {
 }
 
 .panel {
-  /* Side/bottom annotation panel retired — notes open under the tapped line. */
-  display: none !important;
+  display: none;
   position: sticky;
-  top: 1rem;
+  top: max(1rem, calc(50vh - 10rem));
+  align-self: start;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 0;
   padding: 1.25rem 1.35rem;
   min-height: 180px;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
 }
 
 .panel h2 {
@@ -109,6 +111,8 @@ mark.ann.active {
 }
 
 .panel .note { color: #d2cec8; line-height: 1.55; }
+.panel .panel-entry + .panel-entry { margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--line); }
+.panel .play-from { margin-top: 0.65rem; }
 .panel .hint { color: var(--muted); font-size: 0.92rem; }
 .panel .note-fig {
   width: 100%;
@@ -652,17 +656,26 @@ body.has-player .player-vol { display: none; }
 }
 body.has-player.player-ready .wrap { padding-bottom: 6.5rem; }
 @media (max-width: 899px) {
+  body.has-player .panel { display: none !important; }
+  body.has-player .line-note:not([hidden]) { display: block; }
   body.has-player .lyrics { padding-bottom: 0.4rem; }
   body.has-player.player-ready .lyrics { padding-bottom: 0.4rem; }
 }
 @media (min-width: 900px) {
   body.has-player .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
     gap: 2rem;
     align-items: start;
   }
-  body.has-player .panel { display: none !important; }
-  body.has-player .line-note:not([hidden]) { display: block; }
+  body.has-player .panel {
+    display: block;
+    position: sticky;
+    top: max(1rem, calc(50vh - 10rem));
+    align-self: start;
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+  }
+  body.has-player .line-note { display: none !important; }
   body.has-player .lyrics { padding-bottom: 0; }
   body.has-player .read-along {
     display: block;

@@ -31,6 +31,10 @@ const READ_ALONG_SLUGS = new Set([
   "rich-in-bitcoin",
   "radioactive-bitcoin-hope",
   "most-humble-fiat-minimalist",
+  "diamond-hands-and-laser-eyes",
+  "dread-pirate-robbie",
+  "all-time-high-lessons-of-regret",
+  "most-toxic-bitcoin-maxi",
 ]);
 
 const lyricsEl = document.getElementById("lyrics");
@@ -275,9 +279,17 @@ function parseLrc(text) {
   const timed = [];
   for (const line of text.split(/\r?\n/)) {
     const m = line.match(/^\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)$/);
-    if (!m) continue;
-    const frac = m[3].length === 3 ? Number(m[3]) / 1000 : Number(m[3]) / 100;
-    timed.push({ t: Number(m[1]) * 60 + Number(m[2]) + frac, text: m[4] });
+    if (m) {
+      const frac = m[3].length === 3 ? Number(m[3]) / 1000 : Number(m[3]) / 100;
+      timed.push({ t: Number(m[1]) * 60 + Number(m[2]) + frac, text: m[4] });
+      continue;
+    }
+    const s = line.trim();
+    if (!s) continue;
+    if (/^\[(ti|ar|al|by|offset|length|re|ve|id):/i.test(s)) continue;
+    if (matchSectionLabel(s)) continue;
+    // Untimed lyric mid-song (editor supports bare lines; Robbie stamps later).
+    timed.push({ t: null, text: s });
   }
   return timed;
 }
@@ -350,7 +362,8 @@ function buildLyricLines(items, annotations, timed) {
     const el = document.createElement("div");
     el.className = "lyric-line";
     el.tabIndex = 0;
-    if (entry) el.dataset.t = String(entry.t);
+    const hasTime = entry && entry.t != null && Number.isFinite(entry.t);
+    if (hasTime) el.dataset.t = String(entry.t);
     el.dataset.i = String(lines.length);
     el.innerHTML = renderMarkedLine(item.text, offset, marks);
     const ids = [];
@@ -386,7 +399,7 @@ function buildLyricLines(items, annotations, timed) {
           img.alt = "";
           entryNote.append(img);
         }
-        if (entry) {
+        if (hasTime) {
           const playHere = document.createElement("button");
           playHere.type = "button";
           playHere.className = "play-from";
@@ -400,7 +413,7 @@ function buildLyricLines(items, annotations, timed) {
     if (!entry && !note) el.removeAttribute("tabindex");
     frag.appendChild(el);
     if (note) frag.appendChild(note);
-    lines.push({ t: entry ? entry.t : 0, el, note, anns });
+    lines.push({ t: hasTime ? entry.t : null, el, note, anns });
     offset += item.text.length + 1;
     timeIndex += 1;
   }
@@ -462,20 +475,22 @@ async function renderRemix(lyrics, annotations) {
     lrcText = "";
   }
 
-  const items = parseDisplayLyrics(lyrics);
-  const timed = parseLrc(lrcText);
-  const textItems = items.filter((item) => item.text);
-  if (!timed.length || timed.length !== textItems.length) {
-    renderStatic(lyrics, annotations);
-    mountRemixPlayer([]);
-    return;
-  }
-
   const cta = document.createElement("button");
   cta.type = "button";
   cta.className = "read-along";
   cta.textContent = "Play music and read along";
   subEl.insertAdjacentElement("afterend", cta);
+
+  const items = parseDisplayLyrics(lyrics);
+  const timed = parseLrc(lrcText);
+  const textItems = items.filter((item) => item.text);
+  if (!timed.length || timed.length !== textItems.length) {
+    const { frag, lines } = buildLyricLines(items, annotations, null);
+    lyricsEl.innerHTML = "";
+    lyricsEl.appendChild(frag);
+    mountRemixPlayer(lines);
+    return;
+  }
 
   const { frag, lines } = buildLyricLines(items, annotations, timed);
   lyricsEl.innerHTML = "";
@@ -761,7 +776,7 @@ function mountRemixPlayer(lines) {
   const sidePanel = document.querySelector(".panel");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   const wideQuery = window.matchMedia("(min-width: 900px)");
-  const PHONE_ANCHOR = 0.4;
+  const PHONE_ANCHOR = 0.5;
   const DESK_ANCHOR = 1 / 3;
 
   let signedUrl = "";
@@ -805,7 +820,9 @@ function mountRemixPlayer(lines) {
   function indexAt(t) {
     let found = -1;
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].t <= t + 0.03) found = i;
+      const lt = lines[i].t;
+      if (lt == null || !Number.isFinite(lt)) continue;
+      if (lt <= t + 0.03) found = i;
       else break;
     }
     return found;
@@ -890,12 +907,14 @@ function mountRemixPlayer(lines) {
         img.alt = "";
         entry.append(img);
       }
-      const playHere = document.createElement("button");
-      playHere.type = "button";
-      playHere.className = "play-from";
-      playHere.dataset.i = String(i);
-      playHere.textContent = "play song from here";
-      entry.append(playHere);
+      if (line.t != null && Number.isFinite(line.t)) {
+        const playHere = document.createElement("button");
+        playHere.type = "button";
+        playHere.className = "play-from";
+        playHere.dataset.i = String(i);
+        playHere.textContent = "play song from here";
+        entry.append(playHere);
+      }
       noteEl.append(entry);
     }
   }
@@ -916,6 +935,18 @@ function mountRemixPlayer(lines) {
   function showLineNote(i) {
     const line = lines[i];
     if (!line) return;
+    if (!line.note && !(wideQuery.matches && line.anns && line.anns.length)) {
+      hideNotes();
+      return;
+    }
+    if (wideQuery.matches) {
+      hideInline();
+      if (openNote === i && sidePanel && sidePanel.dataset.open === String(i)) return;
+      renderSidePanel(i);
+      if (sidePanel) sidePanel.dataset.open = String(i);
+      openNote = i;
+      return;
+    }
     if (!line.note) {
       hideNotes();
       return;
@@ -1213,7 +1244,9 @@ function mountRemixPlayer(lines) {
     if (!line) return;
     showLineNote(i);
     if (!audioStarted && !play) return;
+    const hasTime = line.t != null && Number.isFinite(line.t);
     if (play) {
+      if (!hasTime) return;
       if (muted) setMuted(false);
       if (!(Number(vol.value) > 0)) setSlider(rememberedLevel());
       revealBar();
@@ -1225,6 +1258,10 @@ function mountRemixPlayer(lines) {
       return;
     }
     if (!audioStarted) return;
+    if (!hasTime) {
+      applyIndex(i, true, false);
+      return;
+    }
     if (muted) {
       heldTime = line.t;
       heldIndex = i;
@@ -1378,12 +1415,12 @@ function mountRemixPlayer(lines) {
     if (e.target && e.target.closest && e.target.closest(".panel")) return;
     if (!wantPlay || audio.paused || muted || active < 0) return;
     scrollToken += 1;
-    scrollLockUntil = performance.now() + 4000;
+    scrollLockUntil = performance.now() + 3000;
     window.clearTimeout(resumeTimer);
     resumeTimer = window.setTimeout(() => {
       scrollLockUntil = 0;
       if (active >= 0 && !audio.paused && !muted) anchorLine(lines[active].el);
-    }, 4000);
+    }, 3000);
   }
   window.addEventListener("wheel", userScrolled, { passive: true });
   window.addEventListener("touchmove", userScrolled, { passive: true });

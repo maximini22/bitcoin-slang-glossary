@@ -1,7 +1,7 @@
 [
   {
     "id": "stack-btc",
-    "phrase": "stacking a whole lot of bitcoin",
+    "phrase": "Stacking a whole lot of Bitcoin",
     "note": "Stacking bitcoin means adding to a coin balance, usually in repeated buys rather than one entry."
   },
   {
@@ -21,7 +21,7 @@
   },
   {
     "id": "web3",
-    "phrase": "web3",
+    "phrase": "Web3",
     "note": "Web3 is the name for apps and tokens pitched as a blockchain internet. Here it is the venue for the bets."
   },
   {
@@ -36,7 +36,7 @@
   },
   {
     "id": "cheat-sheet",
-    "phrase": "wall street cheat sheet",
+    "phrase": "Wall street cheat sheet",
     "note": "The Wall Street cheat sheet is a cartoon map of crowd mood at each stage of a price cycle."
   },
   {
@@ -71,12 +71,12 @@
   },
   {
     "id": "lev",
-    "phrase": "leverage it",
+    "phrase": "Leverage it",
     "note": "Leverage means controlling a larger position with borrowed funds, so gains and losses are both multiplied."
   },
   {
     "id": "cup",
-    "phrase": "cup and handle",
+    "phrase": "Cup and handle",
     "note": "Cup and handle: price rounds down and back up, then drifts shallowly lower. A break above the handle high is the usual trigger.",
     "image": "assets/charts/cup-and-handle.png"
   },
@@ -93,13 +93,13 @@
   },
   {
     "id": "golden",
-    "phrase": "golden crossing",
+    "phrase": "Golden crossing",
     "note": "Golden cross: the faster moving average crossing above the slower one, classically the 50-day over the 200-day. It lags the turn.",
     "image": "assets/charts/golden-cross.png"
   },
   {
     "id": "volume",
-    "phrase": "volume dropping",
+    "phrase": "Volume dropping",
     "note": "Volume is how much changed hands. Volume falling while rallies make lower highs means less size is supporting the bounces."
   },
   {
@@ -115,24 +115,24 @@
   },
   {
     "id": "short",
-    "phrase": "we gone short it",
+    "phrase": "We gone short it",
     "note": "A short profits if price falls. Death cross: the faster average crossing under the slower one, often 50-day under 200-day, is the lagging form of that turn.",
     "image": "assets/charts/death-cross.png"
   },
   {
     "id": "double",
-    "phrase": "double topping",
+    "phrase": "Double topping",
     "note": "Double top: two highs near the same price with a dip between them. It confirms only if price breaks the neckline, the low between the peaks.",
     "image": "assets/charts/double-top.png"
   },
   {
     "id": "candles",
-    "phrase": "chase some candles",
+    "phrase": "Chase some candles",
     "note": "Candles are candlesticks: each bar is the open, high, low, and close of a time slice. Chasing them is buying after that bar has already printed."
   },
   {
     "id": "retr",
-    "phrase": "retracements",
+    "phrase": "Retracements",
     "note": "A retracement is a temporary move against the prevailing trend. It is not, by itself, a reversal."
   },
   {
@@ -142,7 +142,7 @@
   },
   {
     "id": "two-sixtyfive",
-    "phrase": "bought it for 2 sold it for 65",
+    "phrase": "Bought it for 2 sold it for 65",
     "note": "A sale at 65 of coins bought at 2 is (65 − 2) / 2 = 3,150 percent profit. The next line rounds that to 3,100 percent."
   },
   {

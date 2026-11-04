@@ -6,7 +6,7 @@
   },
   {
     "id": "uncollateralised",
-    "phrase": "I take the debt\nIt’s uncollateralised",
+    "phrase": "It’s uncollateralised",
     "note": "Uncollateralised debt means no specific asset is pledged against the loan. Strategy's convertible notes are unsecured: lenders bet on the company, and on bitcoin, not on a claim over property."
   },
   {
@@ -96,12 +96,12 @@
   },
   {
     "id": "robert-jr",
-    "phrase": "I created Robert Jr\nCalled it Mr Tony Stark",
+    "phrase": "Called it Mr Tony Stark",
     "note": "Robbie's real name is Robert. In the song's story he builds an AI called Robert Jr, a digital mini-me (like Dr Evil's Mini-Me) that acts like the AI assistant Tony Stark talks to, and he names that assistant Tony Stark: a Russian-doll loop of names."
   },
   {
     "id": "47-lines",
-    "phrase": "47 lines of code",
+    "phrase": "47 Lines of code",
     "note": "In the story, a tiny script that runs his errands and makes his art: the dream of AI agents doing chores. Not a claim about a real script."
   },
   {
@@ -126,7 +126,7 @@
   },
   {
     "id": "rogan-rotisseries",
-    "phrase": "Rogan was left speechless\nIn reaction to human flesh\nOn rotisseries",
+    "phrase": "In reaction to human flesh",
     "note": "Joe Rogan left speechless at the dystopian image of human flesh on rotisseries. The lyric plays that shock for sci-fi horror; no specific episode is pinned here."
   },
   {
@@ -136,7 +136,7 @@
   },
   {
     "id": "solvent",
-    "phrase": "Computer code stay solvent\nLonger than these human beings\nCan be rational",
+    "phrase": "Longer than these human beings",
     "note": "Flips a market saying often credited to John Maynard Keynes: 'The market can remain irrational longer than you can remain solvent.' Here the machines outlast human patience."
   },
   {
@@ -151,7 +151,7 @@
   },
   {
     "id": "ath",
-    "phrase": "Secure the bag\nAt an all time high",
+    "phrase": "At an all time high",
     "note": "An all-time high is the highest price an asset has ever reached. Bitcoin set a record of about US$126,000 on 6 October 2025. Securing the bag means cashing in at the top."
   },
   {
@@ -176,7 +176,7 @@
   },
   {
     "id": "traffic",
-    "phrase": "Stuck in the traffic\nPunching the dash",
+    "phrase": "Stuck in the traffic",
     "note": "The immortality punchline: every bitcoin spent becoming superhuman, the stack back at zero, and an ordinary body stuck in peak-hour traffic."
   }
 ]

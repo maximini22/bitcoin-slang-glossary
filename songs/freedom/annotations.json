@@ -2,27 +2,27 @@
   {
     "id": "paper-money",
     "phrase": "money wasn't worth much (paper)",
-    "note": "\"Paper\" is fiat currency \u2014 dollars and other government-issued notes. In Bitcoin slang, paper money is the thing that loses purchasing power when supply expands. The bar sets the scene in a world where cash already felt thin."
+    "note": "\"Paper\" is fiat currency — dollars and other government-issued notes. In Bitcoin slang, paper money is the thing that loses purchasing power when supply expands. The bar sets the scene in a world where cash already felt thin."
   },
   {
     "id": "print-it",
-    "phrase": "pay what it costs (print it)",
-    "note": "\"Print it\" is shorthand for monetary expansion: central banks creating new currency units. When money can be printed, prices and debts can be paid with thinner units \u2014 the opposite of Bitcoin's fixed 21 million supply."
+    "phrase": "And you can pay what it cost's (print it)",
+    "note": "\"Print it\" is shorthand for monetary expansion: central banks creating new currency units. When money can be printed, prices and debts can be paid with thinner units — the opposite of Bitcoin's fixed 21 million supply."
   },
   {
     "id": "slots-blackjack",
     "phrase": "double up up on the slots",
-    "note": "Slots and blackjack stand in for speculative gambling as a come-up path \u2014 high variance bets when wages and paper money feel worthless. The verse pairs that risk with later stacking sats: same hunger, different vehicle."
+    "note": "Slots and blackjack stand in for speculative gambling as a come-up path — high variance bets when wages and paper money feel worthless. The verse pairs that risk with later stacking sats: same hunger, different vehicle."
   },
   {
     "id": "blackjack-21",
     "phrase": "hit 21 on blackjack",
-    "note": "Casino 21 vs protocol 21 \u2014 chance versus a rule that does not reset."
+    "note": "Casino 21 vs protocol 21 — chance versus a rule that does not reset."
   },
   {
     "id": "bluff-texan",
     "phrase": "Bluff em like a texan",
-    "note": "In Texas Hold\u2019em a bluff is betting a weak or empty hand hard enough that better hands fold. Fiat governance bluffs with print and confidence; settlement is whoever flinches. Bitcoin settles without the performance."
+    "note": "In Texas Hold’em a bluff is betting a weak or empty hand hard enough that better hands fold. Fiat governance bluffs with print and confidence; settlement is whoever flinches. Bitcoin settles without the performance."
   },
   {
     "id": "hold-em-money",
@@ -31,38 +31,38 @@
   },
   {
     "id": "hood-security",
-    "phrase": "Made it out the hood (let's go)\nBut I might need security now",
+    "phrase": "Made it out the hood (let's go)",
     "note": "Exit one risk surface; inherit another. Visible stack, visible target."
   },
   {
     "id": "stack-sats",
     "phrase": "Stack sats",
-    "note": "Stacking sats means buying small amounts of bitcoin repeatedly. One satoshi is 0.00000001 BTC \u2014 one hundred-millionth of a coin. The habit is the culture: accumulate units instead of timing one perfect trade."
+    "note": "Stacking sats means buying small amounts of bitcoin repeatedly. One satoshi is 0.00000001 BTC — one hundred-millionth of a coin. The habit is the culture: accumulate units instead of timing one perfect trade."
   },
   {
     "id": "bags",
     "phrase": "too too much about our bags",
-    "note": "A bag is a crypto position you hold. Talking too much about your bags is flexing holdings \u2014 and risking attention you may not want once the stack is real. The bar is about oversharing the come-up."
+    "note": "A bag is a crypto position you hold. Talking too much about your bags is flexing holdings — and risking attention you may not want once the stack is real. The bar is about oversharing the come-up."
   },
   {
     "id": "hit-milli",
-    "phrase": "if bitcoin really hit milli (it will)",
-    "note": "\"Milli\" here is a million-dollar bitcoin price \u2014 the long-running maximalist price target. Parenthetical \"it will\" is conviction talk: treating the target as inevitable while still hedging the lifestyle fantasy that follows."
+    "phrase": "if Bitcoin really hit milli (it will)",
+    "note": "\"Milli\" here is a million-dollar bitcoin price — the long-running maximalist price target. Parenthetical \"it will\" is conviction talk: treating the target as inevitable while still hedging the lifestyle fantasy that follows."
   },
   {
     "id": "trad-wife",
     "phrase": "trad wife soon",
-    "note": "\"Trad wife\" is internet culture for a traditional homemaker role. In the verse it is a lifestyle goal tied to wealth from bitcoin \u2014 then immediately undercut by doubt about gold digging."
+    "note": "\"Trad wife\" is internet culture for a traditional homemaker role. In the verse it is a lifestyle goal tied to wealth from bitcoin — then immediately undercut by doubt about gold digging."
   },
   {
     "id": "gold-digging",
     "phrase": "good at gold digging",
-    "note": "Gold digging means pursuing a partner for money. The narrator imagines success, then questions motives \u2014 freedom from being broke still comes with trust problems."
+    "note": "Gold digging means pursuing a partner for money. The narrator imagines success, then questions motives — freedom from being broke still comes with trust problems."
   },
   {
     "id": "freedom",
     "phrase": "Freedom",
-    "note": "Self-sovereignty keyword \u2014 money, state, and older \"set you free\" talk in one noun."
+    "note": "Self-sovereignty keyword — money, state, and older \"set you free\" talk in one noun."
   },
   {
     "id": "brokey",
@@ -71,8 +71,8 @@
   },
   {
     "id": "mirage",
-    "phrase": "Unless its a mirage",
-    "note": "The hook questions whether \"freedom from being brokey\" is real wealth or an illusion \u2014 paper gains, temporary highs, or a lifestyle that can still evaporate. Doubt sits inside the celebration."
+    "phrase": "Unless it's a mirage",
+    "note": "The hook questions whether \"freedom from being brokey\" is real wealth or an illusion — paper gains, temporary highs, or a lifestyle that can still evaporate. Doubt sits inside the celebration."
   },
   {
     "id": "hot-momentum",
@@ -87,7 +87,7 @@
   {
     "id": "100k-sats",
     "phrase": "Another couple 100,000 sats",
-    "note": "100,000 sats is 0.001 BTC. Naming stacks in sats is how many holders think day to day \u2014 small, countable units rather than whole coins \u2014 and \"another couple\" is the stacking habit continuing."
+    "note": "100,000 sats is 0.001 BTC. Naming stacks in sats is how many holders think day to day — small, countable units rather than whole coins — and \"another couple\" is the stacking habit continuing."
   },
   {
     "id": "keeping-it",
@@ -102,26 +102,26 @@
   {
     "id": "build-or-rip",
     "phrase": "you can build or you can rip apart",
-    "note": "A builder-vs-destroyer fork: create value or sabotage what you care about. Paired with the next bars about cherishing something and fear of self-sabotage \u2014 personal discipline framed as construction."
+    "note": "A builder-vs-destroyer fork: create value or sabotage what you care about. Paired with the next bars about cherishing something and fear of self-sabotage — personal discipline framed as construction."
   },
   {
     "id": "cherrish",
     "phrase": "That thing you cherish there",
-    "note": "\"Cherrish\" is the lyric's spelling of cherish. The object is whatever you are trying to protect \u2014 the stack, the relationship, the come-up \u2014 while the next line threatens to rip it up."
+    "note": "\"Cherrish\" is the lyric's spelling of cherish. The object is whatever you are trying to protect — the stack, the relationship, the come-up — while the next line threatens to rip it up."
   },
   {
     "id": "outflow-moderate",
     "phrase": "Outflow moderate",
-    "note": "Outflow is money leaving \u2014 spending, transfers, or selling. Keeping outflow moderate is cash-flow discipline: don't bleed the stack. In a HODL frame it is living below what the bags could fund."
+    "note": "Outflow is money leaving — spending, transfers, or selling. Keeping outflow moderate is cash-flow discipline: don't bleed the stack. In a HODL frame it is living below what the bags could fund."
   },
   {
     "id": "tip-a-cup",
     "phrase": "How generous I tip a cup",
-    "note": "Tipping signals having enough to spare. Generosity after the come-up \u2014 while \"lowkey still scared\" of sabotage \u2014 is the tension between flex and fear that the freedom is fragile."
+    "note": "Tipping signals having enough to spare. Generosity after the come-up — while \"lowkey still scared\" of sabotage — is the tension between flex and fear that the freedom is fragile."
   },
   {
     "id": "sabotage",
     "phrase": "somehow sabotage or mess this up",
-    "note": "Self-sabotage anxiety after success: the fear that you will blow the stack, the relationship, or the path. Complements the mirage hook \u2014 freedom from being brokey can still be lost from the inside."
+    "note": "Self-sabotage anxiety after success: the fear that you will blow the stack, the relationship, or the path. Complements the mirage hook — freedom from being brokey can still be lost from the inside."
   }
 ]

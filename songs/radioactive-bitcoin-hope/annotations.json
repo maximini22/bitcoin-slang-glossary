@@ -1,7 +1,7 @@
 [
   {
     "id": "hard-drive",
-    "phrase": "I’m digging through the trash\nFor a hard drive",
+    "phrase": "I’m digging through the trash",
     "note": "In 2013 James Howells, a Welsh IT worker, discarded a hard drive that held the keys to about 8,000 bitcoin. He later tried to excavate a Newport landfill to find it; UK courts blocked that in 2025."
   },
   {
@@ -11,12 +11,12 @@
   },
   {
     "id": "12-words",
-    "phrase": "I’ll remember 12 words\nFrom my past life",
+    "phrase": "I’ll remember 12 words",
     "note": "Twelve (or twenty-four) recovery words are a seed phrase: enough to rebuild a bitcoin wallet on any device. Keep them and the coins can outlive every phone and laptop you own."
   },
   {
     "id": "walton-gspot",
-    "phrase": "I’m like Walton when he fucks\nG spot order filled",
+    "phrase": "I’m like Walton when he fucks",
     "note": "Walton was a co-host on the Pleb Underground podcast who shared Bitcoin bars. He had a line punning 'G spot' (sexual innuendo) with 'spot order' (buying at the current market price), which Robbie borrowed."
   },
   {
@@ -31,7 +31,7 @@
   },
   {
     "id": "diamond-hands",
-    "phrase": "I’ll sell my diamond hands\nTo buy more sats",
+    "phrase": "I’ll sell my diamond hands",
     "note": "Diamond hands means holding through any crash without selling. Sats are satoshis, bitcoin's smallest unit: one hundred-millionth of a coin."
   },
   {
@@ -41,12 +41,12 @@
   },
   {
     "id": "bears",
-    "phrase": "If bears hibernate\nI’m calling that a long nap",
+    "phrase": "I’m calling that a long nap",
     "note": "A bear market is a long stretch of falling prices. When the bears hibernate, the market goes quiet and sideways, sometimes for months."
   },
   {
     "id": "hashrate",
-    "phrase": "Half a milly\nWhat hashrate foretells",
+    "phrase": "What hashrate foretells",
     "note": "'Half a milly' means a US$500,000 bitcoin. Hashrate is the total computing power securing the network; bulls read rising hashrate as miners investing because they expect higher prices."
   },
   {
@@ -56,12 +56,12 @@
   },
   {
     "id": "orange-pill",
-    "phrase": "Got an orange pill",
+    "phrase": "an orange pill",
     "note": "Being orange-pilled means becoming convinced about Bitcoin, a play on the red pill in The Matrix, with orange for Bitcoin's logo."
   },
   {
     "id": "toxic-maxis",
-    "phrase": "Cause we just made toxic maxis\nRadioactive",
+    "phrase": "Cause we just made toxic maxis",
     "note": "Toxic maxis are Bitcoin maximalists known for blunt, uncompromising defence of Bitcoin and rejection of other cryptocurrencies. Radioactive is the next level of toxic."
   },
   {
@@ -81,7 +81,7 @@
   },
   {
     "id": "block-time",
-    "phrase": "Operate on block time\nWith ten minute intervals",
+    "phrase": "With ten minute intervals",
     "note": "Bitcoin adds a new block of transactions roughly every ten minutes. Block time is the network's own clock, counted in blocks rather than calendar dates."
   },
   {
@@ -101,7 +101,7 @@
   },
   {
     "id": "white-paper",
-    "phrase": "Of a paper Nakamoto wrote\nJust 9 pages to inspire",
+    "phrase": "Of a paper Nakamoto wrote",
     "note": "The Bitcoin white paper, published by the pseudonymous Satoshi Nakamoto on 31 October 2008, is nine pages long and describes the whole system."
   },
   {
@@ -126,7 +126,7 @@
   },
   {
     "id": "tweak-model",
-    "phrase": "Because they tried\nTo tweak the model",
+    "phrase": "Because they tried",
     "note": "Changing Bitcoin's rules needs broad agreement. In the block size wars, a push for bigger blocks failed to win users over, and its backers split off in 2017 to create Bitcoin Cash."
   }
 ]

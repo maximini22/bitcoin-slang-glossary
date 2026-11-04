@@ -16,12 +16,12 @@
   },
   {
     "id": "consolidate",
-    "phrase": "as i consolidate",
+    "phrase": "As I consolidate",
     "note": "Consolidation combines many small UTXOs into fewer outputs while fees are cheap. Leave them scattered and a later high-fee season makes the stack clumsy to spend. The housekeeping comes before \"the ballers.\""
   },
   {
     "id": "hall-of-fame",
-    "phrase": "bitcoin hall of fame",
+    "phrase": "Bitcoin hall of fame",
     "note": "There is no building. The line is the imagined room of people who were early and loud. The next bar, entropy, is the thing that room cannot fake."
   },
   {
@@ -51,12 +51,12 @@
   },
   {
     "id": "divorce",
-    "phrase": "divorce lawyers don't really like this thing",
+    "phrase": "Divorce lawyers don't really like this thing",
     "note": "Self-custody does not split like a bank account. If keys are held by one person, a court order is not a withdrawal slip. Lawyers meet bitcoin where the paperwork stops matching the coins."
   },
   {
     "id": "prenup",
-    "phrase": "the prenup never work",
+    "phrase": "The prenup never work",
     "note": "A prenup is a contract, before marriage, about who owns what. It \"never work\" in this bar because bitcoin moves by keys, not by the clause. The unpaid fee is the ordinary punchline on the way out."
   },
   {
@@ -71,7 +71,7 @@
   },
   {
     "id": "multisig",
-    "phrase": "multisig",
+    "phrase": "Multisig",
     "note": "Multisig means a spend that needs more than one key. Two of three is the usual pattern. Lose one key and the others can still move the coins. It is the grown-up version of a single gadget in a drawer."
   },
   {
@@ -96,7 +96,7 @@
   },
   {
     "id": "hat",
-    "phrase": "i got your hat you little chump",
+    "phrase": "I got your hat you little chump",
     "note": "A schoolyard jab. In this verse it lands on the orange hat: merch, taken. The next lines say advertising a side pocket on the device was the mistake that followed the costume."
   },
   {
@@ -116,7 +116,7 @@
   },
   {
     "id": "nostr-audit",
-    "phrase": "you can go and audit that for fun",
+    "phrase": "You can go and audit that for fun",
     "note": "The invitation after NOSTR. A relay protocol and a chain both leave a record a stranger can check. \"For fun\" is the tone. The work is the same as verify, not trust."
   },
   {
@@ -126,7 +126,7 @@
   },
   {
     "id": "stacking",
-    "phrase": "stacking got some sovereignty",
+    "phrase": "Stacking got some sovereignty",
     "note": "Stacking is buying bitcoin regularly. Sovereignty is fewer people who can tell you no. \"Less harassment\" is the hope: keys instead of an IOU, so the stack is not someone else's permission."
   },
   {
@@ -146,7 +146,7 @@
   },
   {
     "id": "fifteen",
-    "phrase": "it's been 15 years",
+    "phrase": "It's been 15 years",
     "note": "The genesis block was 3 January 2009. A 2024 hook saying 15 years is counting from that start. \"We've only been the one\" sits beside it: the maximalist claim, dated."
   }
 ]
