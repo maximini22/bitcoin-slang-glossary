@@ -35,6 +35,8 @@ const READ_ALONG_SLUGS = new Set([
   "dread-pirate-robbie",
   "all-time-high-lessons-of-regret",
   "most-toxic-bitcoin-maxi",
+  "vitamin",
+  "take-money-off-mainstreet",
 ]);
 
 const lyricsEl = document.getElementById("lyrics");
@@ -56,6 +58,8 @@ const SHARE_COVERS = {
   "chester": ["assets/chester-cover.jpg", 700, 700],
   "fliponomics": ["assets/fliponomics-cover.jpg", 600, 600],
   "dread-pirate-robbie": ["assets/dread-pirate-robbie-cover.jpg", 600, 600],
+  "vitamin": ["assets/vitamin-cover.jpg", 600, 600],
+  "take-money-off-mainstreet": ["assets/take-money-off-mainstreet-cover.jpg", 600, 600],
 };
 
 function shareCopy(title) {
@@ -234,7 +238,11 @@ const LISTEN_PAGES = {
   "if-it-wasnt-for-satoshi": "https://links.robbiep.net/if-it-wasnt-for-satoshi/",
   "most-toxic-bitcoin-maxi": "https://links.robbiep.net/most-toxic-bitcoin-maxi/",
 };
-const FREE_MP3_SLUGS = new Set(Object.keys(LISTEN_PAGES));
+const FREE_MP3_SLUGS = new Set([
+  ...Object.keys(LISTEN_PAGES),
+  "vitamin",
+  "take-money-off-mainstreet",
+]);
 const SIGN_HOSTS = [
   "https://audio.btcslang.com",
   "https://bitcoin-slang-audio.bitcoinslang.workers.dev",
