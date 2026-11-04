@@ -69,6 +69,9 @@ function pickMainMp3(keys) {
 
 async function resolveR2AudioKey(env, slug) {
   if (!env.AUDIO) return null;
+  // Editor slug aliases -> R2 download folder slugs
+  const R2_SLUG_ALIAS = { vitamin: "vitamin-ft-jwittit" };
+  slug = R2_SLUG_ALIAS[slug] || slug;
   // Prefer 320 kbps folder, then 320a, then slug root
   for (const prefix of [`downloads/${slug}/320/`, `downloads/${slug}/320a/`, `downloads/${slug}/`]) {
     const keys = [];

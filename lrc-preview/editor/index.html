@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>LRC editor — Bitcoin Slang</title>
 <link rel="stylesheet" href="/styles.css"/>
-<link rel="stylesheet" href="/editor/editor.css"/>
+<link rel="stylesheet" href="/editor/editor.css?v=20261104-2115"/>
 </head>
 <body class="editor-page">
 <header class="ed-top">
@@ -41,6 +41,7 @@
   <button type="button" id="btnSave" class="ed-btn ed-btn-accent">Save draft</button>
   <button type="button" id="btnCopy" class="ed-btn">Copy text</button>
   <button type="button" id="btnDownload" class="ed-btn">Download .lrc</button>
+  <button type="button" id="btnReloadSaved" class="ed-btn" title="Discard local autosave and load latest R2 draft">Reload saved</button>
   <button type="button" id="btnAddSection" class="ed-btn">+ Section</button>
   <button type="button" id="btnClearTimes" class="ed-btn ed-btn-warn" title="Blank every timestamp, keep lyric text">Clear all timestamps</button>
   <span id="status" class="ed-status" role="status"></span>
@@ -50,6 +51,6 @@
 
 <div id="lines" class="ed-lines" role="list" aria-label="Lyrics lines"></div>
 
-<script src="/editor/editor.js"></script>
+<script src="/editor/editor.js?v=20261104-2115"></script>
 </body>
 </html>

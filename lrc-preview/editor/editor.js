@@ -437,61 +437,145 @@
     return res.text();
   }
 
-  async function loadSong(slug, { preferLocal = true } = {}) {
+  function normalizeLrcText(s) {
+    return String(s || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  }
+
+  function localDiffersFromDraft(loc, draftText) {
+    if (!loc || !Array.isArray(loc.lines)) return true;
+    try {
+      return normalizeLrcText(serializeLrc(loc.lines)) !== normalizeLrcText(draftText);
+    } catch {
+      return true;
+    }
+  }
+
+  function applyLoadedLines(slug, nextLines, label, { selectedHint = null, writeLocal = true, savedAt = null } = {}) {
+    lines = nextLines;
+    if (selectedHint != null) {
+      selected = Math.min(Math.max(0, selectedHint), Math.max(0, lines.length - 1));
+    } else {
+      selected = nextStampable(0);
+      if (selected < 0) selected = 0;
+    }
+    undoStack = [];
+    sourceLabel = label;
+    audio.src = `/preview-audio/${slug}.mp3`;
+    if (writeLocal) {
+      try {
+        localStorage.setItem(
+          LS_PREFIX + slug,
+          JSON.stringify({
+            lines,
+            selected,
+            savedAt: savedAt != null ? savedAt : Date.now(),
+            sourceLabel,
+          })
+        );
+      } catch (_) {}
+    }
+    render();
+    setStatus(`Loaded ${slug} (${sourceLabel})`, "ok");
+  }
+
+  async function loadSong(slug, { forceServer = false } = {}) {
     setStatus("Loading…");
     btnPlay.textContent = "Play";
     audio.pause();
     audio.removeAttribute("src");
     audio.load();
 
-    let text = null;
-    sourceLabel = "";
-
-    if (preferLocal) {
-      const loc = loadLocal(slug);
-      if (loc && Array.isArray(loc.lines) && loc.lines.length) {
-        lines = loc.lines;
-        selected = Math.min(loc.selected || 0, lines.length - 1);
-        sourceLabel = "local autosave";
-        audio.src = `/preview-audio/${slug}.mp3`;
-        render();
-        setStatus(`Loaded ${slug} (${sourceLabel})`);
-        return;
-      }
-    }
-
+    let draft = null;
     try {
       const draftRes = await fetch(`/api/lrc-drafts/${slug}`, { credentials: "same-origin" });
       if (draftRes.ok) {
         const data = await draftRes.json();
-        if (data.draft && typeof data.draft.text === "string") {
-          text = data.draft.text;
-          sourceLabel = `R2 draft ${data.draft.name}`;
-        }
+        if (data.draft && typeof data.draft.text === "string") draft = data.draft;
       }
     } catch (_) {}
 
-    if (!text) {
-      try {
-        text = await fetchText(`/songs/${slug}/lyrics.lrc`);
-        sourceLabel = "repo lyrics.lrc";
-        lines = parseLrc(text);
-      } catch (_) {
-        text = await fetchText(`/songs/${slug}/lyrics.txt`);
-        sourceLabel = "repo lyrics.txt (untimed)";
-        lines = parsePlainLyrics(text);
+    const loc = forceServer ? null : loadLocal(slug);
+    const serverUploadedMs = draft && draft.uploaded ? Date.parse(draft.uploaded) : NaN;
+    const localSavedAt = loc && typeof loc.savedAt === "number" ? loc.savedAt : NaN;
+    const localIsNewer =
+      !forceServer &&
+      loc &&
+      Array.isArray(loc.lines) &&
+      loc.lines.length &&
+      Number.isFinite(localSavedAt) &&
+      Number.isFinite(serverUploadedMs) &&
+      localSavedAt > serverUploadedMs &&
+      localDiffersFromDraft(loc, draft.text);
+
+    if (draft && !localIsNewer) {
+      // R2 draft wins (newer, equal, same content, or no usable local). Clear stale local first.
+      if (loc && Number.isFinite(localSavedAt) && Number.isFinite(serverUploadedMs) && serverUploadedMs >= localSavedAt) {
+        clearLocal(slug);
       }
-    } else {
-      lines = parseLrc(text);
+      applyLoadedLines(slug, parseLrc(draft.text), `R2 draft ${draft.name}`, {
+        savedAt: Number.isFinite(serverUploadedMs) ? serverUploadedMs : Date.now(),
+      });
+      return;
     }
 
-    selected = nextStampable(0);
-    if (selected < 0) selected = 0;
-    undoStack = [];
-    audio.src = `/preview-audio/${slug}.mp3`;
-    persistLocal();
-    render();
-    setStatus(`Loaded ${slug} (${sourceLabel})`, "ok");
+    if (localIsNewer) {
+      applyLoadedLines(slug, loc.lines, "local autosave (newer than R2)", {
+        selectedHint: loc.selected || 0,
+        writeLocal: false,
+      });
+      return;
+    }
+
+    // No R2 draft: use local if present, else repo lyrics
+    if (!forceServer && loc && Array.isArray(loc.lines) && loc.lines.length) {
+      applyLoadedLines(slug, loc.lines, "local autosave", {
+        selectedHint: loc.selected || 0,
+        writeLocal: false,
+      });
+      return;
+    }
+
+    let text = null;
+    let label = "";
+    try {
+      text = await fetchText(`/songs/${slug}/lyrics.lrc`);
+      label = "repo lyrics.lrc";
+      applyLoadedLines(slug, parseLrc(text), label);
+    } catch (_) {
+      text = await fetchText(`/songs/${slug}/lyrics.txt`);
+      label = "repo lyrics.txt (untimed)";
+      applyLoadedLines(slug, parsePlainLyrics(text), label);
+    }
+  }
+
+  async function reloadSaved() {
+    const slug = songEl.value;
+    const loc = loadLocal(slug);
+    let draft = null;
+    try {
+      const draftRes = await fetch(`/api/lrc-drafts/${slug}`, { credentials: "same-origin" });
+      if (draftRes.ok) {
+        const data = await draftRes.json();
+        if (data.draft && typeof data.draft.text === "string") draft = data.draft;
+      }
+    } catch (_) {}
+    const serverUploadedMs = draft && draft.uploaded ? Date.parse(draft.uploaded) : NaN;
+    const localSavedAt = loc && typeof loc.savedAt === "number" ? loc.savedAt : NaN;
+    const localNewer =
+      loc &&
+      Array.isArray(loc.lines) &&
+      loc.lines.length &&
+      Number.isFinite(localSavedAt) &&
+      (!Number.isFinite(serverUploadedMs) || localSavedAt > serverUploadedMs) &&
+      (!draft || localDiffersFromDraft(loc, draft.text));
+    if (localNewer) {
+      const ok = window.confirm(
+        "Local edits are newer than the saved R2 draft. Discard them and reload the server draft?"
+      );
+      if (!ok) return;
+    }
+    clearLocal(slug);
+    await loadSong(slug, { forceServer: true });
   }
 
   async function saveDraft() {
@@ -508,6 +592,31 @@
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
       sourceLabel = `R2 draft ${data.name} (final)`;
+      // Align or clear local autosave so it cannot beat this (or a later) server draft.
+      try {
+        const verify = await fetch(`/api/lrc-drafts/${slug}`, { credentials: "same-origin" });
+        if (verify.ok) {
+          const v = await verify.json();
+          const uploadedMs = v.draft && v.draft.uploaded ? Date.parse(v.draft.uploaded) : NaN;
+          if (Number.isFinite(uploadedMs)) {
+            localStorage.setItem(
+              LS_PREFIX + slug,
+              JSON.stringify({
+                lines,
+                selected,
+                savedAt: uploadedMs,
+                sourceLabel,
+              })
+            );
+          } else {
+            clearLocal(slug);
+          }
+        } else {
+          clearLocal(slug);
+        }
+      } catch (_) {
+        clearLocal(slug);
+      }
       setStatus(`Saved ${data.key} — final for push`, "ok");
       await refreshDraftMeta();
       return data;
@@ -613,6 +722,7 @@
   $("btnDownload").addEventListener("click", downloadLrc);
   $("btnAddSection").addEventListener("click", addSection);
   $("btnClearTimes").addEventListener("click", clearAllTimestamps);
+  $("btnReloadSaved").addEventListener("click", () => reloadSaved().catch((e) => setStatus(String(e.message || e), "err")));
 
   seekEl.addEventListener("input", () => {
     suppressSeek = true;
@@ -691,6 +801,7 @@
     loadSong,
     nudge,
     clearAllTimestamps,
+    reloadSaved,
     skipBy,
     playFrom,
     ALL,
