@@ -11,7 +11,7 @@
   },
   {
     "id": "public-private",
-    "phrase": "A public key is your address, private key is your access",
+    "phrase": "A public key is your address",
     "note": "A public key (or its hashed form, the address) is where others send coins. The private key signs spends. Lose the private key and the coins are gone. 'Not your keys, not your coins.'"
   },
   {
@@ -26,17 +26,17 @@
   },
   {
     "id": "hodl",
-    "phrase": "to hodl is to hold",
+    "phrase": "To hodl is to hold",
     "note": "HODL comes from a 2013 Bitcointalk typo: 'I AM HODLING.' It became a strategy: ignore short-term price and hold through drawdowns instead of trading."
   },
   {
     "id": "confirmation-pow",
-    "phrase": "A confirmation is that, the transaction is backed",
+    "phrase": "A confirmation is that the transaction is backed",
     "note": "A confirmation is a block that includes your transaction. More confirmations = harder to reverse. Proof of work is how miners spend energy to append those blocks and secure the chain."
   },
   {
     "id": "miners-pow",
-    "phrase": "miners proof of work",
+    "phrase": "Miners proof of work",
     "note": "Miners compete to find a nonce that makes a block hash meet the difficulty target. Energy in, valid chain out. This is what makes rewriting history expensive."
   },
   {
@@ -51,7 +51,7 @@
   },
   {
     "id": "open-source-node",
-    "phrase": "open source is the code",
+    "phrase": "Open source is the code",
     "note": "Bitcoin Core and related implementations are public. Anyone can read, audit, and run a node. A node is a computer running that software, independently verifying every rule."
   },
   {
@@ -76,12 +76,12 @@
   },
   {
     "id": "moon-100x",
-    "phrase": "to moon is for the price to move a 100x",
+    "phrase": "To moon is for the price to move a 100x",
     "note": "To the moon = extreme upside. 100x is a 10,000% move. Historically Bitcoin has done multi-cycle orders of magnitude; it is not a promise, it is the language of the culture."
   },
   {
     "id": "schiff-saylor",
-    "phrase": "Peter Schiff is a hater, Shout outs to Michael Saylor",
+    "phrase": "See Peter Schiff is a hater",
     "note": "Peter Schiff is a gold advocate who has shorted or dismissed Bitcoin for years. Michael Saylor (MicroStrategy) treated BTC as corporate treasury reserve and became the loudest institutional maximalist."
   },
   {
@@ -96,7 +96,7 @@
   },
   {
     "id": "satoshi-unit",
-    "phrase": "a Satoshi is one",
+    "phrase": "A Satoshi is one",
     "note": "Named after the creator. 1 BTC = 100,000,000 sats. Pricing in sats makes small stacks legible and is how Lightning invoices are usually denominated."
   },
   {
@@ -121,7 +121,7 @@
   },
   {
     "id": "shills-nocoiners",
-    "phrase": "Scammers are shills, no coiners hold bills",
+    "phrase": "Scammers are shills",
     "note": "Shills pump bags they are paid to promote. Nocoiner = someone who refuses Bitcoin and still holds fiat ('bills'). Classic tribal split in Bitcoin Twitter."
   },
   {
@@ -136,12 +136,12 @@
   },
   {
     "id": "fork",
-    "phrase": "when a blockchain splits its a fork",
+    "phrase": "when a blockchain splits it's a fork",
     "note": "A fork is a split in consensus rules. Soft fork = tighter rules, backward compatible. Hard fork = new rules that old nodes reject. Bitcoin Cash was a hard fork of Bitcoin."
   },
   {
     "id": "halving",
-    "phrase": "A halvenings an event",
+    "phrase": "A halvening's an event",
     "note": "Every 210,000 blocks (~4 years) the block subsidy halves. 50 → 25 → 12.5 → 6.25 → 3.125… This is the programmed supply shock. Last scheduled subsidy era ends around 2140."
   },
   {
@@ -156,17 +156,17 @@
   },
   {
     "id": "dip-lambo-bips",
-    "phrase": "A low price is a dip, lambo's are whips",
+    "phrase": "A low price is a dip",
     "note": "Buy the dip = accumulate on drawdowns. Lambo = the joke endgame flex of 2017. Whip = car."
   },
   {
     "id": "bips",
-    "phrase": "bitcoin improvement proposals are bips",
+    "phrase": "Bitcoin improvement proposals are bips",
     "note": "BIPs are the design docs for protocol changes. BIP-32 (HD wallets), BIP-39 (seed phrases), BIP-84 (native segwit paths) are ones most users touch without knowing the numbers."
   },
   {
     "id": "hook-money",
-    "phrase": "Don't nothing move but the money",
+    "phrase": "Don’t nothing move but the money",
     "note": "Stay still, don't flinch, don't panic-sell. The only thing that should move is capital flowing into hard money. Discipline as the hook."
   }
 ]

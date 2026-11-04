@@ -537,7 +537,7 @@
   function addSection() {
     pushUndo();
     const i = selected;
-    lines.splice(i + 1, 0, { kind: "section", time: null, text: "[Section]" });
+    lines.splice(i + 1, 0, { kind: "section", time: null, text: "Section" });
     selected = i + 1;
     persistLocal();
     render();

@@ -1,7 +1,7 @@
 [
   {
     "id": "proven-ways",
-    "phrase": "5 proven ways to rich in bitcoin",
+    "phrase": "5 proven ways to rich in Bitcoin",
     "note": "Ads love promising five proven ways to get rich. Long-term Bitcoiners usually give the dull version: buy bitcoin, hold it, and keep the keys yourself."
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "id": "man-now",
-    "phrase": "Mummy look I’m a man now",
+    "phrase": "Mummy look he's a man now",
     "note": "Coming of age without a bailout. The bar is about building your own bitcoin stack and owning the risk of keeping it safe."
   },
   {
@@ -26,7 +26,7 @@
   },
   {
     "id": "when-sell",
-    "phrase": "When’s a good time to sell?",
+    "phrase": "when's a good time to sell?",
     "note": "Ask a long-term holder when to sell bitcoin and the stock answer is never. They treat it as savings, and see fiat money, not bitcoin, as the thing worth spending."
   },
   {
@@ -36,37 +36,37 @@
   },
   {
     "id": "eat-bugs",
-    "phrase": "Read the books\nOr eat the bugs",
+    "phrase": "Read the books or eat the bugs",
     "note": "'Eat the bugs' is an online meme mocking a future where ordinary people are told to swap meat for insect protein. The choice: learn how money works, or accept whatever you are served."
   },
   {
     "id": "hodl",
-    "phrase": "You gotta HODL and hold",
+    "phrase": "gotta hodl and hold",
     "note": "HODL began as a typo of 'hold' in a 2013 Bitcoin forum post titled 'I AM HODLING'. It now means holding through wild price swings instead of selling."
   },
   {
     "id": "custody",
-    "phrase": "And in your own custody\nWithin your wallet at home",
+    "phrase": "in your own custody",
     "note": "Self-custody means holding your bitcoin's private keys yourself, often on a hardware wallet, instead of trusting an exchange that could freeze your account or collapse."
   },
   {
     "id": "21-million",
-    "phrase": "It’s 21 million\nMinus my stack",
+    "phrase": "It’s 21 million minus my stack",
     "note": "Bitcoin's supply is capped at 21 million coins by its code. Subtract what is in your wallet and the rest is shared among everyone else; every coin you hold is one nobody else can."
   },
   {
     "id": "infinity",
-    "phrase": "Are literally gonna print it to infinity",
+    "phrase": "Are literally gonna go and print it to infinity",
     "note": "In 2020 Minneapolis Fed president Neel Kashkari said the Fed had an 'infinite amount of cash'. Central banks can create money without a hard cap; Bitcoin's issuance schedule cannot be changed that way."
   },
   {
     "id": "matrix",
-    "phrase": "Your matrix is equity debt",
+    "phrase": "your matrix is equity debt",
     "note": "Equity and debt are the usual walls of traditional wealth: shares on one side, bonds and loans on the other, all priced in printable currency. That lattice of promises is the matrix the line is naming."
   },
   {
     "id": "manlikekweks",
-    "phrase": "[Verse 3 - ManLikeKweks]",
+    "phrase": "Verse 3 - ManLikeKweks",
     "note": "ManLikeKweks is a Bitcoin rapper who features on Rich in Bitcoin with his own verse. He is on Nostr and X, and his music has since broadened into Christ-themed tracks."
   },
   {
@@ -81,12 +81,12 @@
   },
   {
     "id": "nostr",
-    "phrase": "When I’m on Nostr\nZap zap zap zap zap zap",
+    "phrase": "Zap zap zap zap zap zap any nation",
     "note": "Nostr is an open, decentralised social network where no company owns your account. 'Zaps' are small bitcoin tips sent instantly over the Lightning Network to posts you like."
   },
   {
     "id": "old-money",
-    "phrase": "Old money shaking",
+    "phrase": "old money shaking",
     "note": "Old money means inherited, established wealth. Bitcoin is a new monetary system anyone can join without permission from the people who already own the old one."
   }
 ]

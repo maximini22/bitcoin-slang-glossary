@@ -142,7 +142,10 @@ function applyAnnotations(text, annotations) {
     used.push(a.id);
   }
 
-  html = html.replace(/^\[(.+)\]$/gm, '<span class="section-label">[$1]</span>');
+  html = html.split(/\n/).map((full) => {
+    const sec = matchSectionLabel(full);
+    return sec ? `<span class="section-label">${escapeHtml(sec)}</span>` : full;
+  }).join("\n");
   return html;
 }
 
@@ -242,12 +245,27 @@ function foldLyric(s) {
     .replace(/[\u2018\u2019\u02bc]/g, "'");
 }
 
+const SECTION_LABEL_RE = /^(intro|verse(?:\s+\d+)?|hook|chorus|pre[-\s]?chorus|prechorus|bridge|outro)(?:\s*-\s*.+)?$/i;
+
+/** True section header line: plain whitelist label, or legacy [Label] / [Label - name]. */
+function matchSectionLabel(line) {
+  const s = String(line || "").trim();
+  if (!s) return null;
+  const bracketed = s.match(/^\[(.+)\]$/);
+  const core = (bracketed ? bracketed[1] : s).trim();
+  if (!core) return null;
+  if (SECTION_LABEL_RE.test(core)) return core;
+  // Keep legacy bracket-only headers that are not in the whitelist (rare).
+  if (bracketed) return core;
+  return null;
+}
+
 function parseDisplayLyrics(text) {
   const items = [];
   for (const line of text.split(/\r?\n/)) {
     if (!line.trim()) continue;
-    const section = line.match(/^\[(.+)\]$/);
-    if (section) items.push({ section: section[1] });
+    const section = matchSectionLabel(line);
+    if (section) items.push({ section });
     else items.push({ text: line });
   }
   return items;
@@ -324,7 +342,7 @@ function buildLyricLines(items, annotations, timed) {
     if (item.section) {
       const label = document.createElement("span");
       label.className = "section-label";
-      label.textContent = `[${item.section}]`;
+      label.textContent = item.section;
       frag.appendChild(label);
       continue;
     }
