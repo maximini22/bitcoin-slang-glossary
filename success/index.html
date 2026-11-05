@@ -56,7 +56,7 @@
       var p = new URLSearchParams(location.search);
       var sid = p.get('session_id') || p.get('sid') || '';
       var el = document.getElementById('session-meta');
-      var STRIPE_ORIGIN = 'https://jlr-stripe-test.bitcoinslang.workers.dev';
+      var STRIPE_ORIGIN = 'https://bitcoinslang-paid.bitcoinslang.workers.dev';
       if (sid) {
         // Real post-checkout: stripe worker mints the gated download page
         location.replace(STRIPE_ORIGIN + '/order/' + encodeURIComponent(sid));

@@ -32,9 +32,9 @@
   <script>
     window.BTC_SLANG_BUNDLE = {
       productId: "prod_VZaD3BEAuqKyXe",
-      priceId: "price_1UYR2yKgMY8eiZFzIWb6k7Mn",
+      priceId: "price_1UYR2xKgMY8eiZFzLdIsYIsy",
       name: "BTC Slang Bundle",
-      amountAud: 1.00,
+      amountAud: 17.00,
       currency: "AUD"
     };
   </script>
@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var payBtn = document.getElementById('pay-btn');
   var confirm = document.getElementById('mock-confirm');
   if (!form) return;
-  // Live Worker creates a Checkout Session for the A$1 proof price (no Payment Link).
-  var PAY_URL = 'https://jlr-stripe-test.bitcoinslang.workers.dev/checkout/live';
+  // Live Worker creates a Checkout Session for the A$17.00 price (no Payment Link).
+  var PAY_URL = 'https://bitcoinslang-paid.bitcoinslang.workers.dev/checkout/live';
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var email = document.getElementById('email');
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
     location.href = u.toString();
   });
   if (confirm) {
-    confirm.innerHTML = '<strong>Live proof price A$1.00</strong> — Stripe live Checkout. After payment you get the HTML download page with FLAC + MP3 zips. Full price stays A$17.00 after this test.';
+    confirm.innerHTML = '<strong>A$17.00</strong> — Stripe live Checkout. After payment you get the HTML download page with FLAC + MP3 zips.';
     confirm.classList.add('show');
   }
 });
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="brand">Bitcoinslang.com · Educational lyrics</div>
     <p class="crumb"><a href="/">Home</a> / <a href="/bundle/">BTC Slang Bundle</a> / Checkout</p>
     <h1>Checkout</h1>
-    <p class="sub">Secure Stripe Checkout — no card fields on this page. This test uses the live <strong>A$1.00 proof</strong> price.</p>
+    <p class="sub">Secure Stripe Checkout — no card fields on this page. Live price <strong>A$17.00</strong>.</p>
 
     <section class="bundle-visual bv-sm" aria-hidden="true">
       <div class="bv-bg">
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       <div class="bv-content">
         <h2>BTC Slang Bundle</h2>
-        <p>23 songs · live proof A$1.00 · Photo: AndyRails</p>
+        <p>23 songs · A$17.00 · Photo: AndyRails</p>
       </div>
     </section>
 
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <strong>BTC Slang Bundle</strong>
           <span>Dread Pirate Robbie album + every other Bitcoin Slang track · <span id="order-format">FLAC — HD lossless</span></span>
         </div>
-        <div>A$1.00 <span style="font-size:.75rem;color:#9a9690;">proof</span></div>
+        <div>A$17.00</div>
       </div>
 
       
@@ -168,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
       <div class="total-row">
-        <span>Total (AUD) · proof price</span>
-        <strong>A$1.00</strong>
+        <span>Total (AUD)</span>
+        <strong>A$17.00</strong>
       </div>
 
       <form id="checkout-form" novalidate>
@@ -179,12 +179,12 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <button id="pay-btn" class="btn full" type="submit"
           data-stripe-product="prod_VZaD3BEAuqKyXe"
-          data-stripe-price="price_1UYR2yKgMY8eiZFzIWb6k7Mn"
-          data-product-name="BTC Slang Bundle — proof">Pay A$1.00 (proof price)</button>
+          data-stripe-price="price_1UYR2xKgMY8eiZFzLdIsYIsy"
+          data-product-name="BTC Slang Bundle">Pay A$17.00</button>
         <p class="pay-legal" style="font-size:.8rem;color:#9a9690;margin:.6rem 0 0;">By paying you agree to our <a href="/terms/">Terms</a> (no refunds on digital downloads) and <a href="/privacy/">Privacy Policy</a>.</p>
       </form>
       <div id="mock-confirm" class="mock-confirm" role="status">
-        <strong>Live proof price A$1.00</strong> — opens Stripe live Checkout for the BTC Slang Bundle proof price.
+        <strong>A$17.00</strong> — opens Stripe live Checkout for the BTC Slang Bundle.
       </div>
     </div>
     <p class="legal-links" style="font-size:.85rem;margin:.75rem 0 0;"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a></p>
