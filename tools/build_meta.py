@@ -74,3 +74,9 @@ apply("checkout/index.html",block("Checkout · BTC Slang Bundle (A$17.00) | Bitc
 apply("success/index.html",block("Download · BTC Slang Bundle | BitcoinSlang.com",
   clip("Download page for the BTC Slang Bundle by ROBBIE P. Grab your FLAC HD lossless or MP3 files of the Dread Pirate Robbie album plus 10 more sound money songs."),
   BASE+"/success/",bimg,"website","BTC Slang Bundle cover artwork"))
+apply("terms/index.html",block("Terms · bitcoinslang.com",
+  clip("Terms of use and sale for bitcoinslang.com by ROBBIE P: digital downloads, A$ pricing via Stripe, no refunds on digital purchases, personal licence, and no AI scraping or training."),
+  BASE+"/terms/",bimg,"website","BTC Slang Bundle cover artwork"))
+apply("privacy/index.html",block("Privacy · bitcoinslang.com",
+  clip("Privacy policy for bitcoinslang.com by ROBBIE P: what we collect at checkout and on the site, who processes it (Stripe, hosting), how long we keep it, and your choices."),
+  BASE+"/privacy/",bimg,"website","BTC Slang Bundle cover artwork"))
