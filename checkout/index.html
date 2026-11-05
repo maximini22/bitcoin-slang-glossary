@@ -92,9 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var confirm = document.getElementById('mock-confirm');
   if (!form) return;
   var PAY_URL = 'https://buy.stripe.com/test_28E3cwfhngNs0DCcVQ5EY00';
-  // LIVE: replace PAY_URL with live Payment Link for A$17.00 once STRIPE_LIVE_SECRET_KEY is set
-  // and product/price/webhook are created. Do not commit live secrets.
-  var LIVE_PAY_URL = ''; // e.g. https://buy.stripe.com/....
+  // LIVE ready in Stripe (A$17 price_1UYR2xKgMY8eiZFzLdIsYIsy / A$1 proof price_1UYR2yKgMY8eiZFzIWb6k7Mn)
+  // but public stays on TEST until proof purchase succeeds. Restricted key lacks payment_links_write;
+  // leave LIVE_PAY_URL empty (or paste a Dashboard Payment Link / Session URL when flipping).
+  var LIVE_PAY_URL = ''; // do not set until Robbie confirms A$1 proof + refund
   if (LIVE_PAY_URL) PAY_URL = LIVE_PAY_URL;
   form.addEventListener('submit', function (e) {
     e.preventDefault();
