@@ -194,9 +194,12 @@ async function boot() {
   } else {
     subEl.textContent = `${meta.artist}${meta.theme ? " · " + meta.theme : ""}`;
   }
-  const share = shareCopy(meta.title);
-  document.title = share.title;
-  setShareMeta(share.title, share.description, meta.title);
+  // Static pages carry curated meta from tools/build_meta.py; only fill in for bare song.html.
+  if (!document.head.querySelector('link[rel="canonical"][href*="/songs/"]')) {
+    const share = shareCopy(meta.title);
+    document.title = share.title;
+    setShareMeta(share.title, share.description, meta.title);
+  }
   ensureJsonLd(meta, lyrics);
   mountSongOffers(meta);
   if (meta.copyright) {
