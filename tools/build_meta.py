@@ -74,27 +74,31 @@ def apply(path,blk):
 fan=["assets/dread-pirate-robbie-cover.jpg","assets/cover.jpg","assets/most-toxic-bitcoin-maxi-cover.jpg","assets/freedom-cover.jpg","assets/fliponomics-cover.jpg"]
 # og/home.jpg: site-level share image (desktop song-page mock), rendered from tools/og_home.html via headless Chrome
 bimg=BASE+"/og/home.jpg"
+# Song OG images (desktop lyric+annotation mock) are built by tools/build_og_songs.py.
+# Keep pointing meta at og/<slug>.jpg; do not overwrite with a plain cover card.
 for d in sorted(glob.glob("songs/*/meta.json")):
     m=json.load(open(d)); slug=m["slug"]; t=m["title"]
     if m.get("featuring"): t+=f" ft. {m['featuring']}"
-    card_single(f"assets/{slug}-cover.jpg",f"og/{slug}.jpg")
+    ogp=f"og/{slug}.jpg"
+    if not os.path.exists(ogp):
+        card_single(f"assets/{slug}-cover.jpg",ogp)  # fallback if mocks not built yet
     apply(f"songs/{slug}/index.html",block(f"{t} annotated lyrics by ROBBIE P | BitcoinSlang.com",clip(SHARE[slug]),
-      f"{BASE}/songs/{slug}/",f"{BASE}/og/{slug}.jpg","music.song",f"{m['title']} cover art"))
+      f"{BASE}/songs/{slug}/",f"{BASE}/og/{slug}.jpg","music.song",f"{m['title']} annotated lyrics share image"))
 apply("index.html",block("BitcoinSlang.com · Annotated Bitcoin lyrics by ROBBIE P",
   clip("Educational annotations of Bitcoin and sound money lyrics by ROBBIE P: tap a gold phrase for a short note on the term, the culture and the moment."),
-  BASE+"/",bimg,"website","BitcoinSlang song page: Most Toxic Bitcoin Maxi lyrics with an annotation note"))
+  BASE+"/",bimg,"website","BitcoinSlang annotated lyrics share image"))
 apply("bundle/index.html",block("BTC Slang Bundle (A$17.00) · ROBBIE P | BitcoinSlang.com",
   clip("The Dread Pirate Robbie album (13 tracks) plus 10 more sound money songs by ROBBIE P for one flat A$17.00, in FLAC HD lossless or MP3 to own."),
-  BASE+"/bundle/",bimg,"product","BitcoinSlang song page: Most Toxic Bitcoin Maxi lyrics with an annotation note"))
+  BASE+"/bundle/",bimg,"product","BitcoinSlang annotated lyrics share image"))
 apply("checkout/index.html",block("Checkout · BTC Slang Bundle (A$17.00) | BitcoinSlang.com",
   clip("Checkout for the BTC Slang Bundle by ROBBIE P: the Dread Pirate Robbie album plus 10 more sound money songs, A$17.00 in FLAC or MP3, paid securely via Stripe."),
-  BASE+"/checkout/",bimg,"website","BitcoinSlang song page: Most Toxic Bitcoin Maxi lyrics with an annotation note"))
+  BASE+"/checkout/",bimg,"website","BitcoinSlang annotated lyrics share image"))
 apply("success/index.html",block("Download · BTC Slang Bundle | BitcoinSlang.com",
   clip("Download page for the BTC Slang Bundle by ROBBIE P: grab your FLAC HD lossless or MP3 files of the Dread Pirate Robbie album plus 10 more sound money songs."),
-  BASE+"/success/",bimg,"website","BitcoinSlang song page: Most Toxic Bitcoin Maxi lyrics with an annotation note"))
+  BASE+"/success/",bimg,"website","BitcoinSlang annotated lyrics share image"))
 apply("terms/index.html",block("Terms · ROBBIE P | BitcoinSlang.com",
   clip("Terms of use and sale for bitcoinslang.com: digital downloads, A$ pricing via Stripe, no refunds on digital purchases, a personal licence and no AI training."),
-  BASE+"/terms/",bimg,"website","BitcoinSlang song page: Most Toxic Bitcoin Maxi lyrics with an annotation note"))
+  BASE+"/terms/",bimg,"website","BitcoinSlang annotated lyrics share image"))
 apply("privacy/index.html",block("Privacy · ROBBIE P | BitcoinSlang.com",
   clip("Privacy policy for bitcoinslang.com: what we collect at checkout and on the site, who processes it (Stripe, hosting), how long we keep it and your choices."),
-  BASE+"/privacy/",bimg,"website","BitcoinSlang song page: Most Toxic Bitcoin Maxi lyrics with an annotation note"))
+  BASE+"/privacy/",bimg,"website","BitcoinSlang annotated lyrics share image"))
