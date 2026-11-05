@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var confirm = document.getElementById('mock-confirm');
   if (!form) return;
   // Live Worker creates a Checkout Session for the A$1 proof price (no Payment Link).
-  var PAY_URL = 'https://paid.bitcoinslang.com/checkout/live';
+  var PAY_URL = 'https://jlr-stripe-test.bitcoinslang.workers.dev/checkout/live';
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var email = document.getElementById('email');
