@@ -20,6 +20,7 @@ applySongFooter();
 
 // Songs with a synced lyrics.lrc and a <slug>.mp3 stream key in R2.
 const READ_ALONG_SLUGS = new Set([
+  "bitcoin-slang",
   "bitcoin-slang-remix",
   "if-it-wasnt-for-satoshi",
   "going-cashless",
@@ -182,7 +183,8 @@ async function boot() {
     return;
   }
 
-  const lyrics = await lyricsRes.text();
+  // Lines starting with "#" are file comments (e.g. the copyright line), not lyrics.
+  const lyrics = (await lyricsRes.text()).split(/\r?\n/).filter((l) => !/^\s*#/.test(l)).join("\n").replace(/^\n+/, "");
   const annotations = await annRes.json();
   const meta = metaRes.ok ? await metaRes.json() : { title: slug, artist: "ROBBIE P" };
 
@@ -197,6 +199,15 @@ async function boot() {
   setShareMeta(share.title, share.description, meta.title);
   ensureJsonLd(meta, lyrics);
   mountSongOffers(meta);
+  if (meta.copyright) {
+    const foot = document.querySelector(".song-foot-line");
+    if (foot && !foot.querySelector(".song-foot-copy")) {
+      const cp = document.createElement("span");
+      cp.className = "song-foot-copy";
+      cp.textContent = meta.copyright;
+      foot.append(" · ", cp);
+    }
+  }
 
   if (READ_ALONG_SLUGS.has(slug)) {
     await renderRemix(lyrics, annotations);
@@ -227,6 +238,7 @@ const LISTEN_PAGES = {
 };
 const FREE_MP3_SLUGS = new Set([
   "all-time-high-lessons-of-regret",
+  "bitcoin-slang",
   "bitcoin-slang-remix",
   "chester",
   "circular-economy-scifi-world",
@@ -295,6 +307,7 @@ function parseLrc(text) {
     }
     const s = line.trim();
     if (!s) continue;
+    if (s.startsWith("#")) continue; // LRC comment (copyright line)
     if (/^\[(ti|ar|al|by|offset|length|re|ve|id):/i.test(s)) continue;
     if (matchSectionLabel(s)) continue;
     // Untimed lyric mid-song (editor supports bare lines; Robbie stamps later).

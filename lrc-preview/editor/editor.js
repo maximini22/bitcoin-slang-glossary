@@ -2,6 +2,7 @@
   // All bitcoinslang.com songs that have lyrics in the glossary repo
   const SONGS = [
     { slug: "all-time-high-lessons-of-regret", title: "All Time High, Lessons of Regret", group: "Needs stamp" },
+    { slug: "bitcoin-slang", title: "Bitcoin Slang (Original, Gzutek)", group: "Needs stamp" },
     { slug: "bitcoin-slang-remix", title: "Bitcoin Slang Remix", group: "Has LRC" },
     { slug: "chester", title: "Chester", group: "Has LRC" },
     { slug: "circular-economy-scifi-world", title: "Circular Economy Scifi World", group: "Five packs" },
