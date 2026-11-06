@@ -91,11 +91,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var payBtn = document.getElementById('pay-btn');
   var confirm = document.getElementById('mock-confirm');
   if (!form) return;
-  // Public stays on TEST Payment Link until A$1 live proof + refund is confirmed.
-  var PAY_URL = 'https://buy.stripe.com/test_28E3cwfhngNs0DCcVQ5EY00';
-  // LIVE ready server-side (A$17 price_1UYR2xKgMY8eiZFzLdIsYIsy / A$1 proof price_1UYR2yKgMY8eiZFzIWb6k7Mn).
-  var LIVE_PAY_URL = ''; // do not set until Robbie confirms A$1 proof + refund
-  if (LIVE_PAY_URL) PAY_URL = LIVE_PAY_URL;
+  // Live Worker creates a Checkout Session for the A$17.00 price (no Payment Link).
+  var PAY_URL = 'https://bitcoinslang-paid.bitcoinslang.workers.dev/checkout/live';
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var email = document.getElementById('email');
@@ -108,13 +105,13 @@ document.addEventListener('DOMContentLoaded', function () {
       payBtn.textContent = 'Redirecting to Stripe…';
     }
     var u = new URL(PAY_URL);
-    if (email && email.value.trim()) u.searchParams.set('prefilled_email', email.value.trim());
+    if (email && email.value.trim()) u.searchParams.set('email', email.value.trim());
     var fmt = (window.BTC_SLANG_FORMAT && window.BTC_SLANG_FORMAT.read()) || 'flac';
-    u.searchParams.set('client_reference_id', 'bundle-' + fmt);
+    u.searchParams.set('format', fmt);
     location.href = u.toString();
   });
   if (confirm) {
-    confirm.innerHTML = '<strong>TEST mode</strong> — Stripe test Checkout (card 4242…). Live A$17 stays off until the A$1 proof purchase is confirmed.';
+    confirm.innerHTML = '<strong>A$17.00</strong> — Stripe live Checkout. After payment you get the HTML download page with FLAC + MP3 zips.';
     confirm.classList.add('show');
   }
 });
@@ -125,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="brand">Bitcoinslang.com · Educational lyrics</div>
     <p class="crumb"><a href="/">Home</a> / <a href="/bundle/">BTC Slang Bundle</a> / Checkout</p>
     <h1>Checkout</h1>
-    <p class="sub">Secure Stripe Checkout — no card fields on this page. Public button is still <strong>TEST mode</strong> (shown price A$17.00).</p>
+    <p class="sub">Secure Stripe Checkout — no card fields on this page. Live price <strong>A$17.00</strong>.</p>
 
     <section class="bundle-visual bv-sm" aria-hidden="true">
       <div class="bv-bg">
@@ -181,13 +178,13 @@ document.addEventListener('DOMContentLoaded', function () {
           <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
         </div>
         <button id="pay-btn" class="btn full" type="submit"
-          data-stripe-product="prod_VWUL05N8QKHdog"
-          data-stripe-price="price_1UVRMTKgMY8eiZFzQTYM4hjv"
+          data-stripe-product="prod_VZaD3BEAuqKyXe"
+          data-stripe-price="price_1UYR2xKgMY8eiZFzLdIsYIsy"
           data-product-name="BTC Slang Bundle">Pay A$17.00</button>
         <p class="pay-legal" style="font-size:.8rem;color:#9a9690;margin:.6rem 0 0;">By paying you agree to our <a href="/terms/">Terms</a> (no refunds on digital downloads) and <a href="/privacy/">Privacy Policy</a>.</p>
       </form>
       <div id="mock-confirm" class="mock-confirm" role="status">
-        <strong>TEST mode</strong> — opens Stripe test Checkout for the BTC Slang Bundle.
+        <strong>A$17.00</strong> — opens Stripe live Checkout for the BTC Slang Bundle.
       </div>
     </div>
     <p class="legal-links" style="font-size:.85rem;margin:.75rem 0 0;"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a></p>
